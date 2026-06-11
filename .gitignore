@@ -1,0 +1,10 @@
+.env
+*.pyc
+__pycache__/
+*.log
+logs/
+*.csv
+*.pdf
+calibration.json
+venv/
+.DS_Store

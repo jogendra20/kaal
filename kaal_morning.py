@@ -1,0 +1,250 @@
+"""
+kaal_morning.py
+Morning scan: runs at ~8:50 AM.
+Generates today's intraday watchlist from live announcements + deals + promoter activity.
+Sends Telegram brief with full REASON CHAIN (why bullish/bearish per stock).
+No hardcoded watchlist. Watchlist is purely scan output.
+"""
+import sys, os, time
+sys.path.insert(0, os.path.dirname(__file__))
+
+from datetime import datetime
+from collections import defaultdict
+
+from kaal_sources import (
+    fetch_nse_announcements, fetch_bse_announcements,
+    fetch_bse_bulk_block, fetch_macro, fetch_asm_gsm_ban,
+    fetch_news, fetch_sebi_pit, check_liquidity,
+)
+from kaal_scorer import (
+    classify_announcement, score_announcement,
+    score_bulk_deal, score_promoter_pit, score_news_velocity,
+)
+from kaal_telegram import send
+from kaal_config import check_keys,\
+     MAX_TIER1, MAX_TIER2, VIX_HIGH
+from kaal_llm import reset_call_count
+
+DATA_DIR       = os.path.join(os.path.dirname(__file__), "data")
+SEEN_FILE      = os.path.join(DATA_DIR, "seen_ids.txt")
+WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.txt")
+
+
+def log(msg):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+
+
+def load_seen():
+    if not os.path.exists(SEEN_FILE): return set()
+    return set(open(SEEN_FILE).read().splitlines())
+
+def save_seen(ids):
+    os.makedirs(DATA_DIR, exist_ok=True)
+    open(SEEN_FILE, "w").write("\n".join(sorted(ids)))
+
+def save_watchlist(symbols: list):
+    os.makedirs(DATA_DIR, exist_ok=True)
+    open(WATCHLIST_FILE, "w").write("\n".join(symbols))
+
+def get_ann_id(ann):
+    return (
+        (ann.get("an_dt") or ann.get("dt") or "") + "_" +
+        (ann.get("symbol") or str(ann.get("SCRIP_CD", "")) or "")
+    )
+
+def macro_bias_label(macro: dict) -> str:
+    score = 0
+    vix = macro.get("vix", 15)
+    if vix < 14:    score += 2
+    elif vix > 20:  score -= 2
+    gift = macro.get("gift_nifty_bias", "Neutral")
+    if gift == "Bullish":  score += 2
+    elif gift == "Bearish": score -= 2
+    if macro.get("spx_chg", 0) > 0.3:   score += 1
+    elif macro.get("spx_chg", 0) < -0.5: score -= 1
+    if score >= 2:   return "📈 BULLISH"
+    if score <= -1:  return "📉 BEARISH"
+    return "➡️ NEUTRAL"
+
+def direction_emoji(direction: str) -> str:
+    return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
+
+def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
+    now   = datetime.now().strftime("%d %b %Y %I:%M %p")
+    vix   = macro.get("vix", 0)
+    bias  = macro_bias_label(macro)
+    gift  = macro.get("gift_nifty_bias", "Neutral")
+    giftp = macro.get("gift_nifty_pct", 0)
+
+    lines = [
+        "<b>⚔️ KAAL MORNING BRIEF</b>",
+        f"<code>{now}</code>",
+        "",
+        "<b>🌐 MACRO</b>",
+        f"VIX: <code>{vix:.1f}</code>  |  Bias: {bias}",
+        f"GIFT Nifty: <code>{giftp:+.2f}%</code> ({gift})",
+        f"SPX: <code>{macro.get('spx_chg', 0):+.1f}%</code>  "
+        f"Crude: <code>${macro.get('crude', 0):.0f}</code>  "
+        f"Gold: <code>${macro.get('gold', 0):.0f}</code>  "
+        f"USD/INR: <code>{macro.get('usdinr', 0):.2f}</code>",
+        "─" * 34,
+    ]
+
+    if tier1:
+        lines.append("\n🔥 <b>TIER 1 — HIGH CONVICTION</b>")
+        for i, s in enumerate(tier1, 1):
+            de = direction_emoji(s.get("direction", "NEUTRAL"))
+            lines += [
+                "",
+                f"<b>#{i}  {s['symbol']}</b>  {de}  Score: <code>{s['score']}/100</code>",
+                f"📌 <b>Catalyst:</b> {s.get('catalyst', '').replace('_', ' ')}",
+                f"📊 <b>Signal from:</b> {', '.join(s.get('signal_sources', []))}",
+                f"💡 <b>Key fact:</b> {s.get('key', '')[:110]}",
+                f"🧠 <b>Why {s.get('direction','?')}:</b> {s.get('reason', '')[:200]}",
+                f"🌍 <b>Macro:</b> {s.get('macro_note', '')[:90]}" if s.get("macro_note") else "",
+                f"🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL",
+            ]
+    else:
+        lines.append("\n⚠️ No Tier 1 stocks today — consider staying in cash")
+
+    if tier2:
+        lines.append("\n👀 <b>TIER 2 — WATCHLIST (confirm at open)</b>")
+        for s in tier2:
+            de = direction_emoji(s.get("direction", "NEUTRAL"))
+            lines.append(
+                f"• <b>{s['symbol']}</b> {de} [{s['score']}]  "
+                f"{s.get('catalyst', '').replace('_', ' ')} — "
+                f"{s.get('key', '')[:70]}"
+            )
+            if s.get("reason"):
+                lines.append(f"  ↳ {s['reason'][:120]}")
+
+    if not tier1 and not tier2:
+        lines.append("\n⚠️ No qualifying stocks today — stay in cash, protect capital")
+
+    if vix > VIX_HIGH:
+        lines.append(f"\n⚠️ <b>VIX {vix:.1f} &gt; {VIX_HIGH} — Tier 1 only, 50% position size</b>")
+
+    lines += [
+        "",
+        "─" * 34,
+        "<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>",
+    ]
+    return "\n".join(l for l in lines if l is not None)
+
+
+def run():
+    check_keys()
+    reset_call_count()
+    t0 = time.time()
+    log("═══ KAAL MORNING RUN ═══")
+
+    seen     = load_seen()
+    filters  = fetch_asm_gsm_ban()
+    skip_set = filters["asm"] | filters["gsm"] | filters["ban"]
+    macro    = fetch_macro()
+    log(f"Macro: VIX={macro.get('vix', 0):.1f}, Bias={macro.get('gift_nifty_bias')}, SPX={macro.get('spx_chg', 0):+.1f}%")
+
+    nse_anns = fetch_nse_announcements()
+    bse_anns = fetch_bse_announcements()
+    deals    = fetch_bse_bulk_block()
+    news     = fetch_news()
+    pit      = fetch_sebi_pit()
+
+    log(f"Fetched: {len(nse_anns)} NSE + {len(bse_anns)} BSE announcements, {len(deals)} deals, {len(pit)} PIT entries")
+    log(f"Seen IDs loaded: {len(seen)} — new announcements will be scored")
+
+    new_seen   = set(seen)
+    all_signals = []
+
+    # ── Score announcements — Tier 1 first, then Tier 2 ──
+    from kaal_scorer import classify_announcement as _classify
+    tier1_anns, tier2_anns, new_anns = [], [], []
+    for ann in nse_anns + bse_anns:
+        aid = get_ann_id(ann)
+        if aid in seen:
+            continue
+        new_seen.add(aid)
+        new_anns.append(ann)
+        subj = (ann.get("desc") or ann.get("subject") or ann.get("NEWSSUB") or "").strip()
+        det  = (ann.get("attchmntText") or ann.get("LONGDESC") or "").strip()
+        _, _, tier = _classify(subj, det)
+        if tier == 1:
+            tier1_anns.append(ann)
+        elif tier == 2:
+            tier2_anns.append(ann)
+
+    log(f"New: {len(new_anns)} | Tier1 candidates: {len(tier1_anns)} | Tier2 candidates: {len(tier2_anns)}")
+
+    for ann in tier1_anns + tier2_anns:
+        result = score_announcement(ann, skip_set, macro_context=macro, use_pdf=True)
+        if not result.get("skip") and result["score"] >= 40:
+            all_signals.append(result)
+
+    # ── Score bulk/block deals ────────────────────────────
+    for deal in deals:
+        result = score_bulk_deal(deal)
+        if not result.get("skip") and result["score"] >= 50:
+            all_signals.append(result)
+
+    # ── Score promoter activity ───────────────────────────
+    for pit_entry in pit:
+        result = score_promoter_pit(pit_entry)
+        if not result.get("skip"):
+            all_signals.append(result)
+
+    # ── Score news velocity (attention flags only) ────────
+    news_signals = score_news_velocity(news)
+    all_signals.extend(news_signals)
+
+    # ── Merge by symbol: best score + source bonus ────────
+    by_symbol = defaultdict(list)
+    for s in all_signals:
+        by_symbol[s["symbol"]].append(s)
+
+    final = []
+    for symbol, sigs in by_symbol.items():
+        if symbol in skip_set:
+            continue
+        best         = max(sigs, key=lambda x: x["score"])
+        all_sources  = []
+        for s in sigs:
+            all_sources.extend(s.get("signal_sources", []))
+        unique_sources = list(dict.fromkeys(all_sources))  # deduplicated, order preserved
+        source_bonus   = (len(set(unique_sources)) - 1) * 5  # +5 per additional source type
+
+        best = dict(best)
+        best["score"]          = min(best["score"] + source_bonus, 100)
+        best["signal_sources"] = unique_sources
+
+        # Multi-source confirmation note
+        if len(set(unique_sources)) > 1:
+            best["reason"] = (
+                f"[MULTI-SOURCE CONFIRMATION: {', '.join(set(unique_sources))}] "
+                + best.get("reason", "")
+            )
+
+        final.append(best)
+
+    # ── Sort and tier ─────────────────────────────────────
+    final.sort(key=lambda x: -x["score"])
+
+    from kaal_config import TIER1_MIN_SCORE, TIER2_MIN_SCORE
+    tier1 = [s for s in final if s["score"] >= TIER1_MIN_SCORE][:MAX_TIER1]
+    tier2 = [s for s in final if TIER2_MIN_SCORE <= s["score"] < TIER1_MIN_SCORE][:MAX_TIER2]
+
+    # ── Save outputs ──────────────────────────────────────
+    save_seen(new_seen)
+    # Watchlist = symbols for monitor to watch during the day
+    watchlist_symbols = [s["symbol"] for s in tier1 + tier2]
+    save_watchlist(watchlist_symbols)
+    log(f"Watchlist saved: {watchlist_symbols}")
+
+    # ── Send Telegram ─────────────────────────────────────
+    msg = build_morning_brief(tier1, tier2, macro)
+    send(msg)
+    log(f"Brief sent: {len(tier1)} Tier1, {len(tier2)} Tier2 | Time: {time.time()-t0:.1f}s")
+
+
+if __name__ == "__main__":
+    run()
