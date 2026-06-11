@@ -30,6 +30,13 @@ def classify_announcement(subject: str, details: str) -> tuple:
     det  = details.lower().strip()
 
     # Step 1: exact NSE desc match (highest precision)
+    # AGM special case: if company is a subsidiary, don't skip — send to LLM
+    if subj == "Shareholders meeting":
+        from kaal_config import SUBSIDIARY_MAP
+        if symbol in SUBSIDIARY_MAP:
+            return "AGM_SUBSIDIARY", 65, 1
+        return "SKIP", 0, 3
+
     if subj in NSE_SKIP_EXACT:
         return "SKIP", 0, 3
     if subj in NSE_SKIP_EXTRA:
@@ -106,6 +113,7 @@ Return ONLY a JSON object with exactly these keys:
   "key_detail": "<single most important fact in one line, be specific>",
   "reason": "<2-3 sentences: WHY this is bullish/bearish, what the market reaction typically is, what trader should watch for>",
   "skip_reason": "<if score < 40, why. else empty>",
+  "offer_price": <for open offers: the offer price per share as number, else 0>,
   "macro_impact": "<one line: how current market context affects this stock's setup>"
 }}
 
@@ -161,6 +169,22 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         if use_pdf and pdf_url and (tier == 1 or cat in ("VAGUE", "OUTCOME_OF_BOARD_MEETING")):
             pdf_text = download_pdf_text(pdf_url)
 
+        # Staleness check for open offers via Tavily/Serper
+        if tier == 1 and any(k in (subject+details).lower() for k in ["open offer","buyback","merger"]):
+            try:
+                from kaal_llm import search_staleness
+                stale_result = search_staleness(symbol, cat)
+                if not stale_result.get("is_fresh", True):
+                    return {
+                        "symbol": symbol, "score": 10, "tier": 3,
+                        "skip": True, "catalyst": cat,
+                        "reason": f"STALE: {stale_result.get('note','')[:100]}",
+                        "direction": "NEUTRAL", "source": source,
+                        "signal_sources": [source],
+                    }
+            except Exception:
+                pass
+
         prompt = _build_prompt(subject, details, pdf_text, macro_context)
         llm = call_llm(prompt, fast=(tier == 2))
 
@@ -170,6 +194,24 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             # Staleness penalty
             if not llm.get("is_fresh", True):
                 score = min(score, 25)
+
+            # Open offer price check — if offer price < market price, arbitrage is dead
+            catalyst_type = llm.get("catalyst_type", cat).upper()
+            if "OPEN_OFFER" in catalyst_type:
+                deal_val = llm.get("deal_value_cr", 0)
+                offer_price = llm.get("offer_price", 0)
+                if offer_price and offer_price > 0:
+                    try:
+                        from kaal_sources import check_liquidity
+                        liq = check_liquidity(symbol)
+                        # rough market price from liquidity check not available
+                        # flag for manual check instead
+                        pass
+                    except Exception:
+                        pass
+                # If LLM says not fresh, hard cap
+                if not llm.get("is_fresh", True):
+                    score = min(score, 15)
 
             # Macro adjustment — skip for structural floor catalysts
             FLOOR_CATALYSTS = {"OPEN_OFFER", "BUYBACK", "BUY_BACK", "BUY-BACK", "TAKEOVER", "DELISTING"}

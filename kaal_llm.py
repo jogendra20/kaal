@@ -65,6 +65,32 @@ def _call_groq_key(key: str, prompt: str, label: str) -> tuple:
     return {}, False
 
 
+def _call_cerebras(prompt: str) -> dict:
+    _load_env()
+    key = os.environ.get("CEREBRAS_API_KEY", "")
+    if not key:
+        return {}
+    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    body = {
+        "model": "llama-3.3-70b",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.1,
+        "max_tokens": 500,
+        "response_format": {"type": "json_object"},
+    }
+    try:
+        r = requests.post(
+            "https://api.cerebras.ai/v1/chat/completions",
+            headers=headers, json=body, timeout=20
+        )
+        if r.status_code == 200:
+            return _parse_json(r.json()["choices"][0]["message"]["content"])
+        print(f"[LLM] Cerebras {r.status_code}: {r.text[:80]}")
+    except Exception as e:
+        print(f"[LLM] Cerebras exception: {e}")
+    return {}
+
+
 def _call_gemini(prompt: str) -> dict:
     _load_env()
     key = os.environ.get("GEMINI_API_KEY", "")
@@ -138,6 +164,10 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
                 return {}
 
     if not fast:
+        result = _call_cerebras(prompt)
+        if result:
+            print("→ Cerebras OK")
+            return result
         result = _call_gemini(prompt)
         if result:
             print("→ Gemini OK")
@@ -145,6 +175,144 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
 
     print("→ FAILED")
     return {}
+
+
+def gemini_final_judge(signals: list, macro: dict) -> list:
+    """
+    Gemini receives all scored signals and re-ranks them.
+    Called once per run — not per announcement.
+    Returns re-ranked list with updated scores and reasons.
+    """
+    _load_env()
+    if not signals:
+        return signals
+
+    import json
+    signals_text = json.dumps([{
+        "symbol": s["symbol"],
+        "score": s["score"],
+        "catalyst": s.get("catalyst", ""),
+        "direction": s.get("direction", ""),
+        "key": s.get("key", ""),
+        "reason": s.get("reason", ""),
+    } for s in signals[:15]], indent=2)
+
+    macro_text = (
+        f"VIX={macro.get('vix',15):.1f}, "
+        f"GIFT Nifty={macro.get('gift_nifty_bias','Neutral')}, "
+        f"SPX={macro.get('spx_chg',0):+.1f}%, "
+        f"Crude={macro.get('crude',0):.0f}, "
+        f"USD/INR={macro.get('usdinr',0):.2f}"
+    )
+
+    prompt = f"""You are an expert NSE intraday trader and risk manager.
+
+MARKET CONTEXT: {macro_text}
+
+Below are stocks scored by an automated system today. Your job:
+1. Re-rank them based on intraday trading conviction
+2. Penalize stale catalysts, over-extended stocks, or macro headwinds
+3. Boost genuine fresh Tier1 catalysts (open offer, merger, buyback, USFDA)
+4. Return ONLY a JSON array, no preamble
+
+Scored signals:
+{signals_text}
+
+Return ONLY a JSON array like:
+[
+  {{"symbol": "RBLBANK", "final_score": 78, "final_reason": "two lines max why", "action": "WATCH|BUY_PULLBACK|SKIP"}},
+  ...
+]
+
+Rules:
+- SKIP: stale catalyst, macro headwind too strong, or score < 45
+- WATCH: good catalyst but wait for price confirmation
+- BUY_PULLBACK: strong fresh catalyst, enter on retest only
+- Max 5 BUY_PULLBACK, max 5 WATCH
+- Be strict. When in doubt, SKIP.
+"""
+
+    result = _call_gemini(prompt)
+    if not result:
+        return signals
+
+    # Gemini may return a list directly
+    if isinstance(result, list):
+        ranked = result
+    else:
+        ranked = result.get("signals", result.get("results", []))
+
+    if not ranked:
+        return signals
+
+    # Merge Gemini verdicts back into original signals
+    gemini_map = {r["symbol"]: r for r in ranked if "symbol" in r}
+    updated = []
+    for s in signals:
+        sym = s["symbol"]
+        if sym in gemini_map:
+            g = gemini_map[sym]
+            if g.get("action") == "SKIP":
+                continue
+            s = dict(s)
+            s["score"]  = g.get("final_score", s["score"])
+            s["reason"] = f"[GEMINI: {g.get('action','?')}] {g.get('final_reason', s.get('reason',''))}"
+            s["action"] = g.get("action", "WATCH")
+            updated.append(s)
+        else:
+            updated.append(s)
+
+    updated.sort(key=lambda x: -x["score"])
+    return updated
+
+
+def search_staleness(symbol: str, catalyst: str) -> dict:
+    """
+    Use Tavily or Serper to check if catalyst is stale.
+    Returns {"is_fresh": bool, "note": str}
+    """
+    _load_env()
+    query = f"{symbol} {catalyst.replace('_',' ')} NSE announcement latest"
+
+    # Try Tavily first
+    tavily_key = os.environ.get("TAVILY_API_KEY", "")
+    if tavily_key:
+        try:
+            r = requests.post(
+                "https://api.tavily.com/search",
+                json={"api_key": tavily_key, "query": query, "max_results": 3},
+                timeout=10
+            )
+            if r.status_code == 200:
+                results = r.json().get("results", [])
+                snippets = " ".join(r.get("content", "") for r in results[:3])[:500]
+                # Simple heuristic: if old dates found, likely stale
+                stale_signals = ["weeks ago", "last month", "announced in", "previously"]
+                is_stale = any(s in snippets.lower() for s in stale_signals)
+                return {"is_fresh": not is_stale, "note": snippets[:200]}
+        except Exception as e:
+            print(f"[SEARCH] Tavily error: {e}")
+
+    # Fallback to Serper
+    serper_key = os.environ.get("SERPER_API_KEY", "")
+    if serper_key:
+        try:
+            r = requests.post(
+                "https://google.serper.dev/search",
+                headers={"X-API-KEY": serper_key, "Content-Type": "application/json"},
+                json={"q": query, "num": 3},
+                timeout=10
+            )
+            if r.status_code == 200:
+                items = r.json().get("organic", [])
+                snippets = " ".join(i.get("snippet", "") for i in items[:3])[:500]
+                stale_signals = ["weeks ago", "last month", "announced in", "previously"]
+                is_stale = any(s in snippets.lower() for s in stale_signals)
+                return {"is_fresh": not is_stale, "note": snippets[:200]}
+        except Exception as e:
+            print(f"[SEARCH] Serper error: {e}")
+
+    return {"is_fresh": True, "note": "search unavailable"}
 
 
 def reset_call_count():

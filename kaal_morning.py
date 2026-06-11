@@ -226,6 +226,15 @@ def run():
 
         final.append(best)
 
+    # ── Gemini Final Judge (1 call, re-ranks everything) ────
+    log("Running Gemini final judge...")
+    try:
+        from kaal_llm import gemini_final_judge
+        final = gemini_final_judge(final, macro)
+        log(f"Gemini judge done: {len(final)} signals remain")
+    except Exception as e:
+        log(f"Gemini judge failed: {e} — using raw scores")
+
     # ── Sort and tier ─────────────────────────────────────
     final.sort(key=lambda x: -x["score"])
 

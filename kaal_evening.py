@@ -107,7 +107,7 @@ def build_evening_brief(tier1: list, tier2: list, macro: dict, pit: list) -> str
 
 def run():
     check_keys()
-        reset_call_count()
+    reset_call_count()
     print(f"[{datetime.now().strftime('%H:%M:%S')}] KAAL Evening Run started")
     send("🔄 <b>KAAL: Evening scan running...</b>")
 

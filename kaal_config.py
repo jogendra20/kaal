@@ -29,6 +29,12 @@ TELEGRAM_CHAT  = os.environ.get("TELEGRAM_CHAT_ID", "")
 GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
+# ── EXTRA LLM KEYS (loaded from .env)
+import os
+CEREBRAS_API_KEY = os.environ.get("CEREBRAS_API_KEY", "")
+TAVILY_API_KEY   = os.environ.get("TAVILY_API_KEY", "")
+SERPER_API_KEY   = os.environ.get("SERPER_API_KEY", "")
+
 # ── SCAN FILTERS ──────────────────────────────────────────
 GAP_MIN       = 1.0    # minimum gap % to consider
 GAP_MAX       = 8.0    # max gap (above = too extended, skip)
@@ -64,7 +70,6 @@ NSE_SKIP_EXACT = {
     'Copy of Newspaper Publication',
     'Trading Window',
     'Certificate under SEBI (Depositories and Participants) Regulations, 2018',
-    'Shareholders meeting',
     'Monitoring Agency Report',
     'Price movement',
     'Record Date',
@@ -179,6 +184,10 @@ TIER1_DETAIL_KEYWORDS = [
     "open offer", "letter of offer", "public announcement", "takeover",
     "change of control", "buyback", "buy back", "buy-back", "repurchase",
     "merger", "amalgamation", "scheme of arrangement",
+    "demerger",
+    "de-merger",
+    "separate listing",
+    "spin-off",
     "acquisition of", "acquires", "acquired",
     "large order", "order received", "order win", "bagged", "order book",
     "capacity addition", "new plant", "greenfield", "brownfield",
@@ -216,6 +225,15 @@ TIER2_SUBJECTS = [
     "issue of securities", "investor presentation", "press release",
     "credit rating", "outcome of nclt",
 ]
+
+# ── PARENT-SUBSIDIARY MAP (AGM on these = check for delisting/merger)
+SUBSIDIARY_MAP = {
+    "UNICHEMLAB": "IPCALAB",
+    "RECLTD": "PFC",
+    "GLENMARK": "GLENMARKLIFE",
+    "TATACHEM": "TATACHEMICALS",
+    "LTIM": "LT",
+}
 
 # ── KNOWN LIQUID F&O UNIVERSE (baseline check) ───────────
 # If a scored stock is NOT in this set AND has low volume, flag it
