@@ -154,38 +154,70 @@ def fetch_macro():
     macro["usdinr_chg"] = chg
     print(f"[SRC] USD/INR: {price} ({chg:+.2f}%)")
 
-    # India VIX
+    # India VIX — live from NSE allIndices
     try:
-        if NSELIB_OK:
-            vix_data = capital_market.india_vix_data(period="1W")
-            macro["vix"] = float(vix_data.iloc[-1]["CLOSE_INDEX_VAL"])
+        s = nse_session()
+        r = s.get("https://www.nseindia.com/api/allIndices", timeout=10)
+        indices = r.json().get("data", [])
+        for idx in indices:
+            if idx.get("indexSymbol", "").upper() == "INDIA VIX":
+                macro["vix"] = float(idx.get("last", 15))
+                print(f"[SRC] VIX (live NSE): {macro['vix']}")
+                break
         else:
-            raise Exception("nselib not available")
+            raise Exception("VIX not found")
     except Exception:
         try:
-            s = nse_session()
-            r = s.get("https://www.nseindia.com/api/allIndices", timeout=10)
-            indices = r.json().get("data", [])
-            for idx in indices:
-                if "VIX" in idx.get("indexSymbol", "").upper():
-                    macro["vix"] = float(idx.get("last", 15))
-                    break
+            if NSELIB_OK:
+                vix_data = capital_market.india_vix_data(period="1W")
+                macro["vix"] = float(vix_data.iloc[-1]["CLOSE_INDEX_VAL"])
+                print(f"[SRC] VIX (nselib): {macro['vix']}")
+            else:
+                raise Exception("nselib unavailable")
         except Exception:
             macro["vix"] = 15
+            print(f"[SRC] VIX: fallback 15")
 
-    # GIFT Nifty via Yahoo — Nifty50 spot vs previous close as proxy
+    # GIFT Nifty — stooq → Yahoo → SPX proxy
+    gift_done = False
+
     try:
-        nifty_price, nifty_chg = _yahoo_quote("%5ENSEI")
-        if nifty_price and nifty_chg is not None:
-            macro["gift_nifty_pct"]  = round(nifty_chg, 2)
-            macro["gift_nifty_bias"] = "Bullish" if nifty_chg > 0.3 else ("Bearish" if nifty_chg < -0.3 else "Neutral")
-        else:
-            raise Exception("no nifty data")
-        print(f"[SRC] GIFT Nifty proxy: {nifty_chg:+.2f}% → {macro['gift_nifty_bias']}")
-    except Exception:
+        import csv, io
+        r = requests.get(
+            "https://stooq.com/q/d/l/?s=nifty.f&i=d",
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=10
+        )
+        if r.status_code == 200:
+            reader = csv.DictReader(io.StringIO(r.text))
+            rows = [row for row in reader if row.get("Close") and row["Close"] not in ("null", "")]
+            if len(rows) >= 2:
+                prev  = float(rows[-2]["Close"])
+                close = float(rows[-1]["Close"])
+                chg   = round(((close - prev) / prev) * 100, 2)
+                macro["gift_nifty_pct"]  = chg
+                macro["gift_nifty_bias"] = "Bullish" if chg > 0.3 else ("Bearish" if chg < -0.3 else "Neutral")
+                print(f"[SRC] GIFT Nifty (stooq): {chg:+.2f}% → {macro['gift_nifty_bias']}")
+                gift_done = True
+    except Exception as e:
+        print(f"[SRC] stooq failed: {e}")
+
+    if not gift_done:
+        try:
+            price, chg = _yahoo_quote("%5ENSEI")
+            if chg is not None:
+                macro["gift_nifty_pct"]  = round(chg, 2)
+                macro["gift_nifty_bias"] = "Bullish" if chg > 0.3 else ("Bearish" if chg < -0.3 else "Neutral")
+                print(f"[SRC] GIFT Nifty (Yahoo): {chg:+.2f}% → {macro['gift_nifty_bias']}")
+                gift_done = True
+        except Exception as e:
+            print(f"[SRC] Yahoo Nifty failed: {e}")
+
+    if not gift_done:
         spx_chg = macro.get("spx_chg", 0)
         macro["gift_nifty_bias"] = "Bullish" if spx_chg > 0.5 else ("Bearish" if spx_chg < -0.5 else "Neutral")
         macro["gift_nifty_pct"]  = round(spx_chg * 0.6, 2)
+        print(f"[SRC] GIFT Nifty (SPX proxy): {macro['gift_nifty_pct']:+.2f}% → {macro['gift_nifty_bias']}")
 
     return macro
 
