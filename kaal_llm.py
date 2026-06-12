@@ -6,10 +6,10 @@ import json, re, os, time
 import requests
 
 GROQ_MODEL   = "llama-3.3-70b-versatile"
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash"
 
 _call_count = 0
-MAX_LLM_CALLS_PER_RUN = 50
+MAX_LLM_CALLS_PER_RUN = 30
 
 
 def _load_env():
@@ -137,7 +137,7 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
         return {}
 
     # Pace calls: 2.5s between calls to stay under 30 RPM
-    time.sleep(2.5)
+    time.sleep(1.2)
 
     result, rl1 = _call_groq_key(key1, prompt, "Groq1")
     if result:

@@ -9,6 +9,7 @@ import sys, os, time
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime
+from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
@@ -29,9 +30,6 @@ DATA_DIR       = os.path.join(os.path.dirname(__file__), "data")
 SEEN_FILE      = os.path.join(DATA_DIR, "seen_ids.txt")
 WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.txt")
 
-
-def log(msg):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
 def load_seen():

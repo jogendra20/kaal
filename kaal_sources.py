@@ -269,6 +269,9 @@ def check_liquidity(symbol: str) -> dict:
 
 # ── PDF READER ────────────────────────────────────────────────────────────────
 def download_pdf_text(url: str) -> str:
+    import warnings, logging
+    logging.getLogger("pdfminer").setLevel(logging.ERROR)
+    warnings.filterwarnings("ignore")
     if not url:
         return ""
     try:

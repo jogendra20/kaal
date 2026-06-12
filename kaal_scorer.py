@@ -32,10 +32,7 @@ def classify_announcement(subject: str, details: str) -> tuple:
     # Step 1: exact NSE desc match (highest precision)
     # AGM special case: if company is a subsidiary, don't skip — send to LLM
     if subj == "Shareholders meeting":
-        from kaal_config import SUBSIDIARY_MAP
-        if symbol in SUBSIDIARY_MAP:
-            return "AGM_SUBSIDIARY", 65, 1
-        return "SKIP", 0, 3
+        return "AGM_POSSIBLE", 45, 2
 
     if subj in NSE_SKIP_EXACT:
         return "SKIP", 0, 3
@@ -149,6 +146,15 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         return {**empty, "reason": "Stock under ASM/GSM/F&O ban"}
 
     cat, base_score, tier = classify_announcement(subject, details)
+
+    # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
+    if cat == "AGM_POSSIBLE":
+        from kaal_config import SUBSIDIARY_MAP
+        if symbol in SUBSIDIARY_MAP:
+            cat, base_score, tier = "AGM_SUBSIDIARY", 65, 1
+        else:
+            return {**empty, "reason": "Routine AGM — no parent stake"}
+
     if cat == "SKIP":
         return {**empty, "reason": "Routine/low-value announcement"}
 
