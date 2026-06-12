@@ -110,23 +110,75 @@ def fetch_bse_bulk_block():
 
 
 # ── MACRO DATA ────────────────────────────────────────────────────────────────
+def _stooq_quote(symbol: str) -> tuple:
+    """Returns (price, chg_pct) using Stooq — more reliable from India/Termux."""
+    try:
+        import csv, io
+        url = f"https://stooq.com/q/d/l/?s={symbol}&i=d"
+        r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
+        if r.status_code != 200:
+            return 0, 0
+        reader = csv.DictReader(io.StringIO(r.text))
+        rows = [row for row in reader if row.get("Close") and row["Close"] not in ("null","")]
+        if len(rows) >= 2:
+            prev  = float(rows[-2]["Close"])
+            close = float(rows[-1]["Close"])
+            chg   = round(((close - prev) / prev) * 100, 2)
+            return round(close, 2), chg
+    except Exception:
+        pass
+    return 0, 0
+
+
 def _yahoo_quote(symbol: str) -> tuple:
-    """Returns (price, chg_pct) using Yahoo Finance."""
+    """Returns (price, chg_pct) — compares last two daily closes explicitly."""
     try:
         url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1d&range=5d"
         headers = {"User-Agent": "Mozilla/5.0"}
         r = requests.get(url, headers=headers, timeout=10)
         if r.status_code != 200:
             return 0, 0
-        data  = r.json()
+        data   = r.json()
         result = data["chart"]["result"][0]
+        timestamps = result.get("timestamp", [])
+        closes = result.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+        closes = [c for c, t in zip(closes, timestamps) if c is not None]
+        timestamps = [t for c, t in zip(closes, timestamps) if c is not None]
+        timestamps_clean = [t for t, c in zip(timestamps, closes) if c is not None]
+        from datetime import datetime, timezone
+        now_utc = datetime.now(timezone.utc)
+        # US markets close at 21:00 UTC (4PM ET)
+        # If current UTC hour >= 21 or < 13: US markets closed — use last close
+        # If current UTC hour 13-21: US markets open — use second to last close
+        us_open = 13 <= now_utc.hour < 21
+        # Sanity check: if latest close deviates >3% from prev, likely bad data
+        def pick_closes(closes):
+            if len(closes) >= 2:
+                c = closes[-1]
+                p = closes[-2]
+                if p and abs((c - p) / p) > 0.03 and len(closes) >= 3:
+                    # Suspicious — use prev two instead
+                    return closes[-3], closes[-2]
+                return p, c
+            return 0, 0
+
+        if us_open and len(closes) >= 3:
+            prev  = closes[-3]
+            close = closes[-2]
+        else:
+            prev, close = pick_closes(closes)
+            if not prev:
+                return 0, 0
+        chg = round(((close - prev) / prev) * 100, 2)
+        return round(close, 2), chg
+        # fallback to meta
         meta  = result.get("meta", {})
         close = float(meta.get("regularMarketPrice") or 0)
         prev  = float(meta.get("chartPreviousClose") or 0)
         if close and prev:
             chg = round(((close - prev) / prev) * 100, 2)
             return round(close, 2), chg
-    except Exception as e:
+    except Exception:
         pass
     return 0, 0
 
@@ -134,25 +186,42 @@ def _yahoo_quote(symbol: str) -> tuple:
 def fetch_macro():
     macro = {}
 
-    price, chg = _yahoo_quote("%5EGSPC")
+    # SPX — stooq symbol: ^spx
+    price, chg = _stooq_quote("^spx")
+    if not price:
+        price, chg = _yahoo_quote("%5EGSPC")
     macro["spx"] = price
     macro["spx_chg"] = chg
     print(f"[SRC] SPX: {price} ({chg:+.2f}%)")
 
-    price, chg = _yahoo_quote("CL=F")
+    # Crude — stooq symbol: cl.f
+    price, chg = _stooq_quote("cl.f")
+    if not price:
+        price, chg = _yahoo_quote("CL=F")
     macro["crude"] = price
     macro["crude_chg"] = chg
     print(f"[SRC] Crude: {price} ({chg:+.2f}%)")
 
-    price, chg = _yahoo_quote("GC=F")
+    # Gold — stooq symbol: gc.f
+    price, chg = _stooq_quote("gc.f")
+    if not price:
+        price, chg = _yahoo_quote("GC=F")
     macro["gold"] = price
     macro["gold_chg"] = chg
     print(f"[SRC] Gold: {price} ({chg:+.2f}%)")
 
-    price, chg = _yahoo_quote("INR=X")
-    macro["usdinr"] = price
-    macro["usdinr_chg"] = chg
-    print(f"[SRC] USD/INR: {price} ({chg:+.2f}%)")
+    # USD/INR — stooq symbol: inrusd (inverted, need to flip)
+    price, chg = _stooq_quote("inr.usd")
+    if price:
+        usdinr = round(1 / price, 2) if price else 0
+        chg    = -round(chg, 2)
+        macro["usdinr"] = usdinr
+        macro["usdinr_chg"] = chg
+    else:
+        price, chg = _yahoo_quote("INR=X")
+        macro["usdinr"] = price
+        macro["usdinr_chg"] = chg
+    print(f"[SRC] USD/INR: {macro['usdinr']} ({macro['usdinr_chg']:+.2f}%)")
 
     # India VIX — live from NSE allIndices
     try:
