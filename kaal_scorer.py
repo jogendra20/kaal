@@ -402,7 +402,7 @@ def score_news_velocity(articles: list, known_symbols: set = None) -> list:
             # Higher score if mentioned in Tavily/Serper (active search = stronger signal)
             active_sources = sources.get(symbol, set())
             base  = 42 if "TAVILY" in active_sources or "SERPER" in active_sources else 36
-            score = min(base + count * 5, 62)
+            score = min(base + count * 5, 65)  # capped at 65 — never Tier1 alone
             src_list = list(active_sources)
 
             results.append({

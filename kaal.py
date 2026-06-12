@@ -77,6 +77,15 @@ def print_idle_message(t: dtime):
     print()
 
 def main():
+    # Wait for internet before doing anything
+    try:
+        from kaal_network import wait_for_internet
+        if not wait_for_internet(max_wait_seconds=120):
+            print("[KAAL] No internet after 2 minutes — exiting")
+            return
+    except Exception as e:
+        print(f"[KAAL] Network check failed: {e}")
+
     mode = detect_mode()
     now  = datetime.now().strftime("%I:%M %p")
 

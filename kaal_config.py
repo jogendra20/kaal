@@ -65,6 +65,7 @@ RSS_FEEDS = {
 # These are exact desc field values from NSE feed
 
 NSE_SKIP_EXACT = {
+    'Post Buyback Public Announcement',
     'Analysts/Institutional Investor Meet/Con. Call Updates',
     'General Updates',
     'Copy of Newspaper Publication',

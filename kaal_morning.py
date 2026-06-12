@@ -64,6 +64,27 @@ def macro_bias_label(macro: dict) -> str:
     if score <= -1:  return "📉 BEARISH"
     return "➡️ NEUTRAL"
 
+def _entry_plan(s: dict) -> str:
+    cat = s.get("catalyst", "").upper()
+    vix = 15  # default fallback
+    if "OPEN_OFFER" in cat or "TAKEOVER" in cat:
+        return "Entry: pullback to VWMA20 only | SL: 15M body low | Target: 1:3"
+    elif "BUYBACK" in cat:
+        return "Entry: breakout above prev high | SL: 15M low | Target: 1:2"
+    elif "MERGER" in cat or "AMALGAM" in cat or "DEMERGER" in cat:
+        return "Entry: pullback after gap-up | SL: 15M low | Target: 1:2.5"
+    elif "USFDA" in cat or "ORDER_WIN" in cat:
+        return "Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2"
+    elif "RESULTS" in cat:
+        return "Entry: wait for 9:30 candle direction | SL: 15M low | Target: 1:2"
+    elif "NEWS_MOMENTUM" in cat:
+        return "Attention flag only — confirm with price + volume before entry"
+    elif "ACQUISITION" in cat:
+        return "Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2"
+    else:
+        return "Entry after 9:30 AM | SL: 15M low | Target: 2x SL"
+
+
 def direction_emoji(direction: str) -> str:
     return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
 
@@ -100,7 +121,7 @@ def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
                 f"💡 <b>Key fact:</b> {s.get('key', '')[:110]}",
                 f"🧠 <b>Why {s.get('direction','?')}:</b> {s.get('reason', '')[:200]}",
                 f"🌍 <b>Macro:</b> {s.get('macro_note', '')[:90]}" if s.get("macro_note") else "",
-                f"🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL",
+                f"🎯 {_entry_plan(s)}",
             ]
     else:
         lines.append("\n⚠️ No Tier 1 stocks today — consider staying in cash")
