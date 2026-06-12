@@ -214,7 +214,16 @@ def fetch_asm_gsm_ban():
 
 # ── NEWS ─────────────────────────────────────────────────────────────────────
 def fetch_news():
+    """
+    Fetch news from:
+    1. RSS feeds (ET, Mint, MC)
+    2. Tavily active search for intraday movers
+    3. Serper fallback
+    """
+    import os
     articles = []
+
+    # --- RSS feeds ---
     for source, url in RSS_FEEDS.items():
         try:
             feed = feedparser.parse(url)
@@ -225,7 +234,64 @@ def fetch_news():
                     "summary":   entry.get("summary", ""),
                     "published": entry.get("published", ""),
                 })
-        except Exception: pass
+        except Exception:
+            pass
+
+    # --- Tavily active search ---
+    tavily_key = os.environ.get("TAVILY_API_KEY", "")
+    if tavily_key:
+        queries = [
+            "NSE BSE stocks to buy today intraday",
+            "NSE stocks breakout news today",
+            "India stock market movers today",
+        ]
+        for query in queries:
+            try:
+                r = requests.post(
+                    "https://api.tavily.com/search",
+                    json={
+                        "api_key": tavily_key,
+                        "query": query,
+                        "max_results": 5,
+                        "search_depth": "basic",
+                    },
+                    timeout=10
+                )
+                if r.status_code == 200:
+                    for item in r.json().get("results", []):
+                        articles.append({
+                            "source":    "TAVILY",
+                            "title":     item.get("title", ""),
+                            "summary":   item.get("content", "")[:300],
+                            "published": "",
+                            "url":       item.get("url", ""),
+                        })
+            except Exception as e:
+                print(f"[SRC] Tavily news error: {e}")
+
+    # --- Serper fallback ---
+    serper_key = os.environ.get("SERPER_API_KEY", "")
+    if serper_key and len([a for a in articles if a["source"] == "TAVILY"]) == 0:
+        try:
+            r = requests.post(
+                "https://google.serper.dev/search",
+                headers={"X-API-KEY": serper_key, "Content-Type": "application/json"},
+                json={"q": "NSE BSE intraday stocks news today", "num": 10},
+                timeout=10
+            )
+            if r.status_code == 200:
+                for item in r.json().get("organic", []):
+                    articles.append({
+                        "source":    "SERPER",
+                        "title":     item.get("title", ""),
+                        "summary":   item.get("snippet", ""),
+                        "published": "",
+                        "url":       item.get("link", ""),
+                    })
+        except Exception as e:
+            print(f"[SRC] Serper news error: {e}")
+
+    print(f"[SRC] News: {len(articles)} articles (RSS + Tavily + Serper)")
     return articles
 
 
@@ -270,7 +336,9 @@ def check_liquidity(symbol: str) -> dict:
 # ── PDF READER ────────────────────────────────────────────────────────────────
 def download_pdf_text(url: str) -> str:
     import warnings, logging
-    logging.getLogger("pdfminer").setLevel(logging.ERROR)
+    logging.getLogger("pdfminer").setLevel(logging.CRITICAL)
+    logging.getLogger("pdfplumber").setLevel(logging.CRITICAL)
+    logging.disable(logging.CRITICAL)
     warnings.filterwarnings("ignore")
     if not url:
         return ""

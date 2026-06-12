@@ -368,40 +368,59 @@ _NOISE_WORDS = {
 
 def score_news_velocity(articles: list, known_symbols: set = None) -> list:
     """
-    Count stock mentions in news headlines.
-    Only returns signals for stocks that exist in F&O universe or known_symbols.
-    Filters out noise words like RBI, GDP, etc.
+    Count stock mentions across RSS + Tavily + Serper articles.
+    Extracts stock symbols from titles and summaries.
+    Only returns signals for stocks in F&O universe or known_symbols.
     """
     from collections import Counter
     if known_symbols is None:
         known_symbols = FNO_UNIVERSE_HINT
 
-    mentions = Counter()
-    titles   = {}
+    mentions  = Counter()
+    titles    = {}
+    summaries = {}
+    sources   = {}
 
     for a in articles:
-        title = a.get("title", "").upper()
-        for word in re.findall(r'\b[A-Z]{3,12}\b', title):
+        # Search both title and summary for stock names
+        text = (a.get("title", "") + " " + a.get("summary", "")).upper()
+        src  = a.get("source", "RSS")
+        for word in re.findall(r'\b[A-Z]{3,12}\b', text):
             if word in _NOISE_WORDS:
                 continue
             if word in known_symbols:
                 mentions[word] += 1
-                titles[word] = title
+                titles[word]    = a.get("title", "")
+                summaries[word] = a.get("summary", "")[:150]
+                if word not in sources:
+                    sources[word] = set()
+                sources[word].add(src)
 
     results = []
     for symbol, count in mentions.items():
         if count >= 2:
-            score = min(38 + count * 6, 58)  # capped at 58, never Tier 1 alone
+            # Higher score if mentioned in Tavily/Serper (active search = stronger signal)
+            active_sources = sources.get(symbol, set())
+            base  = 42 if "TAVILY" in active_sources or "SERPER" in active_sources else 36
+            score = min(base + count * 5, 62)
+            src_list = list(active_sources)
+
             results.append({
                 "symbol":         symbol,
                 "score":          score,
                 "tier":           2,
                 "skip":           False,
-                "catalyst":       "NEWS_VELOCITY",
-                "direction":      "NEUTRAL",   # LLM not called here; just attention signal
-                "key":            f"Mentioned {count}x in news: {titles[symbol][:70]}",
-                "reason":         f"High news mention frequency ({count} articles). Not a buy signal alone — use as attention flag, confirm with price action.",
+                "catalyst":       "NEWS_MOMENTUM",
+                "direction":      "NEUTRAL",
+                "key":            f"Mentioned {count}x across {', '.join(src_list)}: {titles[symbol][:70]}",
+                "reason":         (
+                    f"Stock appearing in {count} news articles today across {', '.join(src_list)}. "
+                    f"Snippet: {summaries.get(symbol,'')[:100]}. "
+                    f"Confirm with price action — news momentum alone is not a buy signal."
+                ),
                 "source":         "NEWS",
-                "signal_sources": ["NEWS"],
+                "signal_sources": src_list if src_list else ["NEWS"],
             })
+
+    results.sort(key=lambda x: -x["score"])
     return results

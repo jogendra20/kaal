@@ -31,10 +31,33 @@ def _load_env():
 
 def _parse_json(text: str) -> dict:
     clean = re.sub(r"```json|```", "", text).strip()
+    # Try full parse first
+    try:
+        return json.loads(clean)
+    except Exception:
+        pass
+    # Try extracting first JSON object
     match = re.search(r"\{.*\}", clean, re.DOTALL)
     if match:
-        return json.loads(match.group())
-    return json.loads(clean)
+        try:
+            return json.loads(match.group())
+        except Exception:
+            pass
+    # Try extracting JSON array
+    match = re.search(r"\[.*\]", clean, re.DOTALL)
+    if match:
+        try:
+            return json.loads(match.group())
+        except Exception:
+            pass
+    # Last resort: fix common issues
+    try:
+        fixed = re.sub(r",\s*([}\]])", r"", clean)  # trailing commas
+        fixed = re.sub(r"'([^']*)':", r'"":', fixed)  # single quotes
+        return json.loads(fixed)
+    except Exception:
+        pass
+    return {}
 
 
 def _call_groq_key(key: str, prompt: str, label: str) -> tuple:
