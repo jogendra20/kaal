@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements,
+    fetch_nse_announcements, fetch_preopen_gainers,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
 )
@@ -166,6 +166,9 @@ def run():
 
     nse_anns = fetch_nse_announcements()
     news     = fetch_news()
+    preopen  = fetch_preopen_gainers()
+    # Build gap map for quick lookup
+    gap_map  = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
     pit      = fetch_sebi_pit()
 
     log(f"Fetched: {len(nse_anns)} NSE announcements")
@@ -178,6 +181,9 @@ def run():
     from kaal_scorer import classify_announcement as _classify
     tier1_anns, tier2_anns, new_anns = [], [], []
     for ann in nse_anns:
+        # Pre-open gap boost
+        sym = ann.get('symbol', '')
+        ann['preopen_gap'] = gap_map.get(sym, 0.0)
         aid = get_ann_id(ann)
         if aid in seen:
             continue

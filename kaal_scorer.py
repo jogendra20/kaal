@@ -189,6 +189,11 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
     if symbol in skip_set:
         return {**empty, "reason": "Stock under ASM/GSM/F&O ban"}
 
+    # Pre-open gap check
+    preopen_gap = ann.get('preopen_gap', 0.0) if isinstance(ann, dict) else 0.0
+    if preopen_gap > 8.0:
+        return {**empty, 'reason': f'Gap already {preopen_gap:.1f}% — edge consumed, skip'}
+
     cat, base_score, tier = classify_announcement(subject, details)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
@@ -313,6 +318,11 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 "signal_sources":  [source],
             }
 
+    # Boost if pre-open gap confirms catalyst
+    if 2.0 <= preopen_gap <= 8.0:
+        base_score = min(base_score + 8, 95)
+        signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
+
     return {
         "symbol":         symbol,
         "subject":        subject,
@@ -398,6 +408,11 @@ def score_promoter_pit(pit_entry: dict) -> dict:
         )
     else:
         return {"symbol": symbol, "skip": True, "score": 0}
+
+    # Boost if pre-open gap confirms catalyst
+    if 2.0 <= preopen_gap <= 8.0:
+        base_score = min(base_score + 8, 95)
+        signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
 
     return {
         "symbol":         symbol,
