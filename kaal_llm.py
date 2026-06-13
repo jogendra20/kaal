@@ -95,19 +95,23 @@ def _call_cerebras(prompt: str) -> dict:
         return {}
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     body = {
-        "model": "llama-3.3-70b",
+        "model": "zai-glm-4.7",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.1,
-        "max_tokens": 500,
-        "response_format": {"type": "json_object"},
+        "max_tokens": 1000,
     }
     try:
         r = requests.post(
             "https://api.cerebras.ai/v1/chat/completions",
-            headers=headers, json=body, timeout=20
+            headers=headers, json=body, timeout=25
         )
         if r.status_code == 200:
-            return _parse_json(r.json()["choices"][0]["message"]["content"])
+            msg = r.json()["choices"][0]["message"]
+            # zai-glm-4.7 is a reasoning model — content may be in reasoning or content
+            text = msg.get("content") or msg.get("reasoning") or ""
+            if not text:
+                return {}
+            return _parse_json(text)
         print(f"[LLM] Cerebras {r.status_code}: {r.text[:80]}")
     except Exception as e:
         print(f"[LLM] Cerebras exception: {e}")
@@ -160,7 +164,7 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
         return {}
 
     # Pace calls: 2.5s between calls to stay under 30 RPM
-    time.sleep(1.2)
+    time.sleep(1.5)
 
     result, rl1 = _call_groq_key(key1, prompt, "Groq1")
     if result:

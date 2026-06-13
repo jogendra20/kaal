@@ -59,39 +59,7 @@ def fetch_nse_announcements():
         print(f"[SRC] NSE announcements error: {e}")
         return []
 
-def fetch_bse_announcements():
-    today     = datetime.now().strftime("%Y%m%d")
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
-    url = (
-        f"https://api.bseindia.com/BseIndiaAPI/api/AnnGetData/w"
-        f"?strCat=-1&strPrevDate={yesterday}&strScrip=&strSearch=P"
-        f"&strToDate={today}&strType=C&subcategory=-1"
-    )
-    for attempt in range(2):
-        try:
-            r = requests.get(url, headers=HEADERS_BSE, timeout=8)
-            if r.status_code != 200:
-                print(f"[SRC] BSE HTTP {r.status_code} — skipping")
-                return []
-            ct = r.headers.get("Content-Type", "")
-            if "json" not in ct:
-                print(f"[SRC] BSE returned non-JSON ({ct[:40]}) — blocked")
-                return []
-            data = r.json()
-            if isinstance(data, dict):
-                return data.get("Table", [])
-            return []
-        except requests.exceptions.Timeout:
-            print(f"[SRC] BSE timeout (attempt {attempt+1}/2) — skipping")
-            if attempt == 0:
-                time.sleep(2)
-        except Exception as e:
-            print(f"[SRC] BSE error: {e}")
-            break
-    return []
 
-
-# ── BULK / BLOCK DEALS ───────────────────────────────────────────────────────
 def fetch_bse_bulk_block():
     today = datetime.now().strftime("%Y%m%d")
     deals = []

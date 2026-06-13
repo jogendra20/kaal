@@ -92,8 +92,6 @@ NSE_TIER1_EXACT = {
     'Post Buyback Public Announcement',
     'Acquisition',
     'Scheme of Arrangement',
-    'Bagging/Receiving of orders/contracts',
-    'Awarding of order(s)/contract(s)',
     'Reply to Clarification- Financial results',
     'News Verification',
     'Final  forensic  audit  report',
@@ -119,6 +117,8 @@ NSE_SKIP_EXTRA = {
 }
 
 NSE_TIER2_EXACT = {
+    'Bagging/Receiving of orders/contracts',
+    'Awarding of order(s)/contract(s)',
     # Disclosure under SEBI Takeover Regulations -> handled in scorer directly
     'Outcome of Board Meeting',
     'Press Release',

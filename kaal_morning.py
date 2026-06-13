@@ -13,9 +13,9 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_bse_announcements,
-    fetch_bse_bulk_block, fetch_macro, fetch_asm_gsm_ban,
-    fetch_news, fetch_sebi_pit, check_liquidity,
+    fetch_nse_announcements,
+    fetch_macro, fetch_asm_gsm_ban,
+    fetch_news, check_liquidity,
 )
 from kaal_scorer import (
     classify_announcement, score_announcement,
@@ -165,12 +165,10 @@ def run():
     log(f"Macro: VIX={macro.get('vix', 0):.1f}, Bias={macro.get('gift_nifty_bias')}, SPX={macro.get('spx_chg', 0):+.1f}%")
 
     nse_anns = fetch_nse_announcements()
-    bse_anns = fetch_bse_announcements()
-    deals    = fetch_bse_bulk_block()
     news     = fetch_news()
     pit      = fetch_sebi_pit()
 
-    log(f"Fetched: {len(nse_anns)} NSE + {len(bse_anns)} BSE announcements, {len(deals)} deals, {len(pit)} PIT entries")
+    log(f"Fetched: {len(nse_anns)} NSE announcements")
     log(f"Seen IDs loaded: {len(seen)} — new announcements will be scored")
 
     new_seen   = set(seen)
@@ -179,7 +177,7 @@ def run():
     # ── Score announcements — Tier 1 first, then Tier 2 ──
     from kaal_scorer import classify_announcement as _classify
     tier1_anns, tier2_anns, new_anns = [], [], []
-    for ann in nse_anns + bse_anns:
+    for ann in nse_anns:
         aid = get_ann_id(ann)
         if aid in seen:
             continue
