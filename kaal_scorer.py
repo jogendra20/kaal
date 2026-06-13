@@ -82,6 +82,50 @@ def classify_announcement(subject: str, details: str) -> tuple:
 
 
 # ── LLM SCORING PROMPT ───────────────────────────────────────────────────────
+def _build_results_prompt(subject, details, pdf_text, macro_context):
+    ctx = 'Subject: ' + subject + '\nDetails: ' + details[:600]
+    if pdf_text:
+        ctx += '\nPDF Excerpt:\n' + pdf_text[:3000]
+    macro_str = ''
+    if macro_context:
+        macro_str = ('\nMARKET CONTEXT: VIX=' + str(macro_context.get('vix','N/A'))
+            + ', GIFT Nifty=' + macro_context.get('gift_nifty_bias','Neutral')
+            + ', SPX=' + str(macro_context.get('spx_chg',0)) + '%')
+    rules = (
+        'Scoring rules:\n'
+        '- PAT growth >50% + no exceptional items + after-hours = 80-90\n'
+        '- PAT growth 20-50% + no exceptional items = 60-75\n'
+        '- PAT growth <20% or exceptional items = 30-50\n'
+        '- Revenue miss despite PAT beat = penalize 10\n'
+        '- Guidance cut = penalize 15\n'
+        '- Large cap >20000Cr = penalize 10\n'
+    )
+    schema = (
+        '{\n'
+        '  "score": <0-100>,\n'
+        '  "pat_growth_pct": <PAT YoY growth as number>,\n'
+        '  "revenue_growth_pct": <Revenue YoY growth as number>,\n'
+        '  "margin_expanded": <true/false>,\n'
+        '  "exceptional_item": <true if one-time item inflated PAT>,\n'
+        '  "dividend_announced": <true/false>,\n'
+        '  "guidance_tone": "<POSITIVE|NEGATIVE|NEUTRAL|NONE>",\n'
+        '  "is_beat": <true if PAT >20% and no exceptional items>,\n'
+        '  "is_fresh": <true if announced after market hours>,\n'
+        '  "catalyst_type": "RESULTS_BEAT",\n'
+        '  "direction": "<BULLISH|BEARISH|NEUTRAL>",\n'
+        '  "key": "<PAT +X% YoY, Revenue +X% YoY, margin expanded/contracted>",\n'
+        '  "reason": "<two lines: why this will or will not move intraday>",\n'
+        '  "skip_reason": "<if score < 40 why, else empty>",\n'
+        '  "offer_price": 0\n'
+        '}'
+    )
+    return (
+        'You are an expert NSE/BSE intraday trader analyzing quarterly results.'
+        + macro_str + '\n\n' + ctx
+        + '\n\nReturn ONLY a JSON object:\n' + schema
+        + '\n\n' + rules
+    )
+
 def _build_prompt(subject: str, details: str, pdf_text: str, macro_context: dict) -> str:
     ctx = f"Subject: {subject}\nDetails: {details[:600]}"
     if pdf_text:
@@ -191,7 +235,21 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             except Exception:
                 pass
 
-        prompt = _build_prompt(subject, details, pdf_text, macro_context)
+        # Use results-specific prompt for financial results
+        results_keywords = [
+            'financial result', 'outcome of board', 'results_beat',
+            'results_miss', 'quarterly result', 'annual result'
+        ]
+        is_results = any(k in (subject + details).lower() for k in results_keywords)
+        if is_results:
+            prompt = _build_results_prompt(subject, details, pdf_text, macro_context)
+        else:
+            results_keywords = ['financial result', 'outcome of board', 'quarterly result', 'annual result']
+        is_results = any(k in (subject + details).lower() for k in results_keywords)
+        if is_results:
+            prompt = _build_results_prompt(subject, details, pdf_text, macro_context)
+        else:
+            prompt = _build_prompt(subject, details, pdf_text, macro_context)
         llm = call_llm(prompt, fast=(tier == 2))
 
         if llm:
