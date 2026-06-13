@@ -323,6 +323,15 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         base_score = min(base_score + 8, 95)
         signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
 
+    # Sector strength boost/penalty
+    if isinstance(ann, dict):
+        if ann.get('sector_hot'):
+            base_score = min(base_score + 6, 95)
+            signals.append('Sector tailwind — hot sector today')
+        if ann.get('sector_cold'):
+            base_score = max(base_score - 8, 0)
+            signals.append('Sector headwind — cold sector today')
+
     return {
         "symbol":         symbol,
         "subject":        subject,
@@ -413,6 +422,15 @@ def score_promoter_pit(pit_entry: dict) -> dict:
     if 2.0 <= preopen_gap <= 8.0:
         base_score = min(base_score + 8, 95)
         signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
+
+    # Sector strength boost/penalty
+    if isinstance(ann, dict):
+        if ann.get('sector_hot'):
+            base_score = min(base_score + 6, 95)
+            signals.append('Sector tailwind — hot sector today')
+        if ann.get('sector_cold'):
+            base_score = max(base_score - 8, 0)
+            signals.append('Sector headwind — cold sector today')
 
     return {
         "symbol":         symbol,

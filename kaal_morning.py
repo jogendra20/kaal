@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers,
+    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
 )
@@ -169,6 +169,14 @@ def run():
     preopen  = fetch_preopen_gainers()
     # Build gap map for quick lookup
     gap_map  = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
+    sectors  = fetch_sector_strength()
+    hot_kw   = set(w.upper() for w in sectors.get('hot_keywords', []))
+    cold_kw  = set()
+    for sec in sectors.get('cold_sectors', []):
+        from kaal_sources import SECTOR_MAP
+        cold_kw.update(SECTOR_MAP.get(sec['sector'], []))
+    ann['sector_hot']  = any(w in (ann.get('subject','') + ann.get('attchmntText','')).upper() for w in hot_kw)
+    ann['sector_cold'] = any(w in (ann.get('subject','') + ann.get('attchmntText','')).upper() for w in cold_kw)
     pit      = fetch_sebi_pit()
 
     log(f"Fetched: {len(nse_anns)} NSE announcements")
