@@ -136,8 +136,8 @@ def _call_gemini(prompt: str) -> dict:
         if r.status_code == 200:
             text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
             return _parse_json(text)
-        elif r.status_code == 503:
-            print(f"[LLM] Gemini 503 — retrying in 5s...")
+        elif r.status_code in (503, 429):
+            print(f"[LLM] Gemini {r.status_code} — retrying in 5s...")
             time.sleep(5)
             r2 = requests.post(url, json=body, timeout=25)
             if r2.status_code == 200:
