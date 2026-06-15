@@ -252,8 +252,19 @@ def run():
     log("Running Gemini final judge...")
     try:
         from kaal_llm import gemini_final_judge
-        final = gemini_final_judge(final, macro)
-        log(f"Gemini judge done: {len(final)} signals remain")
+        judged = gemini_final_judge(final, macro)
+        if judged:
+            final = judged
+            log(f"Gemini judge done: {len(final)} signals remain")
+        else:
+            log("Gemini returned empty — applying rule-based fallback filter")
+            # Rule-based fallback: remove news momentum and unsized order wins
+            final = [s for s in final if s.get("catalyst","") not in ("NEWS_MOMENTUM",)]
+            final = [s for s in final if not (
+                s.get("catalyst","") in ("ORDER_WIN", "BAGGING_RECEIVING_OF_ORDE", "AWARDING_OF_ORDER(S)_CONT")
+                and s.get("score", 0) < 80
+            )]
+            log(f"Fallback filter done: {len(final)} signals remain")
     except Exception as e:
         log(f"Gemini judge failed: {e} — using raw scores")
 

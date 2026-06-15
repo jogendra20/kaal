@@ -49,7 +49,7 @@ MAX_TIER2 = 8   # reduced from 10, quality over quantity
 MAX_LLM_CALLS = 80   # per run (Groq free tier, 80 is safe)
 
 # ── SCORE THRESHOLDS ─────────────────────────────────────
-TIER1_MIN_SCORE = 72   # was 75, slightly relaxed for Groq
+TIER1_MIN_SCORE = 75   # was 75, slightly relaxed for Groq
 TIER2_MIN_SCORE = 48
 SKIP_BELOW      = 40
 
