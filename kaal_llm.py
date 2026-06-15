@@ -129,13 +129,20 @@ def _call_gemini(prompt: str) -> dict:
     )
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.1, "maxOutputTokens": 500},
+        "generationConfig": {"temperature": 0.1, "maxOutputTokens": 2000},
     }
     try:
         r = requests.post(url, json=body, timeout=25)
         if r.status_code == 200:
             text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
             return _parse_json(text)
+        elif r.status_code == 503:
+            print(f"[LLM] Gemini 503 — retrying in 5s...")
+            time.sleep(5)
+            r2 = requests.post(url, json=body, timeout=25)
+            if r2.status_code == 200:
+                text = r2.json()["candidates"][0]["content"]["parts"][0]["text"]
+                return _parse_json(text)
         print(f"[LLM] Gemini {r.status_code}: {r.text[:80]}")
     except Exception as e:
         print(f"[LLM] Gemini exception: {e}")
@@ -268,31 +275,43 @@ Rules:
     if not result:
         return signals
 
-    # Gemini may return a list directly
+    # Handle list or dict response
     if isinstance(result, list):
         ranked = result
+    elif isinstance(result, dict):
+        ranked = result.get("signals", result.get("results", result.get("data", [])))
     else:
-        ranked = result.get("signals", result.get("results", []))
+        return signals
 
     if not ranked:
         return signals
 
     # Merge Gemini verdicts back into original signals
-    gemini_map = {r["symbol"]: r for r in ranked if "symbol" in r}
+    gemini_map = {}
+    for r in ranked:
+        if isinstance(r, dict) and "symbol" in r:
+            gemini_map[r["symbol"]] = r
+
+    print(f"[LLM] Gemini verdicts: {[(r.get('symbol'), r.get('action')) for r in ranked[:5]]}")
+
     updated = []
     for s in signals:
         sym = s["symbol"]
         if sym in gemini_map:
             g = gemini_map[sym]
-            if g.get("action") == "SKIP":
+            action = g.get("action", "WATCH")
+            if action == "SKIP":
+                print(f"[LLM] Gemini SKIP: {sym}")
                 continue
             s = dict(s)
             s["score"]  = g.get("final_score", s["score"])
-            s["reason"] = f"[GEMINI: {g.get('action','?')}] {g.get('final_reason', s.get('reason',''))}"
-            s["action"] = g.get("action", "WATCH")
+            s["reason"] = f"[{action}] {g.get('final_reason', s.get('reason',''))}"
+            s["action"] = action
             updated.append(s)
         else:
-            updated.append(s)
+            # Not in Gemini response = SKIP
+            print(f"[LLM] Gemini not ranked: {sym} — skipping")
+            continue
 
     updated.sort(key=lambda x: -x["score"])
     return updated
