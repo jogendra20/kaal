@@ -248,7 +248,7 @@ def run():
 
         final.append(best)
 
-    # ── Gemini Final Judge (1 call, re-ranks everything) ────
+    # ── Gemini Final Judge ──────────────────────────────────
     log("Running Gemini final judge...")
     try:
         from kaal_llm import gemini_final_judge
@@ -257,25 +257,24 @@ def run():
             final = judged
             log(f"Gemini judge done: {len(final)} signals remain")
         else:
-            log("Gemini unavailable — applying strict rule-based fallback")
-            SKIP_CATALYSTS = {"NEWS_MOMENTUM", "OTHER", "PARTNERSHIP"}
-            ORDER_CATS = {"ORDER_WIN", "BAGGING_RECEIVING_OF_ORDE", "AWARDING_OF_ORDER(S)_CONT"}
-            KEEP_CATALYSTS = {"OPEN_OFFER", "BUYBACK", "MERGER", "AMALGAMATION", "USFDA", "DEMERGER", "SCHEME_OF_ARRANGEMENT"}
-            filtered = []
-            for s in final:
-                cat = s.get("catalyst", "").upper()
-                score = s.get("score", 0)
-                if cat in SKIP_CATALYSTS:
-                    continue
-                if cat in ORDER_CATS and score < 80:
-                    continue
-                if score < 65:
-                    continue
-                filtered.append(s)
-            final = filtered
-            log(f"Fallback filter done: {len(final)} signals remain")
+            raise Exception("Gemini returned empty")
     except Exception as e:
-        log(f"Gemini judge failed: {e} — using raw scores")
+        log(f"Gemini unavailable: {e} — rule-based fallback")
+        SKIP_CATS = {"NEWS_MOMENTUM", "OTHER", "PARTNERSHIP"}
+        ORDER_CATS = {"ORDER_WIN", "BAGGING_RECEIVING_OF_ORDE", "AWARDING_OF_ORDER(S)_CONT"}
+        filtered = []
+        for s in final:
+            cat = s.get("catalyst", "").upper()
+            score = s.get("score", 0)
+            if cat in SKIP_CATS:
+                continue
+            if cat in ORDER_CATS and score < 80:
+                continue
+            if score < 65:
+                continue
+            filtered.append(s)
+        final = filtered
+        log(f"Fallback done: {len(final)} signals remain")
 
     # ── Sort and tier ─────────────────────────────────────
     final.sort(key=lambda x: -x["score"])
