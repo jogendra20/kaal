@@ -255,8 +255,12 @@ Rules:
 - SKIP: stale catalyst, macro headwind too strong, or score < 45
 - WATCH: good catalyst but wait for price confirmation
 - BUY_PULLBACK: strong fresh catalyst, enter on retest only
-- Max 3 BUY_PULLBACK, max 4 WATCH, rest SKIP
-- Be ruthless — only highest conviction makes the cut
+- MAXIMUM 3 BUY_PULLBACK total
+- MAXIMUM 3 WATCH total
+- Everything else MUST be SKIP
+- NEWS_MOMENTUM catalyst alone = always SKIP
+- ORDER_WIN without size confirmation = SKIP
+- Be ruthless — if in doubt, SKIP
 - Be strict. When in doubt, SKIP.
 """
 

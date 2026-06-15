@@ -336,6 +336,10 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             base_score = max(base_score - 8, 0)
             signals.append('Sector headwind — cold sector today')
 
+    # Hard cap for news momentum — never Tier1 regardless of boosts
+    if cat == 'NEWS_MOMENTUM':
+        base_score = min(base_score, 62)
+
     return {
         "symbol":         symbol,
         "subject":        subject,
@@ -435,6 +439,10 @@ def score_promoter_pit(pit_entry: dict) -> dict:
         if ann.get('sector_cold'):
             base_score = max(base_score - 8, 0)
             signals.append('Sector headwind — cold sector today')
+
+    # Hard cap for news momentum — never Tier1 regardless of boosts
+    if cat == 'NEWS_MOMENTUM':
+        base_score = min(base_score, 62)
 
     return {
         "symbol":         symbol,
