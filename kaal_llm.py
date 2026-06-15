@@ -143,10 +143,13 @@ def _call_gemini(prompt: str) -> dict:
             if r2.status_code == 200:
                 text = r2.json()["candidates"][0]["content"]["parts"][0]["text"]
                 return _parse_json(text)
+            print(f"[LLM] Gemini 503 retry failed")
+            return None
         print(f"[LLM] Gemini {r.status_code}: {r.text[:80]}")
+        return None
     except Exception as e:
         print(f"[LLM] Gemini exception: {e}")
-    return {}
+    return None
 
 
 # Track if we're in rate-limit cooldown
@@ -272,8 +275,10 @@ Rules:
 """
 
     result = _call_gemini(prompt)
+    if result is None:
+        return []
     if not result:
-        return signals
+        return []
 
     # Handle list or dict response
     if isinstance(result, list):
