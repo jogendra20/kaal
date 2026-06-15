@@ -508,6 +508,8 @@ def score_news_velocity(articles: list, known_symbols: set = None) -> list:
             score = min(base + count * 4, 62)  # hard cap 62 — always Tier2
             src_list = list(active_sources)
 
+            # Hard cap — news momentum never Tier1
+            score = min(score, 62)
             results.append({
                 "symbol":         symbol,
                 "score":          score,
