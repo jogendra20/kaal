@@ -175,9 +175,7 @@ def run():
     for sec in sectors.get('cold_sectors', []):
         from kaal_sources import SECTOR_MAP
         cold_kw.update(SECTOR_MAP.get(sec['sector'], []))
-    ann['sector_hot']  = any(w in (ann.get('subject','') + ann.get('attchmntText','')).upper() for w in hot_kw)
-    ann['sector_cold'] = any(w in (ann.get('subject','') + ann.get('attchmntText','')).upper() for w in cold_kw)
-    pit      = fetch_sebi_pit()
+
 
     log(f"Fetched: {len(nse_anns)} NSE announcements")
     log(f"Seen IDs loaded: {len(seen)} — new announcements will be scored")
@@ -192,6 +190,10 @@ def run():
         # Pre-open gap boost
         sym = ann.get('symbol', '')
         ann['preopen_gap'] = gap_map.get(sym, 0.0)
+        # Sector signals
+        text = (ann.get('subject','') + ann.get('attchmntText','')).upper()
+        ann['sector_hot']  = any(w in text for w in hot_kw)
+        ann['sector_cold'] = any(w in text for w in cold_kw)
         aid = get_ann_id(ann)
         if aid in seen:
             continue
@@ -212,17 +214,6 @@ def run():
         if not result.get("skip") and result["score"] >= 40:
             all_signals.append(result)
 
-    # ── Score bulk/block deals ────────────────────────────
-    for deal in deals:
-        result = score_bulk_deal(deal)
-        if not result.get("skip") and result["score"] >= 50:
-            all_signals.append(result)
-
-    # ── Score promoter activity ───────────────────────────
-    for pit_entry in pit:
-        result = score_promoter_pit(pit_entry)
-        if not result.get("skip"):
-            all_signals.append(result)
 
     # ── Score news velocity (attention flags only) ────────
     news_signals = score_news_velocity(news)

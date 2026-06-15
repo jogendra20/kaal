@@ -8,7 +8,7 @@ import sys, os, time
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime
-from kaal_sources import fetch_nse_announcements, fetch_bse_announcements, fetch_bse_bulk_block, fetch_macro, fetch_asm_gsm_ban
+from kaal_sources import fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban
 from kaal_scorer import score_announcement, score_bulk_deal
 from kaal_telegram import send
 from kaal_config import VIX_HIGH, TIER1_MIN_SCORE
@@ -59,10 +59,10 @@ def check_once(watchlist: set, skip_set: set, macro: dict):
     new_seen = set(seen)
 
     nse_anns   = fetch_nse_announcements()
-    bse_anns   = fetch_bse_announcements()
-    bulk_deals = fetch_bse_bulk_block()
+    bse_anns   = []
+    bulk_deals = []
 
-    for ann in nse_anns + bse_anns:
+    for ann in nse_anns :
         aid = get_ann_id(ann)
         if aid in seen:
             continue

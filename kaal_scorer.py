@@ -195,6 +195,10 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         return {**empty, 'reason': f'Gap already {preopen_gap:.1f}% — edge consumed, skip'}
 
     cat, base_score, tier = classify_announcement(subject, details)
+    # Order wins hard cap — never Tier1
+    if cat in ('BAGGING_RECEIVING_OF_ORDE', 'AWARDING_OF_ORDER(S)_CONT', 'ORDER_WIN'):
+        base_score = min(base_score, 65)
+        tier = max(tier, 2)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
     if cat == "AGM_POSSIBLE":
@@ -493,7 +497,7 @@ def score_news_velocity(articles: list, known_symbols: set = None) -> list:
             # Higher score if mentioned in Tavily/Serper (active search = stronger signal)
             active_sources = sources.get(symbol, set())
             base  = 42 if "TAVILY" in active_sources or "SERPER" in active_sources else 36
-            score = min(base + count * 5, 65)  # capped at 65 — never Tier1 alone
+            score = min(base + count * 4, 62)  # hard cap 62 — always Tier2
             src_list = list(active_sources)
 
             results.append({
