@@ -189,16 +189,36 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
     if symbol in skip_set:
         return {**empty, "reason": "Stock under ASM/GSM/F&O ban"}
 
-    # Pre-open gap check
-    preopen_gap = ann.get('preopen_gap', 0.0) if isinstance(ann, dict) else 0.0
-    if preopen_gap > 8.0:
-        return {**empty, 'reason': f'Gap already {preopen_gap:.1f}% — edge consumed, skip'}
+    # Check if open offer is already closed
+    try:
+        from kaal_config import CLOSED_OPEN_OFFERS
+        from datetime import datetime
+        if symbol in CLOSED_OPEN_OFFERS:
+            close_date = datetime.strptime(CLOSED_OPEN_OFFERS[symbol], '%Y-%m-%d')
+            if datetime.now() > close_date:
+                return {**empty, 'reason': f'Open offer closed on {CLOSED_OPEN_OFFERS[symbol]} — stale'}
+    except Exception:
+        pass
 
     cat, base_score, tier = classify_announcement(subject, details)
     # Order wins hard cap — never Tier1
     if cat in ('BAGGING_RECEIVING_OF_ORDE', 'AWARDING_OF_ORDER(S)_CONT', 'ORDER_WIN'):
         base_score = min(base_score, 65)
         tier = max(tier, 2)
+
+    # Pre-open gap boost
+    preopen_gap = ann.get('preopen_gap', 0.0) if isinstance(ann, dict) else 0.0
+    if preopen_gap > 8.0:
+        return {**empty, 'reason': f'Gap already {preopen_gap:.1f}% — edge consumed, skip'}
+    if 2.0 <= preopen_gap <= 8.0:
+        base_score = min(base_score + 8, 95)
+
+    # Sector strength boost/penalty
+    if isinstance(ann, dict):
+        if ann.get('sector_hot'):
+            base_score = min(base_score + 6, 95)
+        if ann.get('sector_cold'):
+            base_score = max(base_score - 8, 0)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
     if cat == "AGM_POSSIBLE":
@@ -322,23 +342,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 "signal_sources":  [source],
             }
 
-    # Boost if pre-open gap confirms catalyst
-    if 2.0 <= preopen_gap <= 8.0:
-        base_score = min(base_score + 8, 95)
-        signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
 
-    # Sector strength boost/penalty
-    if isinstance(ann, dict):
-        if ann.get('sector_hot'):
-            base_score = min(base_score + 6, 95)
-            signals.append('Sector tailwind — hot sector today')
-        if ann.get('sector_cold'):
-            base_score = max(base_score - 8, 0)
-            signals.append('Sector headwind — cold sector today')
-
-    # Hard cap for news momentum — never Tier1 regardless of boosts
-    if cat == 'NEWS_MOMENTUM':
-        base_score = min(base_score, 62)
 
     return {
         "symbol":         symbol,
@@ -426,23 +430,7 @@ def score_promoter_pit(pit_entry: dict) -> dict:
     else:
         return {"symbol": symbol, "skip": True, "score": 0}
 
-    # Boost if pre-open gap confirms catalyst
-    if 2.0 <= preopen_gap <= 8.0:
-        base_score = min(base_score + 8, 95)
-        signals.append(f'Pre-open gap +{preopen_gap:.1f}% confirms catalyst')
 
-    # Sector strength boost/penalty
-    if isinstance(ann, dict):
-        if ann.get('sector_hot'):
-            base_score = min(base_score + 6, 95)
-            signals.append('Sector tailwind — hot sector today')
-        if ann.get('sector_cold'):
-            base_score = max(base_score - 8, 0)
-            signals.append('Sector headwind — cold sector today')
-
-    # Hard cap for news momentum — never Tier1 regardless of boosts
-    if cat == 'NEWS_MOMENTUM':
-        base_score = min(base_score, 62)
 
     return {
         "symbol":         symbol,

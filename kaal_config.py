@@ -228,6 +228,11 @@ TIER2_SUBJECTS = [
 ]
 
 # ── PARENT-SUBSIDIARY MAP (AGM on these = check for delisting/merger)
+# Open offers with known close dates — skip after close date
+CLOSED_OPEN_OFFERS = {
+    "RBLBANK": "2026-06-12",  # Emirates NBD offer closed June 12
+}
+
 SUBSIDIARY_MAP = {
     "UNICHEMLAB": "IPCALAB",
     "RECLTD": "PFC",
