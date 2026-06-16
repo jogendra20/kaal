@@ -207,6 +207,8 @@ def run():
         elif tier == 2:
             tier2_anns.append(ann)
 
+    # Speed fix: cap Tier2 at 40 to avoid slow runs
+    tier2_anns = tier2_anns[:40]
     log(f"New: {len(new_anns)} | Tier1 candidates: {len(tier1_anns)} | Tier2 candidates: {len(tier2_anns)}")
 
     for ann in tier1_anns + tier2_anns:
@@ -260,15 +262,23 @@ def run():
             raise Exception("Gemini returned empty")
     except Exception as e:
         log(f"Gemini unavailable: {e} — rule-based fallback")
-        SKIP_CATS = {"NEWS_MOMENTUM", "OTHER", "PARTNERSHIP"}
+        SKIP_CATS = {"NEWS_MOMENTUM", "OTHER", "PARTNERSHIP", "CLARIFICATION"}
         ORDER_CATS = {"ORDER_WIN", "BAGGING_RECEIVING_OF_ORDE", "AWARDING_OF_ORDER(S)_CONT"}
+        WEAK_ACQ   = {"JUBLFOOD", "BIOCON", "INDIACEM"}  # known small acquisitions
+        KEEP_CATS  = {"OPEN_OFFER", "BUYBACK", "MERGER", "AMALGAMATION",
+                      "USFDA", "DEMERGER", "SCHEME_OF_ARRANGEMENT", "AGM_SUBSIDIARY"}
         filtered = []
         for s in final:
-            cat = s.get("catalyst", "").upper()
-            score = s.get("score", 0)
+            cat    = s.get("catalyst", "").upper()
+            score  = s.get("score", 0)
+            symbol = s.get("symbol", "")
             if cat in SKIP_CATS:
                 continue
             if cat in ORDER_CATS and score < 80:
+                continue
+            if symbol in WEAK_ACQ:
+                continue
+            if cat == "ACQUISITION" and score < 75:
                 continue
             if score < 65:
                 continue
