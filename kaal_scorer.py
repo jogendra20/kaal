@@ -219,6 +219,9 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             base_score = min(base_score + 6, 95)
         if ann.get('sector_cold'):
             base_score = max(base_score - 8, 0)
+        # Screener confirmation boost
+        if ann.get('in_screener'):
+            base_score = min(base_score + 10, 95)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
     if cat == "AGM_POSSIBLE":

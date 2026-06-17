@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength,
+    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
 )
@@ -169,7 +169,13 @@ def run():
     preopen  = fetch_preopen_gainers()
     # Build gap map for quick lookup
     gap_map  = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
-    sectors  = fetch_sector_strength()
+    sectors   = fetch_sector_strength()
+    screeners = fetch_chartink_screeners()
+    # All screener symbols in one set
+    screener_stocks = set()
+    for name, stocks in screeners.items():
+        screener_stocks.update(stocks)
+    log(f'Screener universe: {len(screener_stocks)} unique stocks across {len(screeners)} screeners')
     hot_kw   = set(w.upper() for w in sectors.get('hot_keywords', []))
     cold_kw  = set()
     for sec in sectors.get('cold_sectors', []):
@@ -192,8 +198,9 @@ def run():
         ann['preopen_gap'] = gap_map.get(sym, 0.0)
         # Sector signals
         text = (ann.get('subject','') + ann.get('attchmntText','')).upper()
-        ann['sector_hot']  = any(w in text for w in hot_kw)
-        ann['sector_cold'] = any(w in text for w in cold_kw)
+        ann['sector_hot']   = any(w in text for w in hot_kw)
+        ann['sector_cold']  = any(w in text for w in cold_kw)
+        ann['in_screener']  = ann.get('symbol','') in screener_stocks
         aid = get_ann_id(ann)
         if aid in seen:
             continue
@@ -220,6 +227,26 @@ def run():
     # ── Score news velocity (attention flags only) ────────
     news_signals = score_news_velocity(news)
     all_signals.extend(news_signals)
+
+    # ── Screener-only signals (technical breakout, no announcement) ───
+    announced_symbols = {s['symbol'] for s in all_signals}
+    for name, stocks in screeners.items():
+        for symbol in stocks[:20]:
+            if symbol in announced_symbols:
+                continue  # already covered by announcement
+            score = 58 if name == 'gap_up' else 55
+            all_signals.append({
+                'symbol':         symbol,
+                'score':          score,
+                'tier':           2,
+                'skip':           False,
+                'catalyst':       f'SCREENER_{name.upper()}',
+                'direction':      'BULLISH',
+                'key':            f'Chartink {name.replace("_"," ").title()} — technical signal only',
+                'reason':         f'Stock in {name} screener. Confirm with price action and volume before entry.',
+                'source':         'CHARTINK',
+                'signal_sources': ['CHARTINK'],
+            })
 
     # ── Merge by symbol: best score + source bonus ────────
     by_symbol = defaultdict(list)
