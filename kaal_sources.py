@@ -369,17 +369,15 @@ CHARTINK_SCANS = {
         "and ( latest volume > 100000 ) "
         "and ( latest close > 20 ) )"
     ),
-    "high_delivery": (
-        "( {cash} ( latest volume > 2 * ( average( 20 , latest volume ) ) ) "
-        "and ( latest close > latest open ) "
-        "and ( latest close > 20 ) "
-        "and ( latest volume > 300000 ) )"
+    "high_volume_breakout": (
+        "( {cash} ( latest close > 20 ) "
+        "and ( latest volume > 500000 ) "
+        "and ( latest close > 1 day ago close * 1.03 ) )"
     ),
     "momentum": (
-        "( {cash} ( latest close > latest '200 day EMA' ) "
-        "and ( latest 'RSI' ( 14 ) > 60 ) "
-        "and ( latest volume > 2 * ( average( 20 , latest volume ) ) ) "
-        "and ( latest close > 20 ) )"
+        "( {cash} ( latest close > 20 ) "
+        "and ( latest close > 1 month ago close ) "
+        "and ( latest volume > 200000 ) )"
     ),
 }
 
