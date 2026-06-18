@@ -20,6 +20,7 @@ from kaal_sources import (
 from kaal_scorer import (
     classify_announcement, score_announcement,
     score_bulk_deal, score_promoter_pit, score_news_velocity,
+    score_proxy_signals,
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
