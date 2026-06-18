@@ -228,6 +228,10 @@ def run():
     news_signals = score_news_velocity(news)
     all_signals.extend(news_signals)
 
+    # ── Proxy/indirect beneficiary signals ───────────────
+    proxy_signals = score_proxy_signals(news, nse_anns)
+    all_signals.extend(proxy_signals)
+
     # ── Screener-only signals (technical breakout, no announcement) ───
     announced_symbols = {s['symbol'] for s in all_signals}
     for name, stocks in screeners.items():
