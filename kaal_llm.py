@@ -216,72 +216,55 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
 
 def gemini_final_judge(signals: list, macro: dict) -> list:
     """
-    Gemini receives all scored signals and re-ranks them.
-    Called once per run — not per announcement.
-    Returns re-ranked list with updated scores and reasons.
+    Gemini receives top 15 signals and strictly filters them.
+    Returns only high conviction stocks with action verdicts.
     """
     _load_env()
     if not signals:
-        return signals
+        return []
 
     import json
+
     signals_text = json.dumps([{
-        "symbol": s["symbol"],
-        "score": s["score"],
+        "symbol":   s["symbol"],
+        "score":    s["score"],
         "catalyst": s.get("catalyst", ""),
-        "direction": s.get("direction", ""),
-        "key": s.get("key", ""),
-        "reason": s.get("reason", ""),
+        "key":      s.get("key", ""),
+        "reason":   s.get("reason", ""),
     } for s in signals[:15]], indent=2)
 
     macro_text = (
         f"VIX={macro.get('vix',15):.1f}, "
-        f"GIFT Nifty={macro.get('gift_nifty_bias','Neutral')}, "
-        f"SPX={macro.get('spx_chg',0):+.1f}%, "
-        f"Crude={macro.get('crude',0):.0f}, "
-        f"USD/INR={macro.get('usdinr',0):.2f}"
+        f"GIFT={macro.get('gift_nifty_bias','Neutral')}, "
+        f"SPX={macro.get('spx_chg',0):+.1f}%"
     )
 
-    prompt = f"""You are an expert NSE intraday trader and risk manager.
+    # Build example from first signal
+    ex = signals[0]
+    example = (
+        f'[{{"symbol": "{ex["symbol"]}", "final_score": {ex["score"]}, '
+        f'"final_reason": "reason here", "action": "WATCH"}}]'
+    )
 
-MARKET CONTEXT: {macro_text}
-
-Below are stocks scored by an automated system today. Your job:
-1. Re-rank them based on intraday trading conviction
-2. Penalize stale catalysts, over-extended stocks, or macro headwinds
-3. Boost genuine fresh Tier1 catalysts (open offer, merger, buyback, USFDA)
-4. Return ONLY a JSON array, no preamble
-
-Scored signals:
-{signals_text}
-
-Return ONLY a JSON array like:
-[
-  {{"symbol": "RBLBANK", "final_score": 78, "final_reason": "two lines max why", "action": "WATCH|BUY_PULLBACK|SKIP"}},
-  ...
-]
-
-Rules:
-- SKIP: stale catalyst, macro headwind too strong, or score < 45
-- WATCH: good catalyst but wait for price confirmation
-- BUY_PULLBACK: strong fresh catalyst, enter on retest only
-- MAXIMUM 2 BUY_PULLBACK total
-- MAXIMUM 4 WATCH total
-- Everything else MUST be SKIP — no exceptions
-- NEWS_MOMENTUM = always SKIP
-- OI_SPURT alone = SKIP (no catalyst)
-- SCREENER alone = SKIP (no catalyst)
-- ORDER_WIN without size = SKIP
-- PROXY_PLAY already moved >10% = SKIP
-- Score < 70 = SKIP
-- Be extremely ruthless — quality over quantity
-- Be strict. When in doubt, SKIP.
-"""
+    prompt = (
+        "You are a strict NSE intraday risk manager. REDUCE the list ruthlessly."
+        f"\n\nMARKET: {macro_text}"
+        f"\n\nSignals:\n{signals_text}"
+        f"\n\nReturn ONLY a JSON array in this exact format (no markdown):\n{example}"
+        "\n\nSTRICT RULES:"
+        "\n- NEWS_MOMENTUM = SKIP always"
+        "\n- OI_SPURT alone = SKIP"
+        "\n- SCREENER alone = SKIP"
+        "\n- ORDER_WIN without size = SKIP"
+        "\n- Score < 70 = SKIP"
+        "\n- MAXIMUM 2 BUY_PULLBACK"
+        "\n- MAXIMUM 3 WATCH"
+        "\n- Everything else = SKIP"
+        "\n- When in doubt = SKIP"
+    )
 
     result = _call_gemini(prompt)
-    if result is None:
-        return []
-    if not result:
+    if result is None or not result:
         return []
 
     # Handle list or dict response
@@ -290,37 +273,31 @@ Rules:
     elif isinstance(result, dict):
         ranked = result.get("signals", result.get("results", result.get("data", [])))
     else:
-        return signals
+        return []
 
     if not ranked:
-        return signals
-
-    # Merge Gemini verdicts back into original signals
-    gemini_map = {}
-    for r in ranked:
-        if isinstance(r, dict) and "symbol" in r:
-            gemini_map[r["symbol"]] = r
+        return []
 
     print(f"[LLM] Gemini verdicts: {[(r.get('symbol'), r.get('action')) for r in ranked[:5]]}")
 
+    # Merge verdicts back
+    gemini_map = {r["symbol"]: r for r in ranked if isinstance(r, dict) and "symbol" in r}
     updated = []
     for s in signals:
         sym = s["symbol"]
-        if sym in gemini_map:
-            g = gemini_map[sym]
-            action = g.get("action", "WATCH")
-            if action == "SKIP":
-                print(f"[LLM] Gemini SKIP: {sym}")
-                continue
-            s = dict(s)
-            s["score"]  = g.get("final_score", s["score"])
-            s["reason"] = f"[{action}] {g.get('final_reason', s.get('reason',''))}"
-            s["action"] = action
-            updated.append(s)
-        else:
-            # Not in Gemini response = SKIP
+        if sym not in gemini_map:
             print(f"[LLM] Gemini not ranked: {sym} — skipping")
             continue
+        g = gemini_map[sym]
+        action = g.get("action", "SKIP")
+        if action == "SKIP":
+            print(f"[LLM] Gemini SKIP: {sym}")
+            continue
+        s = dict(s)
+        s["score"]  = g.get("final_score", s["score"])
+        s["reason"] = f"[{action}] {g.get('final_reason', s.get('reason',''))}"
+        s["action"] = action
+        updated.append(s)
 
     updated.sort(key=lambda x: -x["score"])
     return updated
