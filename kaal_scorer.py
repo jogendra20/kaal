@@ -222,6 +222,12 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         # Screener confirmation boost
         if ann.get('in_screener'):
             base_score = min(base_score + 10, 95)
+        # OI spurt boost — smart money positioning
+        oi_pct = ann.get('oi_spurt', 0)
+        if oi_pct > 20:
+            base_score = min(base_score + 12, 95)
+        elif oi_pct > 10:
+            base_score = min(base_score + 6, 95)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
     if cat == "AGM_POSSIBLE":

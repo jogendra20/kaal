@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners,
+    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_spurts,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
 )
@@ -172,6 +172,7 @@ def run():
     gap_map  = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
     sectors   = fetch_sector_strength()
     screeners = fetch_chartink_screeners()
+    oi_map    = fetch_oi_spurts()
     # All screener symbols in one set
     screener_stocks = set()
     for name, stocks in screeners.items():
@@ -202,6 +203,8 @@ def run():
         ann['sector_hot']   = any(w in text for w in hot_kw)
         ann['sector_cold']  = any(w in text for w in cold_kw)
         ann['in_screener']  = ann.get('symbol','') in screener_stocks
+        oi_data = oi_map.get(ann.get('symbol',''), {})
+        ann['oi_spurt']    = oi_data.get('avg_oi_pct', 0)
         aid = get_ann_id(ann)
         if aid in seen:
             continue
@@ -232,6 +235,27 @@ def run():
     # ── Proxy/indirect beneficiary signals ───────────────
     proxy_signals = score_proxy_signals(news, nse_anns)
     all_signals.extend(proxy_signals)
+
+    # ── OI spurt signals (smart money positioning) ────────
+    announced_syms = {s['symbol'] for s in all_signals}
+    for symbol, oi_data in oi_map.items():
+        if symbol in announced_syms:
+            continue
+        if oi_data['avg_oi_pct'] < 15:
+            continue
+        score = 60 if oi_data['avg_oi_pct'] > 20 else 55
+        all_signals.append({
+            'symbol':         symbol,
+            'score':          score,
+            'tier':           2,
+            'skip':           False,
+            'catalyst':       'OI_SPURT',
+            'direction':      'BULLISH',
+            'key':            f'OI spurt {oi_data["avg_oi_pct"]:.1f}% above avg — smart money positioning',
+            'reason':         'Unusual OI buildup detected. Confirm with price action and news catalyst before entry.',
+            'source':         'NSE_OI',
+            'signal_sources': ['NSE_OI'],
+        })
 
     # ── Screener-only signals (technical breakout, no announcement) ───
     announced_symbols = {s['symbol'] for s in all_signals}
