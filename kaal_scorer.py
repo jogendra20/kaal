@@ -210,16 +210,6 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
     if symbol in skip_set:
         return {**empty, "reason": "Stock under ASM/GSM/F&O ban"}
 
-    # Buyback type check
-    if cat in ('BUYBACK', 'POST_BUYBACK') and isinstance(ann, dict):
-        text = (ann.get('desc','') + ann.get('attchmntText','')).lower()
-        if 'tender' in text or 'tender offer' in text:
-            ann['buyback_type'] = 'TENDER'
-            base_score = min(base_score, 55)  # arbitrage only
-        elif 'open market' in text or 'stock exchange' in text:
-            ann['buyback_type'] = 'OPEN_MARKET'
-            base_score = max(base_score, 75)  # daily buying pressure
-
     # Check if open offer is already closed
     try:
         from kaal_config import CLOSED_OPEN_OFFERS
@@ -693,14 +683,27 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
     # Load today already-triggered proxies
     dedup_file = os.path.join(os.path.dirname(__file__), "data", "proxy_dedup.txt")
     today = datetime.now().strftime("%Y-%m-%d")
+    today_dt = datetime.now()
+
+    # Cooldown periods for different trigger types (days)
+    COOLDOWN_DAYS = {
+        "NSE IPO": 5, "NSE DRHP": 5, "NSE LISTING": 3,
+        "DEFAULT": 1,
+    }
+
     already_triggered = set()
     if os.path.exists(dedup_file):
         for line in open(dedup_file):
             line = line.strip()
             if "|" in line:
-                date, trigger = line.split("|", 1)
-                if date == today:
-                    already_triggered.add(trigger)
+                date_str, trigger = line.split("|", 1)
+                try:
+                    trigger_date = datetime.strptime(date_str, "%Y-%m-%d")
+                    cooldown = COOLDOWN_DAYS.get(trigger, COOLDOWN_DAYS["DEFAULT"])
+                    if (today_dt - trigger_date).days < cooldown:
+                        already_triggered.add(trigger)
+                except Exception:
+                    pass
 
     results = []
     found_triggers = set()
