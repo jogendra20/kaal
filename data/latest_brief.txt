@@ -1,20 +1,20 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>19 Jun 2026 03:22 PM</code>
+<code>19 Jun 2026 03:31 PM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>12.9</code>  |  Bias: ➡️ NEUTRAL
-GIFT Nifty: <code>-0.25%</code> (Neutral)
-SPX: <code>-1.2%</code>  Crude: <code>$76</code>  Gold: <code>$4182</code>  USD/INR: <code>94.34</code>
+GIFT Nifty: <code>-0.20%</code> (Neutral)
+SPX: <code>-1.2%</code>  Crude: <code>$76</code>  Gold: <code>$4184</code>  USD/INR: <code>94.34</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<b>#1  APLLTD</b>  🟢  Score: <code>80/100</code>
+<b>#1  APLLTD</b>  🟢  Score: <code>82/100</code>
 📌 <b>Catalyst:</b> USFDA
 📊 <b>Signal from:</b> NSE
 💡 <b>Key fact:</b> Alembic Pharmaceuticals receives USFDA Tentative Approval for Binimetinib Tablets, 45 mg
 🧠 <b>Why BULLISH:</b> The USFDA tentative approval is a significant positive development for Alembic Pharmaceuticals, as it paves the way for the company to launch its product in the US market. This approval typically lead
-🌍 <b>Macro:</b> Low VIX and neutral market bias may amplify the positive reaction to the USFDA approval
+🌍 <b>Macro:</b> Low VIX and neutral market bias may amplify the positive impact of this USFDA approval on 
 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 <b>#2  NIACL</b>  🟢  Score: <code>78/100</code>
@@ -48,24 +48,6 @@ SPX: <code>-1.2%</code>  Crude: <code>$76</code>  Gold: <code>$4182</code>  USD/
 🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits BSELTD indirectly. Check if stock already moved before entering.
 
 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
-
-👀 <b>TIER 2 — WATCHLIST (confirm at open)</b>
-• <b>AMBER</b> 🟢 [73]  ACQUISITION — IL JIN to acquire an additional 38.50% equity stake in Ascent Circuits
-  ↳ [MULTI-SOURCE CONFIRMATION: NSE, MINT] The acquisition is expected to enable closer operational alignment, streamlined g
-• <b>RELIANCE</b> 🟡 [72]  NEWS MOMENTUM — Mentioned 17x across MC, ET, MINT: Taking Stock: Market fails to hold 
-  ↳ [MULTI-SOURCE CONFIRMATION: MC, ET, MINT] Stock appearing in 17 news articles today across MC, ET, MINT. Snippet: <img a
-• <b>NINSYS</b> 🟢 [68]  ORDER WIN — NINtec wins 1.10 million engagement with a Finland-Based AI Company
-  ↳ This order win is a positive development for Nintec Systems, indicating growing demand for its AI services. The market t
-• <b>YATRA</b> 🟡 [60]  CLARIFICATION — Yatra Online Limited sought clarification by the Exchange regarding pr
-  ↳ The clarification sought by the Exchange regarding the potential stake purchase is a significant development, but the ou
-• <b>ENDURANCE</b> 🟢 [60]  CAPACITY ADDITION — Endurance Technologies to expand manufacturing capacity for Lithium-Io
-  ↳ The capacity addition is a positive development for the company, indicating its growth plans and potential to increase r
-• <b>INFY</b> 🟢 [60]  OI SPURT — OI spurt 29.9% above avg — smart money positioning
-  ↳ Unusual OI buildup detected. Confirm with price action and news catalyst before entry.
-• <b>PERSISTENT</b> 🟢 [60]  OI SPURT — OI spurt 25.6% above avg — smart money positioning
-  ↳ Unusual OI buildup detected. Confirm with price action and news catalyst before entry.
-• <b>OFSS</b> 🟢 [58]  SCREENER GAP UP — Chartink Gap Up — technical signal only
-  ↳ Stock in gap_up screener. Confirm with price action and volume before entry.
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

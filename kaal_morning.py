@@ -20,7 +20,7 @@ from kaal_sources import (
 from kaal_scorer import (
     classify_announcement, score_announcement,
     score_bulk_deal, score_promoter_pit, score_news_velocity,
-    score_proxy_signals,
+    score_proxy_signals, score_negative_proxy, score_usfda_signals, score_budget_signals,
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
@@ -71,7 +71,10 @@ def _entry_plan(s: dict) -> str:
     if "OPEN_OFFER" in cat or "TAKEOVER" in cat:
         return "Entry: pullback to VWMA20 only | SL: 15M body low | Target: 1:3"
     elif "BUYBACK" in cat:
-        return "Entry: breakout above prev high | SL: 15M low | Target: 1:2"
+        buyback_type = s.get("buyback_type", "OPEN_MARKET")
+        if buyback_type == "TENDER":
+            return "TENDER buyback — arbitrage only. Buy below offer price, tender shares. Not intraday tradeable."
+        return "OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2"
     elif "MERGER" in cat or "AMALGAM" in cat or "DEMERGER" in cat:
         return "Entry: pullback after gap-up | SL: 15M low | Target: 1:2.5"
     elif "USFDA" in cat or "ORDER_WIN" in cat:
@@ -232,9 +235,30 @@ def run():
     news_signals = score_news_velocity(news)
     all_signals.extend(news_signals)
 
+    # ── Budget day sector signals ─────────────────────────
+    budget_signals = score_budget_signals(news)
+    all_signals.extend(budget_signals)
+
+    # ── USFDA special signals ────────────────────────────
+    usfda_signals = score_usfda_signals(nse_anns, news)
+    # Remove USFDA warnings from all_signals
+    usfda_warn_syms = {s['symbol'] for s in usfda_signals if s['catalyst'] == 'USFDA_WARNING'}
+    if usfda_warn_syms:
+        log(f'USFDA warnings: removing {usfda_warn_syms}')
+        all_signals = [s for s in all_signals if s['symbol'] not in usfda_warn_syms]
+    all_signals.extend([s for s in usfda_signals if not s['skip']])
+
     # ── Proxy/indirect beneficiary signals ───────────────
     proxy_signals = score_proxy_signals(news, nse_anns)
     all_signals.extend(proxy_signals)
+
+    # ── Negative proxy signals (sector headwinds) ─────────
+    neg_signals = score_negative_proxy(news)
+    # Use negative signals to REMOVE affected stocks from all_signals
+    bearish_symbols = {s['symbol'] for s in neg_signals}
+    if bearish_symbols:
+        log(f'Negative proxy: removing {bearish_symbols} from watchlist')
+        all_signals = [s for s in all_signals if s['symbol'] not in bearish_symbols]
 
     # ── OI spurt signals (smart money positioning) ────────
     announced_syms = {s['symbol'] for s in all_signals}

@@ -83,48 +83,68 @@ def classify_announcement(subject: str, details: str) -> tuple:
 
 # ── LLM SCORING PROMPT ───────────────────────────────────────────────────────
 def _build_results_prompt(subject, details, pdf_text, macro_context):
-    ctx = 'Subject: ' + subject + '\nDetails: ' + details[:600]
+    ctx = "Subject: " + subject + "\nDetails: " + details[:600]
     if pdf_text:
-        ctx += '\nPDF Excerpt:\n' + pdf_text[:3000]
-    macro_str = ''
+        ctx += "\nPDF Excerpt:\n" + pdf_text[:3000]
+
+    macro_str = ""
     if macro_context:
-        macro_str = ('\nMARKET CONTEXT: VIX=' + str(macro_context.get('vix','N/A'))
-            + ', GIFT Nifty=' + macro_context.get('gift_nifty_bias','Neutral')
-            + ', SPX=' + str(macro_context.get('spx_chg',0)) + '%')
-    rules = (
-        'Scoring rules:\n'
-        '- PAT growth >50% + no exceptional items + after-hours = 80-90\n'
-        '- PAT growth 20-50% + no exceptional items = 60-75\n'
-        '- PAT growth <20% or exceptional items = 30-50\n'
-        '- Revenue miss despite PAT beat = penalize 10\n'
-        '- Guidance cut = penalize 15\n'
-        '- Large cap >20000Cr = penalize 10\n'
-    )
+        macro_str = (
+            "\nMARKET CONTEXT: VIX=" + str(macro_context.get("vix","N/A")) +
+            ", GIFT Nifty=" + macro_context.get("gift_nifty_bias","Neutral") +
+            ", SPX=" + str(macro_context.get("spx_chg",0)) + "%"
+        )
+
     schema = (
-        '{\n'
-        '  "score": <0-100>,\n'
-        '  "pat_growth_pct": <PAT YoY growth as number>,\n'
-        '  "revenue_growth_pct": <Revenue YoY growth as number>,\n'
-        '  "margin_expanded": <true/false>,\n'
-        '  "exceptional_item": <true if one-time item inflated PAT>,\n'
-        '  "dividend_announced": <true/false>,\n'
-        '  "guidance_tone": "<POSITIVE|NEGATIVE|NEUTRAL|NONE>",\n'
-        '  "is_beat": <true if PAT >20% and no exceptional items>,\n'
-        '  "is_fresh": <true if announced after market hours>,\n'
-        '  "catalyst_type": "RESULTS_BEAT",\n'
-        '  "direction": "<BULLISH|BEARISH|NEUTRAL>",\n'
-        '  "key": "<PAT +X% YoY, Revenue +X% YoY, margin expanded/contracted>",\n'
-        '  "reason": "<two lines: why this will or will not move intraday>",\n'
-        '  "skip_reason": "<if score < 40 why, else empty>",\n'
-        '  "offer_price": 0\n'
-        '}'
+        "{\n"
+        "  \"score\": <0-100 intraday long potential>,\n"
+        "  \"pat_growth_pct\": <PAT this quarter vs same quarter last year number>,\n"
+        "  \"revenue_growth_pct\": <Revenue YoY growth number>,\n"
+        "  \"margin_expanded\": <true if EBITDA margin improved vs last year>,\n"
+        "  \"exceptional_item\": <true if one-time item inflated PAT>,\n"
+        "  \"dividend_announced\": <true if dividend declared with results>,\n"
+        "  \"guidance_tone\": \"<POSITIVE|NEGATIVE|NEUTRAL|NONE>\",\n"
+        "  \"is_beat\": <true if PAT growth >20% AND no exceptional items>,\n"
+        "  \"is_fresh\": <true if announced after 3:30PM market close>,\n"
+        "  \"announced_time\": \"<AFTER_HOURS|DURING_MARKET|UNKNOWN>\",\n"
+        "  \"company_size\": \"<LARGE_CAP|MID_CAP|SMALL_CAP>\",\n"
+        "  \"catalyst_type\": \"RESULTS_BEAT or RESULTS_MISS\",\n"
+        "  \"direction\": \"<BULLISH|BEARISH|NEUTRAL>\",\n"
+        "  \"key\": \"<PAT +X% YoY | Revenue +X% YoY | Margin expanded/contracted>\",\n"
+        "  \"reason\": \"<Line1: beat magnitude. Line2: why it will/wont move intraday>\",\n"
+        "  \"skip_reason\": \"<if score<40 why, else empty>\",\n"
+        "  \"offer_price\": 0,\n"
+        "  \"buyback_type\": \"NA\"\n"
+        "}"
     )
+
+    rules = (
+        "SCORING RULES:\n"
+        "- PAT >50% + no exceptional + after-hours = 82-90\n"
+        "- PAT 30-50% + no exceptional + after-hours = 72-80\n"
+        "- PAT 20-30% + no exceptional = 62-70\n"
+        "- Dividend + PAT beat = +8 bonus\n"
+        "- Guidance POSITIVE = +5 bonus\n"
+        "- Exceptional item inflated PAT = MAX score 35, direction BEARISH\n"
+        "- Revenue miss despite PAT beat = -10\n"
+        "- Guidance NEGATIVE = -15, direction BEARISH\n"
+        "- Announced during market hours = -15\n"
+        "- LARGE_CAP = MAX score 60\n"
+        "- PAT <20% = MAX score 45\n"
+        "- PAT decline = MAX score 25, direction BEARISH\n"
+        "HARD RULES:\n"
+        "- Never BULLISH if exceptional items inflated PAT\n"
+        "- Never score >60 for LARGE_CAP\n"
+    )
+
     return (
-        'You are an expert NSE/BSE intraday trader analyzing quarterly results.'
-        + macro_str + '\n\n' + ctx
-        + '\n\nReturn ONLY a JSON object:\n' + schema
-        + '\n\n' + rules
+        "You are NSE/BSE intraday trader analyzing quarterly results."
+        + macro_str + "\n\n" + ctx
+        + "\n\nExtract numbers from PDF only. Do NOT invent."
+        + "\n\nReturn ONLY JSON:\n" + schema
+        + "\n\n" + rules
     )
+
 
 def _build_prompt(subject: str, details: str, pdf_text: str, macro_context: dict) -> str:
     ctx = f"Subject: {subject}\nDetails: {details[:600]}"
@@ -155,6 +175,7 @@ Return ONLY a JSON object with exactly these keys:
   "reason": "<2-3 sentences: WHY this is bullish/bearish, what the market reaction typically is, what trader should watch for>",
   "skip_reason": "<if score < 40, why. else empty>",
   "offer_price": <for open offers: the offer price per share as number, else 0>,
+  "buyback_type": "<TENDER|OPEN_MARKET|NA> — TENDER=fixed price fixed date, OPEN_MARKET=company buys daily from market",
   "macro_impact": "<one line: how current market context affects this stock's setup>"
 }}
 
@@ -188,6 +209,16 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         return empty
     if symbol in skip_set:
         return {**empty, "reason": "Stock under ASM/GSM/F&O ban"}
+
+    # Buyback type check
+    if cat in ('BUYBACK', 'POST_BUYBACK') and isinstance(ann, dict):
+        text = (ann.get('desc','') + ann.get('attchmntText','')).lower()
+        if 'tender' in text or 'tender offer' in text:
+            ann['buyback_type'] = 'TENDER'
+            base_score = min(base_score, 55)  # arbitrage only
+        elif 'open market' in text or 'stock exchange' in text:
+            ann['buyback_type'] = 'OPEN_MARKET'
+            base_score = max(base_score, 75)  # daily buying pressure
 
     # Check if open offer is already closed
     try:
@@ -466,6 +497,188 @@ _NOISE_WORDS = {
     "BUY", "SELL", "LONG", "SHORT", "CALL", "PUT", "OPTION",
 }
 
+
+
+def score_budget_signals(news_articles: list) -> list:
+    """
+    Scan news for budget day sector allocation keywords.
+    When found, flag sector beneficiary stocks as Tier1/Tier2.
+    Only triggers on budget day or day after.
+    """
+    import os
+    from datetime import datetime
+    from kaal_config import BUDGET_PROXY_MAP
+
+    dedup_file = os.path.join(os.path.dirname(__file__), "data", "budget_dedup.txt")
+    today = datetime.now().strftime("%Y-%m-%d")
+    already_triggered = set()
+    if os.path.exists(dedup_file):
+        for line in open(dedup_file):
+            line = line.strip()
+            if "|" in line:
+                date, trigger = line.split("|", 1)
+                if date == today:
+                    already_triggered.add(trigger)
+
+    results = []
+    found_triggers = set()
+
+    for article in news_articles:
+        text = (article.get("title","") + " " + article.get("summary","")).upper()
+        for trigger, symbols in BUDGET_PROXY_MAP.items():
+            if trigger in text and trigger not in found_triggers and trigger not in already_triggered:
+                found_triggers.add(trigger)
+                print(f"[BUDGET] Trigger: {trigger}")
+                for i, symbol in enumerate(symbols):
+                    score = 80 if i == 0 else 68  # lead stock scores higher
+                    results.append({
+                        "symbol":         symbol,
+                        "score":          score,
+                        "tier":           1 if i == 0 else 2,
+                        "skip":           False,
+                        "catalyst":       "BUDGET_PLAY",
+                        "direction":      "BULLISH",
+                        "key":            f"Budget sector play: {trigger}",
+                        "reason":         f"Budget allocated for {trigger.lower()} sector. Direct beneficiary. Enter after confirmation at 9:30.",
+                        "source":         "NEWS",
+                        "signal_sources": ["NEWS"],
+                        "offer_price":    0,
+                        "is_fresh":       True,
+                    })
+
+    if found_triggers:
+        with open(dedup_file, "a") as f:
+            for trigger in found_triggers:
+                f.write(f"{today}|{trigger}\n")
+        print(f"[BUDGET] {len(results)} stocks flagged from {len(found_triggers)} triggers")
+
+    return results
+
+
+def score_usfda_signals(nse_announcements: list, news_articles: list) -> list:
+    """
+    Special handler for USFDA approvals and warnings.
+    Approval = Tier1 bullish + sympathy plays
+    Warning/Import Alert = Tier1 bearish flag
+    """
+    from kaal_config import (
+        USFDA_APPROVAL_KEYWORDS, USFDA_WARNING_KEYWORDS,
+        USFDA_SYMPATHY_MAP
+    )
+    results = []
+
+    for ann in nse_announcements:
+        text = (ann.get("desc","") + " " + ann.get("attchmntText","")).upper()
+        symbol = ann.get("symbol","")
+
+        # Check approval
+        if any(kw in text for kw in USFDA_APPROVAL_KEYWORDS):
+            results.append({
+                "symbol":         symbol,
+                "score":          85,
+                "tier":           1,
+                "skip":           False,
+                "catalyst":       "USFDA_APPROVAL",
+                "direction":      "BULLISH",
+                "key":            f"USFDA approval — fresh catalyst",
+                "reason":         "USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.",
+                "source":         "NSE",
+                "signal_sources": ["NSE"],
+                "offer_price":    0,
+                "is_fresh":       True,
+            })
+            # Add sympathy plays
+            for peer in USFDA_SYMPATHY_MAP.get(symbol, []):
+                results.append({
+                    "symbol":         peer,
+                    "score":          65,
+                    "tier":           2,
+                    "skip":           False,
+                    "catalyst":       "USFDA_SYMPATHY",
+                    "direction":      "BULLISH",
+                    "key":            f"USFDA sympathy — {symbol} approval benefits sector",
+                    "reason":         f"Peer {symbol} got USFDA approval. Sector sentiment positive. Watch for spillover.",
+                    "source":         "NSE",
+                    "signal_sources": ["NSE"],
+                    "offer_price":    0,
+                    "is_fresh":       True,
+                })
+
+        # Check warning/import alert
+        if any(kw in text for kw in USFDA_WARNING_KEYWORDS):
+            results.append({
+                "symbol":         symbol,
+                "score":          10,
+                "tier":           3,
+                "skip":           True,
+                "catalyst":       "USFDA_WARNING",
+                "direction":      "BEARISH",
+                "key":            f"USFDA WARNING/IMPORT ALERT — AVOID",
+                "reason":         "USFDA warning = -15 to -25% move. Avoid all long positions. Consider short if allowed.",
+                "source":         "NSE",
+                "signal_sources": ["NSE"],
+                "offer_price":    0,
+                "is_fresh":       True,
+            })
+
+    if results:
+        approvals = [r for r in results if r["catalyst"] == "USFDA_APPROVAL"]
+        warnings  = [r for r in results if r["catalyst"] == "USFDA_WARNING"]
+        print(f"[USFDA] {len(approvals)} approvals, {len(warnings)} warnings, {len(results)} total signals")
+
+    return results
+
+
+def score_negative_proxy(news_articles: list) -> list:
+    """
+    Scan news for negative proxy triggers.
+    When found, flag affected stocks as BEARISH with score penalty.
+    """
+    import os
+    from datetime import datetime
+    from kaal_config import NEGATIVE_PROXY_MAP
+
+    dedup_file = os.path.join(os.path.dirname(__file__), "data", "neg_proxy_dedup.txt")
+    today = datetime.now().strftime("%Y-%m-%d")
+    already_triggered = set()
+    if os.path.exists(dedup_file):
+        for line in open(dedup_file):
+            line = line.strip()
+            if "|" in line:
+                date, trigger = line.split("|", 1)
+                if date == today:
+                    already_triggered.add(trigger)
+
+    results = []
+    found_triggers = set()
+
+    for article in news_articles:
+        text = (article.get("title","") + " " + article.get("summary","")).upper()
+        for trigger, symbols in NEGATIVE_PROXY_MAP.items():
+            if trigger in text and trigger not in found_triggers and trigger not in already_triggered:
+                found_triggers.add(trigger)
+                print(f"[NEG_PROXY] Trigger: {trigger}")
+                for symbol in symbols:
+                    results.append({
+                        "symbol":         symbol,
+                        "score":          20,
+                        "tier":           3,
+                        "skip":           True,
+                        "catalyst":       "NEGATIVE_PROXY",
+                        "direction":      "BEARISH",
+                        "key":            f"AVOID — {trigger} = sector headwind",
+                        "reason":         f"Negative proxy: {trigger} news hurts {symbol}. Avoid long positions today.",
+                        "source":         "NEG_PROXY",
+                        "signal_sources": ["NEG_PROXY"],
+                    })
+
+    if found_triggers:
+        with open(dedup_file, "a") as f:
+            for trigger in found_triggers:
+                f.write(f"{today}|{trigger}\n")
+        print(f"[NEG_PROXY] {len(results)} stocks flagged BEARISH")
+
+    return results
 
 def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
     """

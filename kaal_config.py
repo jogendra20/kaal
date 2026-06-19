@@ -229,6 +229,114 @@ TIER2_SUBJECTS = [
 
 # ── PARENT-SUBSIDIARY MAP (AGM on these = check for delisting/merger)
 
+
+
+
+# ── BUDGET DAY SECTOR PROXY MAP ──────────────────────────────────────────────
+# When budget announces allocation for a sector → these stocks benefit
+BUDGET_PROXY_MAP = {
+    # Infrastructure
+    "RAILWAY BUDGET":       ["RVNL", "IRFC", "IRCON", "RAILTEL", "TITAGARH", "TEXRAIL"],
+    "RAILWAY ALLOCATION":   ["RVNL", "IRFC", "IRCON", "RAILTEL", "TITAGARH"],
+    "INFRASTRUCTURE PUSH":  ["LT", "NCC", "KNRCON", "PNCINFRA", "HG INFRA", "GPPL"],
+
+    # Defence
+    "DEFENCE BUDGET":       ["HAL", "BEL", "PARAS", "MIDHANI", "BHEL", "BEML", "MTAR"],
+    "DEFENCE ALLOCATION":   ["HAL", "BEL", "PARAS", "MIDHANI", "BHEL"],
+    "DEFENCE INDIGENISATION":["HAL", "BEL", "PARAS", "MIDHANI", "MTAR"],
+
+    # Renewable energy
+    "SOLAR BUDGET":         ["WAAREEENER", "TATAPOWER", "ADANIGREEN", "SJVN", "NTPC"],
+    "GREEN ENERGY PUSH":    ["WAAREEENER", "TATAPOWER", "ADANIGREEN", "SJVN"],
+    "RENEWABLE TARGET":     ["WAAREEENER", "TATAPOWER", "ADANIGREEN", "SJVN", "NTPC"],
+
+    # Housing
+    "AFFORDABLE HOUSING BUDGET": ["DLF", "GODREJPROP", "PRESTIGE", "OBEROIRLTY", "PHOENIXLTD"],
+    "PMAY ALLOCATION":      ["DLF", "GODREJPROP", "PRESTIGE", "JKCEMENT", "ULTRACEMCO"],
+    "HOUSING FOR ALL":      ["DLF", "GODREJPROP", "PRESTIGE", "JKCEMENT"],
+
+    # Agriculture
+    "FARM BUDGET":          ["PIIND", "BAYER", "UPL", "DHANUKA", "RALLIS"],
+    "KISAN FUND":           ["PIIND", "UPL", "DHANUKA", "RALLIS"],
+    "MSP INCREASE":         ["PIIND", "UPL", "DHANUKA"],
+
+    # EV
+    "EV BUDGET":            ["TATAMOTORS", "MAHINDRA", "OLECTRA", "TATAPOWER", "HBLPOWER"],
+    "EV INCENTIVE":         ["TATAMOTORS", "MAHINDRA", "OLECTRA", "TATAPOWER"],
+    "EV SUBSIDY":           ["TATAMOTORS", "MAHINDRA", "OLECTRA"],
+
+    # PSU banks / credit
+    "PSU BANK RECAP":       ["SBIN", "PNB", "BANKBARODA", "CANBK", "UNIONBANK"],
+    "CREDIT GUARANTEE":     ["SBIN", "PNB", "BANKBARODA", "SIDBI"],
+
+    # Digital India
+    "DIGITAL INDIA":        ["CDSL", "CAMS", "LTIM", "INFY", "TCS"],
+    "TECH PUSH":            ["CDSL", "LTIM", "INFY", "WIPRO"],
+
+    # Healthcare
+    "HEALTH BUDGET":        ["APOLLOHOSP", "MAXHEALTH", "FORTIS", "SUNPHARMA", "CIPLA"],
+    "AYUSHMAN BHARAT":      ["APOLLOHOSP", "MAXHEALTH", "FORTIS", "STARHEALTH"],
+}
+
+# ── USFDA PROXY MAP ──────────────────────────────────────────────────────────
+# When one pharma gets USFDA approval → check if peers make same drug
+# When one pharma gets import alert → entire sector gets cautious
+USFDA_SYMPATHY_MAP = {
+    # Major Indian pharma companies — approval in one benefits peers
+    "SUNPHARMA":   ["DRREDDY", "CIPLA", "LUPIN", "AUROPHARMA", "ZYDUSLIFE"],
+    "DRREDDY":     ["SUNPHARMA", "CIPLA", "LUPIN", "AUROPHARMA"],
+    "CIPLA":       ["SUNPHARMA", "DRREDDY", "LUPIN", "AUROPHARMA"],
+    "LUPIN":       ["SUNPHARMA", "DRREDDY", "CIPLA", "AUROPHARMA"],
+    "AUROPHARMA":  ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN"],
+    "ZYDUSLIFE":   ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN"],
+    "GLENMARK":    ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN"],
+    "ALKEM":       ["SUNPHARMA", "CIPLA", "LUPIN"],
+    "TORNTPHARM":  ["SUNPHARMA", "CIPLA", "LUPIN"],
+}
+
+# USFDA keywords
+USFDA_APPROVAL_KEYWORDS = [
+    "USFDA APPROVAL", "US FDA APPROVAL", "USFDA APPROVED",
+    "ANDA APPROVAL", "NDA APPROVAL", "ABBREVIATED NEW DRUG",
+    "FINAL APPROVAL", "TENTATIVE APPROVAL",
+    "ESTABLISHMENT INSPECTION REPORT", "EIR",
+    "VOLUNTARY ACTION INDICATED", "VAI",
+]
+
+USFDA_WARNING_KEYWORDS = [
+    "USFDA IMPORT ALERT", "FDA IMPORT ALERT",
+    "WARNING LETTER", "USFDA WARNING",
+    "FORM 483", "OFFICIAL ACTION INDICATED", "OAI",
+    "COMPLETE RESPONSE LETTER", "CRL",
+]
+
+# ── NEGATIVE PROXY MAP ───────────────────────────────────────────────────────
+# When trigger found in news → these stocks get BEARISH flag + score penalized
+NEGATIVE_PROXY_MAP = {
+    # Global IT bellwether misses → Indian IT falls
+    "ACCENTURE MISS":       ["WIPRO", "INFY", "TCS", "HCLTECH", "TECHM", "LTIM", "MPHASIS"],
+    "ACCENTURE RESULTS":    ["WIPRO", "INFY", "TCS", "HCLTECH", "TECHM"],
+    "IBM MISS":             ["WIPRO", "INFY", "TCS", "HCLTECH"],
+    "COGNIZANT MISS":       ["WIPRO", "INFY", "TCS", "HCLTECH", "TECHM"],
+    "NASDAQ CRASH":         ["WIPRO", "INFY", "TCS", "HCLTECH", "TECHM", "LTIM"],
+
+    # US pharma/FDA negative → Indian pharma falls
+    "FDA WARNING LETTER":   ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN", "AUROPHARMA"],
+    "FDA IMPORT ALERT":     ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN", "AUROPHARMA"],
+
+    # China slowdown → metal stocks fall
+    "CHINA SLOWDOWN":       ["TATASTEEL", "HINDALCO", "JSWSTEEL", "SAIL", "NALCO"],
+    "CHINA DEMAND FALL":    ["TATASTEEL", "HINDALCO", "JSWSTEEL"],
+
+    # Crude spike → aviation, paint, tyre fall
+    "CRUDE SPIKE":          ["INDIGO", "SPICEJET", "ASIANPAINT", "BERGER", "MRF", "APOLLOTYRE"],
+    "OIL PRICE RISE":       ["INDIGO", "SPICEJET", "ASIANPAINT", "BERGER"],
+
+    # US recession fears → export-heavy IT/pharma fall
+    "US RECESSION":         ["WIPRO", "INFY", "TCS", "SUNPHARMA", "DRREDDY"],
+    "FED RATE HIKE":        ["BANKBARODA", "PNB", "SBIN", "HDFC", "ICICIBANK"],
+}
+
 # ── PROXY/INDIRECT BENEFICIARY MAP ───────────────────────────────────────────
 # When trigger keyword found in news → flag these listed stocks as Tier1
 # Format: "news keyword": ["SYMBOL1", "SYMBOL2", ...]
