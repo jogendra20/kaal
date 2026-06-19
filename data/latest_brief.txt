@@ -1,20 +1,20 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>19 Jun 2026 08:53 AM</code>
+<code>19 Jun 2026 09:02 AM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
 GIFT Nifty: <code>+0.34%</code> (Bullish)
-SPX: <code>+1.1%</code>  Crude: <code>$76</code>  Gold: <code>$4186</code>  USD/INR: <code>94.32</code>
+SPX: <code>+1.1%</code>  Crude: <code>$76</code>  Gold: <code>$4187</code>  USD/INR: <code>94.32</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
 <b>#1  WIPRO</b>  🟢  Score: <code>83/100</code>
 📌 <b>Catalyst:</b> ACQUISITION
-📊 <b>Signal from:</b> NSE, ET, MINT
-💡 <b>Key fact:</b> Wipro to acquire additional 20% stake in Aggne Global IT Services Private Limited
-🧠 <b>Why BULLISH:</b> [MULTI-SOURCE CONFIRMATION: ET, NSE, MINT] This acquisition is expected to strengthen Wipro's competitive advantage in the insurance sector, particularly in driving AI and IP-led transformation. The m
-🌍 <b>Macro:</b> Current market context with low VIX and bullish GIFT Nifty bias supports the bullish setup
+📊 <b>Signal from:</b> NSE, MINT, ET
+💡 <b>Key fact:</b> Wipro to acquire an additional 20% stake in Aggne Global IT Services Private Limited
+🧠 <b>Why BULLISH:</b> [MULTI-SOURCE CONFIRMATION: MINT, ET, NSE] This acquisition is expected to strengthen Wipro's competitive advantage in the insurance sector, particularly in driving AI and IP-led transformation. The m
+🌍 <b>Macro:</b> The current bullish market context, with low VIX and positive GIFT Nifty bias, supports th
 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 <b>#2  NIACL</b>  🟢  Score: <code>78/100</code>
@@ -48,6 +48,24 @@ SPX: <code>+1.1%</code>  Crude: <code>$76</code>  Gold: <code>$4186</code>  USD/
 🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits BSELTD indirectly. Check if stock already moved before entering.
 
 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+👀 <b>TIER 2 — WATCHLIST (confirm at open)</b>
+• <b>HSCL</b> 🟢 [73]  ACQUISITION — Himadri Speciality Chemical Limited acquires 6,00,000 Common Stock of 
+  ↳ The acquisition indicates Himadri's strategic expansion and investment in the battery industry, which could lead to long
+• <b>AMBER</b> 🟢 [73]  ACQUISITION — IL JIN to acquire an additional 38.50% equity stake in Ascent Circuits
+  ↳ The acquisition is expected to enable closer operational alignment, streamlined governance, and enhanced synergies acros
+• <b>ASTERDM</b> 🟢 [73]  ACQUISITION — Aster DM Healthcare acquired 4,50,89,995 equity shares in Aster DM Sup
+  ↳ The acquisition is a strategic move to expand the company's presence in the healthcare sector, which can lead to increas
+• <b>TRUALT</b> 🟢 [73]  ORDER WIN — TruAlt Bioenergy secures ₹150 crore financial assistance approval unde
+  ↳ The approval of ₹150 crore financial assistance under PM JI-VAN Yojana is a significant development for TruAlt Bioenergy
+• <b>SHYAMMETL</b> 🟢 [73]  ACQUISITION — Emerge Green Power Private Limited acquires 26% shares of Shyam Metali
+  ↳ The acquisition of 26% shares by Emerge Green Power Private Limited indicates a strategic investment, which can lead to 
+• <b>TIGERLOGS</b> 🟢 [70]  ORDER WIN — Tiger Logistics (India) Limited has bagged/received new orders/contrac
+  ↳ The receipt of new orders/contracts is a positive development for Tiger Logistics, indicating an increase in business ac
+• <b>3IINFOLTD</b> 🟢 [70]  ORDER WIN — 3i Infotech Limited has received new orders/contracts
+  ↳ Receiving new orders is a positive development for the company, indicating growing demand for its services. This can lea
+• <b>ENDURANCE</b> 🟢 [65]  OTHER — Endurance Technologies to expand manufacturing capacity for Lithium-Io
+  ↳ The capacity addition is a positive development for the company, indicating its growth plans and increasing demand for i
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

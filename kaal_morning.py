@@ -306,6 +306,16 @@ def run():
 
         final.append(best)
 
+    # ── Pre-filter before Gemini (max 15 signals) ─────────
+    # Sort by score, keep top 15 only
+    final.sort(key=lambda x: -x["score"])
+    # Always keep Tier1 catalysts
+    STRONG_CATS = {"OPEN_OFFER","BUYBACK","MERGER","DEMERGER","USFDA","PROXY_PLAY","ACQUISITION"}
+    tier1_final = [s for s in final if s.get("catalyst","").upper() in STRONG_CATS][:8]
+    other_final = [s for s in final if s.get("catalyst","").upper() not in STRONG_CATS][:7]
+    final = tier1_final + other_final
+    log(f"Pre-filter: {len(final)} signals sent to Gemini")
+
     # ── Gemini Final Judge ──────────────────────────────────
     log("Running Gemini final judge...")
     try:
