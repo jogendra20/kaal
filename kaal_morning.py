@@ -358,6 +358,11 @@ def run():
 
     # ── Send Telegram ─────────────────────────────────────
     msg = build_morning_brief(tier1, tier2, macro)
+    # Save brief to file
+    import os
+    brief_file = os.path.join(os.path.dirname(__file__), "data", "latest_brief.txt")
+    with open(brief_file, "w") as f:
+        f.write(msg)
     send(msg)
     log(f"Brief sent: {len(tier1)} Tier1, {len(tier2)} Tier2 | Time: {time.time()-t0:.1f}s")
 

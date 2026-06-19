@@ -1,0 +1,53 @@
+<b>⚔️ KAAL MORNING BRIEF</b>
+<code>19 Jun 2026 08:53 AM</code>
+
+<b>🌐 MACRO</b>
+VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.34%</code> (Bullish)
+SPX: <code>+1.1%</code>  Crude: <code>$76</code>  Gold: <code>$4186</code>  USD/INR: <code>94.32</code>
+──────────────────────────────────
+
+🔥 <b>TIER 1 — HIGH CONVICTION</b>
+
+<b>#1  WIPRO</b>  🟢  Score: <code>83/100</code>
+📌 <b>Catalyst:</b> ACQUISITION
+📊 <b>Signal from:</b> NSE, ET, MINT
+💡 <b>Key fact:</b> Wipro to acquire additional 20% stake in Aggne Global IT Services Private Limited
+🧠 <b>Why BULLISH:</b> [MULTI-SOURCE CONFIRMATION: ET, NSE, MINT] This acquisition is expected to strengthen Wipro's competitive advantage in the insurance sector, particularly in driving AI and IP-led transformation. The m
+🌍 <b>Macro:</b> Current market context with low VIX and bullish GIFT Nifty bias supports the bullish setup
+🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+
+<b>#2  NIACL</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits NIACL indirectly. Check if stock already moved before entering.
+
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+<b>#3  IFCI</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits IFCI indirectly. Check if stock already moved before entering.
+
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+<b>#4  GICRE</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits GICRE indirectly. Check if stock already moved before entering.
+
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+<b>#5  BSELTD</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits BSELTD indirectly. Check if stock already moved before entering.
+
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+──────────────────────────────────
+<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
