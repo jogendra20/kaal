@@ -687,7 +687,13 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
 
     # Cooldown periods for different trigger types (days)
     COOLDOWN_DAYS = {
-        "NSE IPO": 5, "NSE DRHP": 5, "NSE LISTING": 3,
+        "NSE IPO": 7,
+        "NSE DRHP": 7,
+        "NSE LISTING": 3,
+        "NSE IPO DRHP FILED": 30,    # once DRHP filed, next milestone is SEBI obs
+        "NSE SEBI OBSERVATION": 30,  # once SEBI obs comes, next is price band
+        "NSE IPO PRICE BAND": 7,
+        "NSE IPO LISTING": 1,        # listing day fire every day
         "DEFAULT": 1,
     }
 

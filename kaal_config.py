@@ -344,9 +344,14 @@ NEGATIVE_PROXY_MAP = {
 
 PROXY_MAP = {
     # NSE IPO — companies selling NSE shares via OFS
-    "NSE IPO": ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX", "TATACONS"],
-    "NSE DRHP": ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX", "TATACONS"],
-    "NSE LISTING": ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    # Each milestone is a separate trigger with its own cooldown
+    "NSE IPO DRHP FILED":     ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    "NSE SEBI OBSERVATION":   ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    "NSE IPO PRICE BAND":     ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    "NSE IPO LISTING":        ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX", "CDSL"],
+    "NSE IPO":                ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    "NSE DRHP":               ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
+    "NSE LISTING":            ["NIACL", "IFCI", "GICRE", "BSELTD", "MCX"],
 
     # Capital market theme — when NSE IPO files, these also benefit
     "NSE IPO FILING": ["CDSL", "CAMS", "KFINTECH", "BSE"],
