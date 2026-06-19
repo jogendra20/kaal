@@ -1,5 +1,5 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>20 Jun 2026 01:45 AM</code>
+<code>20 Jun 2026 01:52 AM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>13.0</code>  |  Bias: 📈 BULLISH
@@ -9,7 +9,7 @@ SPX: <code>-0.6%</code>  Crude: <code>$77</code>  Gold: <code>$4224</code>  USD/
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<b>#1  EVERESTIND</b>  🟢  Score: <code>85/100</code>
+<b>#1  APLLTD</b>  🟢  Score: <code>85/100</code>
 📌 <b>Catalyst:</b> USFDA APPROVAL
 📊 <b>Signal from:</b> NSE
 💡 <b>Key fact:</b> USFDA approval — fresh catalyst
@@ -17,37 +17,37 @@ SPX: <code>-0.6%</code>  Crude: <code>$77</code>  Gold: <code>$4224</code>  USD/
 
 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
-<b>#2  VENUSPIPES</b>  🟢  Score: <code>85/100</code>
-📌 <b>Catalyst:</b> USFDA APPROVAL
-📊 <b>Signal from:</b> NSE
-💡 <b>Key fact:</b> USFDA approval — fresh catalyst
-🧠 <b>Why BULLISH:</b> USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+<b>#2  NIACL</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits NIACL indirectly. Check if stock already moved before entering.
 
-🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
-<b>#3  SWARAJENG</b>  🟢  Score: <code>85/100</code>
-📌 <b>Catalyst:</b> USFDA APPROVAL
-📊 <b>Signal from:</b> NSE
-💡 <b>Key fact:</b> USFDA approval — fresh catalyst
-🧠 <b>Why BULLISH:</b> USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+<b>#3  IFCI</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits IFCI indirectly. Check if stock already moved before entering.
 
-🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
-<b>#4  DDEVPLSTIK</b>  🟢  Score: <code>85/100</code>
-📌 <b>Catalyst:</b> USFDA APPROVAL
-📊 <b>Signal from:</b> NSE
-💡 <b>Key fact:</b> USFDA approval — fresh catalyst
-🧠 <b>Why BULLISH:</b> USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+<b>#4  GICRE</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits GICRE indirectly. Check if stock already moved before entering.
 
-🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
-<b>#5  INDOTHAI</b>  🟢  Score: <code>85/100</code>
-📌 <b>Catalyst:</b> USFDA APPROVAL
-📊 <b>Signal from:</b> NSE
-💡 <b>Key fact:</b> USFDA approval — fresh catalyst
-🧠 <b>Why BULLISH:</b> USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+<b>#5  BSELTD</b>  🟢  Score: <code>78/100</code>
+📌 <b>Catalyst:</b> PROXY PLAY
+📊 <b>Signal from:</b> PROXY
+💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
+🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits BSELTD indirectly. Check if stock already moved before entering.
 
-🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
