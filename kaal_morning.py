@@ -92,6 +92,49 @@ def _entry_plan(s: dict) -> str:
 def direction_emoji(direction: str) -> str:
     return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
 
+def _status_emoji(status: str) -> str:
+    return {"FRESH": "🟢 FRESH", "AGING": "🟡 AGING", "STALE": "🔴 STALE"}.get(status, "🟢 FRESH")
+
+
+def _signal_time(s: dict) -> str:
+    """Returns NSE filing timestamp if available, else first_seen date."""
+    raw_time = s.get("an_dt", "") or s.get("announcement_time", "")
+    if raw_time:
+        try:
+            dt = datetime.strptime(raw_time[:20], "%d-%b-%Y %H:%M:%S")
+            return dt.strftime("%I:%M %p")
+        except Exception:
+            pass
+    first_seen = s.get("first_seen", "")
+    if first_seen:
+        try:
+            dt = datetime.strptime(first_seen, "%Y-%m-%d")
+            return dt.strftime("%b %d")
+        except Exception:
+            pass
+    return "—"
+
+
+def _format_signal_block(s: dict) -> list:
+    de       = direction_emoji(s.get("direction", "NEUTRAL"))
+    status   = _status_emoji(s.get("hist_status", "FRESH"))
+    pct      = s.get("pct_change", 0.0)
+    catalyst = s.get("catalyst", "").replace("_", " ")
+    time_str = _signal_time(s)
+
+    pct_str = f" | {pct:+.1f}% since trigger" if pct != 0 else ""
+
+    lines = [
+        "",
+        f"<code>[{time_str}]</code> <b>{s['symbol']}</b> — {catalyst} {de}",
+        f"Score: <code>{s['score']}/100</code>{pct_str} {status}",
+        f"└─ {s.get('key', '')[:100]}",
+        f"└─ {s.get('reason', '')[:150]}",
+        f"└─ 🎯 {_entry_plan(s)}",
+    ]
+    return lines
+
+
 def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
     now   = datetime.now().strftime("%d %b %Y %I:%M %p")
     vix   = macro.get("vix", 0)
@@ -115,32 +158,15 @@ def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
 
     if tier1:
         lines.append("\n🔥 <b>TIER 1 — HIGH CONVICTION</b>")
-        for i, s in enumerate(tier1, 1):
-            de = direction_emoji(s.get("direction", "NEUTRAL"))
-            lines += [
-                "",
-                f"<b>#{i}  {s['symbol']}</b>  {de}  Score: <code>{s['score']}/100</code>",
-                f"📌 <b>Catalyst:</b> {s.get('catalyst', '').replace('_', ' ')}",
-                f"📊 <b>Signal from:</b> {', '.join(s.get('signal_sources', []))}",
-                f"💡 <b>Key fact:</b> {s.get('key', '')[:110]}",
-                f"🧠 <b>Why {s.get('direction','?')}:</b> {s.get('reason', '')[:200]}",
-                f"🌍 <b>Macro:</b> {s.get('macro_note', '')[:90]}" if s.get("macro_note") else "",
-                f"🎯 {_entry_plan(s)}",
-            ]
+        for s in tier1:
+            lines += _format_signal_block(s)
     else:
         lines.append("\n⚠️ No Tier 1 stocks today — consider staying in cash")
 
     if tier2:
-        lines.append("\n👀 <b>TIER 2 — WATCHLIST (confirm at open)</b>")
+        lines.append("\n👀 <b>TIER 2 — WATCHLIST</b>")
         for s in tier2:
-            de = direction_emoji(s.get("direction", "NEUTRAL"))
-            lines.append(
-                f"• <b>{s['symbol']}</b> {de} [{s['score']}]  "
-                f"{s.get('catalyst', '').replace('_', ' ')} — "
-                f"{s.get('key', '')[:70]}"
-            )
-            if s.get("reason"):
-                lines.append(f"  ↳ {s['reason'][:120]}")
+            lines += _format_signal_block(s)
 
     if not tier1 and not tier2:
         lines.append("\n⚠️ No qualifying stocks today — stay in cash, protect capital")
@@ -154,7 +180,6 @@ def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
         "<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>",
     ]
     return "\n".join(l for l in lines if l is not None)
-
 
 def run():
     check_keys()
@@ -172,7 +197,8 @@ def run():
     news     = fetch_news()
     preopen  = fetch_preopen_gainers()
     # Build gap map for quick lookup
-    gap_map  = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
+    gap_map   = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
+    price_map = {s['symbol']: s['price'] for s in preopen if s.get('price', 0) > 0}
     sectors   = fetch_sector_strength()
     screeners = fetch_chartink_screeners()
     oi_map    = fetch_oi_spurts()
@@ -375,6 +401,24 @@ def run():
             filtered.append(s)
         final = filtered
         log(f"Fallback done: {len(final)} signals remain")
+
+    # ── Track signal history (price since first trigger) ──
+    from kaal_history import update_signal_history, cleanup_old_history
+    for s in final:
+        sym = s.get('symbol', '')
+        price = price_map.get(sym, 0)
+        if price > 0:
+            hist = update_signal_history(sym, price, s.get('catalyst',''))
+            s['days_old']   = hist['days_old']
+            s['pct_change'] = hist['pct_change']
+            s['hist_status'] = hist['status']
+            s['first_seen']  = hist['first_seen']
+        else:
+            s['days_old']    = 0
+            s['pct_change']  = 0.0
+            s['hist_status'] = 'FRESH'
+            s['first_seen']  = ''
+    cleanup_old_history()
 
     # ── Sort and tier ─────────────────────────────────────
     final.sort(key=lambda x: -x["score"])
