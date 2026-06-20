@@ -1,53 +1,45 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>20 Jun 2026 01:52 AM</code>
+<code>20 Jun 2026 07:41 PM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>13.0</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.57%</code> (Bullish)
+GIFT Nifty: <code>+0.40%</code> (Bullish)
 SPX: <code>-0.6%</code>  Crude: <code>$77</code>  Gold: <code>$4224</code>  USD/INR: <code>94.34</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<b>#1  APLLTD</b>  🟢  Score: <code>85/100</code>
-📌 <b>Catalyst:</b> USFDA APPROVAL
-📊 <b>Signal from:</b> NSE
-💡 <b>Key fact:</b> USFDA approval — fresh catalyst
-🧠 <b>Why BULLISH:</b> USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+<code>[Jun 20]</code> <b>APLLTD</b> — USFDA APPROVAL 🟢
+Score: <code>85/100</code> 🟢 FRESH
+└─ USFDA approval — fresh catalyst
+└─ USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+└─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
-🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+<code>[Jun 20]</code> <b>CYIENT</b> — BUYBACK 🟢
+Score: <code>75/100</code> 🟢 FRESH
+└─ Cyient Limited announces buyback of equity shares
+└─ The buyback announcement is a positive signal as it indicates the company's confidence in its financials and its commitment to returning value to shar
+└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
-<b>#2  NIACL</b>  🟢  Score: <code>78/100</code>
-📌 <b>Catalyst:</b> PROXY PLAY
-📊 <b>Signal from:</b> PROXY
-💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
-🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits NIACL indirectly. Check if stock already moved before entering.
+<code>[Jun 20]</code> <b>AMBER</b> — ACQUISITION 🟢
+Score: <code>75/100</code> 🟢 FRESH
+└─ IL JIN Electronics acquired an additional 37.50% equity stake in Ascent Circuits Private Limited
+└─ The acquisition is a strategic move to increase the company's stake in Ascent Circuits, which can lead to increased control and potential synergies. T
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
-🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+<code>[Jun 20]</code> <b>WIPRO</b> — ACQUISITION 🟢
+Score: <code>75/100</code> 🟢 FRESH
+└─ Wipro acquired an additional 20% stake in Aggne Global IT Services Private Limited
+└─ The acquisition is a strategic move by Wipro to expand its presence in the IT services sector. This move is likely to be viewed positively by the mark
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
-<b>#3  IFCI</b>  🟢  Score: <code>78/100</code>
-📌 <b>Catalyst:</b> PROXY PLAY
-📊 <b>Signal from:</b> PROXY
-💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
-🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits IFCI indirectly. Check if stock already moved before entering.
+👀 <b>TIER 2 — WATCHLIST</b>
 
-🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
-
-<b>#4  GICRE</b>  🟢  Score: <code>78/100</code>
-📌 <b>Catalyst:</b> PROXY PLAY
-📊 <b>Signal from:</b> PROXY
-💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
-🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits GICRE indirectly. Check if stock already moved before entering.
-
-🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
-
-<b>#5  BSELTD</b>  🟢  Score: <code>78/100</code>
-📌 <b>Catalyst:</b> PROXY PLAY
-📊 <b>Signal from:</b> PROXY
-💡 <b>Key fact:</b> Indirect beneficiary of: NSE IPO
-🧠 <b>Why BULLISH:</b> Proxy play — NSE IPO news benefits BSELTD indirectly. Check if stock already moved before entering.
-
-🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+<code>[Jun 20]</code> <b>WELSPUNLIV</b> — BUYBACK 🟢
+Score: <code>72/100</code> 🟢 FRESH
+└─ Welspun Living Limited has extinguished 1,44,00,000 equity shares pursuant to Buyback
+└─ The buyback indicates the company's confidence in its financials and a positive outlook, which can lead to a bullish market reaction. Typically, buyba
+└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

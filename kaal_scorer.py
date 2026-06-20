@@ -370,6 +370,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 "pdf_read":        bool(pdf_text),
                 "source":          source,
                 "signal_sources":  [source],
+                "an_dt":           ann.get("an_dt", "") if isinstance(ann, dict) else "",
             }
 
 
@@ -386,6 +387,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         "direction":      "BULLISH",
         "source":         source,
         "signal_sources": [source],
+        "an_dt":          ann.get("an_dt", "") if isinstance(ann, dict) else "",
     }
 
 

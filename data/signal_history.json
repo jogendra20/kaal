@@ -3,5 +3,30 @@
     "first_seen": "2026-06-17",
     "first_price": 100.0,
     "catalyst": "USFDA_APPROVAL"
+  },
+  "CYIENT": {
+    "first_seen": "2026-06-20",
+    "first_price": 861.0,
+    "catalyst": "BUYBACK"
+  },
+  "AMBER": {
+    "first_seen": "2026-06-20",
+    "first_price": 8218.0,
+    "catalyst": "ACQUISITION"
+  },
+  "WIPRO": {
+    "first_seen": "2026-06-20",
+    "first_price": 176.76,
+    "catalyst": "ACQUISITION"
+  },
+  "WELSPUNLIV": {
+    "first_seen": "2026-06-20",
+    "first_price": 162.0,
+    "catalyst": "BUYBACK"
+  },
+  "APLLTD": {
+    "first_seen": "2026-06-20",
+    "first_price": 749.7,
+    "catalyst": "USFDA_APPROVAL"
   }
 }
