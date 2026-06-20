@@ -98,7 +98,8 @@ def _call_cerebras(prompt: str) -> dict:
         "model": "zai-glm-4.7",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.1,
-        "max_tokens": 3000,
+        "max_tokens": 1500,
+        "reasoning_effort": "none",
     }
     try:
         r = requests.post(
