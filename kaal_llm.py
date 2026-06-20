@@ -98,7 +98,7 @@ def _call_cerebras(prompt: str) -> dict:
         "model": "zai-glm-4.7",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 3000,
     }
     try:
         r = requests.post(
@@ -106,10 +106,15 @@ def _call_cerebras(prompt: str) -> dict:
             headers=headers, json=body, timeout=25
         )
         if r.status_code == 200:
-            msg = r.json()["choices"][0]["message"]
-            # zai-glm-4.7 is a reasoning model — content may be in reasoning or content
-            text = msg.get("content") or msg.get("reasoning") or ""
-            if not text:
+            choice = r.json()["choices"][0]
+            msg = choice["message"]
+            text = msg.get("content", "") or ""
+            if not text.strip():
+                # Truncated before content — try reasoning as last resort
+                text = msg.get("reasoning", "") or ""
+            if not text.strip():
+                fr = choice.get("finish_reason")
+                print(f"[LLM] Cerebras empty content (finish_reason={fr})")
                 return {}
             return _parse_json(text)
         print(f"[LLM] Cerebras {r.status_code}: {r.text[:80]}")
@@ -214,17 +219,8 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
     return {}
 
 
-def gemini_final_judge(signals: list, macro: dict) -> list:
-    """
-    Gemini receives top 15 signals and strictly filters them.
-    Returns only high conviction stocks with action verdicts.
-    """
-    _load_env()
-    if not signals:
-        return []
-
+def _build_judge_prompt(signals: list, macro: dict) -> str:
     import json
-
     signals_text = json.dumps([{
         "symbol":   s["symbol"],
         "score":    s["score"],
@@ -239,14 +235,13 @@ def gemini_final_judge(signals: list, macro: dict) -> list:
         f"SPX={macro.get('spx_chg',0):+.1f}%"
     )
 
-    # Build example from first signal
     ex = signals[0]
     example = (
         f'[{{"symbol": "{ex["symbol"]}", "final_score": {ex["score"]}, '
         f'"final_reason": "reason here", "action": "WATCH"}}]'
     )
 
-    prompt = (
+    return (
         "You are a strict NSE intraday risk manager. REDUCE the list ruthlessly."
         f"\n\nMARKET: {macro_text}"
         f"\n\nSignals:\n{signals_text}"
@@ -263,44 +258,61 @@ def gemini_final_judge(signals: list, macro: dict) -> list:
         "\n- When in doubt = SKIP"
     )
 
-    result = _call_gemini(prompt)
-    if result is None or not result:
-        return []
 
-    # Handle list or dict response
-    if isinstance(result, list):
-        ranked = result
-    elif isinstance(result, dict):
-        ranked = result.get("signals", result.get("results", result.get("data", [])))
-    else:
-        return []
-
+def _merge_judge_verdicts(signals: list, ranked: list, source_name: str) -> list:
     if not ranked:
         return []
-
-    print(f"[LLM] Gemini verdicts: {[(r.get('symbol'), r.get('action')) for r in ranked[:5]]}")
-
-    # Merge verdicts back
-    gemini_map = {r["symbol"]: r for r in ranked if isinstance(r, dict) and "symbol" in r}
+    sample = [(r.get("symbol"), r.get("action")) for r in ranked[:5]]
+    print(f"[LLM] {source_name} verdicts: {sample}")
+    verdict_map = {r["symbol"]: r for r in ranked if isinstance(r, dict) and "symbol" in r}
     updated = []
     for s in signals:
         sym = s["symbol"]
-        if sym not in gemini_map:
-            print(f"[LLM] Gemini not ranked: {sym} — skipping")
+        if sym not in verdict_map:
             continue
-        g = gemini_map[sym]
+        g = verdict_map[sym]
         action = g.get("action", "SKIP")
         if action == "SKIP":
-            print(f"[LLM] Gemini SKIP: {sym}")
+            print(f"[LLM] {source_name} SKIP: {sym}")
             continue
         s = dict(s)
         s["score"]  = g.get("final_score", s["score"])
-        s["reason"] = f"[{action}] {g.get('final_reason', s.get('reason',''))}"
+        s["reason"] = f"[{action}] {g.get("final_reason", s.get("reason",""))}"
         s["action"] = action
         updated.append(s)
-
     updated.sort(key=lambda x: -x["score"])
     return updated
+
+
+def gemini_final_judge(signals: list, macro: dict) -> list:
+    """
+    Final judge: tries Cerebras first (more reliable, no quota issues seen),
+    falls back to Gemini if Cerebras fails. Returns [] if both fail —
+    caller (kaal_morning.py) applies rule-based fallback in that case.
+    """
+    if not signals:
+        return []
+
+    prompt = _build_judge_prompt(signals, macro)
+
+    # Try Cerebras first
+    result = _call_cerebras(prompt)
+    if result:
+        ranked = result if isinstance(result, list) else result.get("signals", result.get("results", result.get("data", [])))
+        if ranked:
+            return _merge_judge_verdicts(signals, ranked, "Cerebras")
+
+    print("[LLM] Cerebras judge unavailable — trying Gemini")
+
+    # Fallback to Gemini
+    result = _call_gemini(prompt)
+    if result:
+        ranked = result if isinstance(result, list) else result.get("signals", result.get("results", result.get("data", [])))
+        if ranked:
+            return _merge_judge_verdicts(signals, ranked, "Gemini")
+
+    print("[LLM] Both Cerebras and Gemini unavailable for judge")
+    return []
 
 
 def search_staleness(symbol: str, catalyst: str) -> dict:
