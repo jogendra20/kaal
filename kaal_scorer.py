@@ -576,6 +576,7 @@ def score_usfda_signals(nse_announcements: list, news_articles: list) -> list:
                 "reason":         "USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.",
                 "source":         "NSE",
                 "signal_sources": ["NSE"],
+                        "an_dt":          ann.get("an_dt", ""),
                 "offer_price":    0,
                 "is_fresh":       True,
             })
@@ -592,6 +593,7 @@ def score_usfda_signals(nse_announcements: list, news_articles: list) -> list:
                     "reason":         f"Peer {symbol} got USFDA approval. Sector sentiment positive. Watch for spillover.",
                     "source":         "NSE",
                     "signal_sources": ["NSE"],
+                        "an_dt":          ann.get("an_dt", ""),
                     "offer_price":    0,
                     "is_fresh":       True,
                 })
@@ -609,6 +611,7 @@ def score_usfda_signals(nse_announcements: list, news_articles: list) -> list:
                 "reason":         "USFDA warning = -15 to -25% move. Avoid all long positions. Consider short if allowed.",
                 "source":         "NSE",
                 "signal_sources": ["NSE"],
+                        "an_dt":          ann.get("an_dt", ""),
                 "offer_price":    0,
                 "is_fresh":       True,
             })

@@ -1,5 +1,5 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>20 Jun 2026 07:53 PM</code>
+<code>20 Jun 2026 07:57 PM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>13.0</code>  |  Bias: 📈 BULLISH
@@ -12,34 +12,26 @@ SPX: <code>-0.6%</code>  Crude: <code>$77</code>  Gold: <code>$4224</code>  USD/
 <code>[Jun 20]</code> <b>APLLTD</b> — USFDA APPROVAL 🟢
 Score: <code>85/100</code> 🟢 FRESH
 └─ USFDA approval — fresh catalyst
-└─ USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
+└─ [BUY_PULLBACK] USFDA approval = immediate re-rating. Strong intraday move expected. Enter on pullback after gap-up.
 └─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 <code>[09:57 PM]</code> <b>CYIENT</b> — BUYBACK 🟢
 Score: <code>75/100</code> 🟢 FRESH
 └─ Cyient Limited announces buyback of equity shares
-└─ The buyback announcement is a positive signal as it indicates the company's confidence in its financials and its commitment to returning value to shar
+└─ [BUY_PULLBACK] Buyback announcement indicates confidence and undervaluation. Verify liquidity before entry.
 └─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 <code>[05:54 PM]</code> <b>AMBER</b> — ACQUISITION 🟢
 Score: <code>75/100</code> 🟢 FRESH
-└─ IL JIN Electronics acquired an additional 37.50% equity stake in Ascent Circuits Private Limited
-└─ The acquisition is a strategic move to increase the company's stake in a subsidiary, which can lead to increased control and potential synergies. The 
+└─ IL JIN Electronics acquired an additional 37.50% equity stake in Ascent Circuits Private Limited for
+└─ [WATCH] Acquisition indicates expansion strategy. Bullish GIFT Nifty supports view. Verify liquidity.
 └─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 <code>[04:09 PM]</code> <b>WIPRO</b> — ACQUISITION 🟢
 Score: <code>75/100</code> 🟢 FRESH
 └─ Wipro acquired an additional 20% stake in Aggne Global IT Services Private Limited
-└─ The acquisition is a strategic move by Wipro to expand its presence in the IT services sector. This move is likely to be viewed positively by the mark
+└─ [WATCH] Strategic acquisition to expand IT presence. Market likely to view positively. Verify liquidity.
 └─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
-
-👀 <b>TIER 2 — WATCHLIST</b>
-
-<code>[06:31 PM]</code> <b>WELSPUNLIV</b> — BUYBACK 🟢
-Score: <code>72/100</code> 🟢 FRESH
-└─ Welspun Living Limited has extinguished 1,44,00,000 equity shares pursuant to Buyback
-└─ The buyback indicates the company's confidence in its financials and a positive outlook, which can lead to a bullish market reaction. Typically, buyba
-└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
