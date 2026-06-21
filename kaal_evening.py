@@ -146,6 +146,10 @@ def run():
     reset_seen()
 
     msg = build_evening_brief(tier1, tier2, macro)
+    import os
+    brief_file = os.path.join(os.path.dirname(__file__), "data", "latest_brief.txt")
+    with open(brief_file, "w") as f:
+        f.write(msg)
     send(msg)
     print(f"Evening brief sent: {len(tier1)} Tier1, {len(tier2)} Tier2")
 
