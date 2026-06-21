@@ -55,9 +55,9 @@ SKIP_BELOW      = 40
 
 # ── MACRO RSS FEEDS ───────────────────────────────────────
 RSS_FEEDS = {
-    "ET":    "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
-    "MINT":  "https://www.livemint.com/rss/markets",
-    "MC":    "https://www.moneycontrol.com/rss/marketreports.xml",
+    "ET":   "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+    "MINT": "https://www.livemint.com/rss/markets",
+    "MC":   "https://www.moneycontrol.com/rss/latestnews.xml",
 }
 # Reuters removed — rarely has India-specific stock names, adds noise to velocity scorer
 
