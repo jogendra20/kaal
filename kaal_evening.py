@@ -13,9 +13,8 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_bse_announcements,
-    fetch_bse_bulk_block, fetch_macro, fetch_asm_gsm_ban,
-    fetch_news, fetch_sebi_pit,
+    fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban,
+    fetch_news,
 )
 from kaal_scorer import (
     score_announcement, score_bulk_deal,
@@ -42,7 +41,7 @@ def reset_seen():
 def direction_emoji(direction: str) -> str:
     return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
 
-def build_evening_brief(tier1: list, tier2: list, macro: dict, pit: list) -> str:
+def build_evening_brief(tier1: list, tier2: list, macro: dict) -> str:
     now = datetime.now().strftime("%d %b %Y")
     vix = macro.get("vix", 0)
 
@@ -86,18 +85,6 @@ def build_evening_brief(tier1: list, tier2: list, macro: dict, pit: list) -> str
             de = direction_emoji(s.get("direction", "NEUTRAL"))
             lines.append(f"• {s['symbol']} {de} — {s.get('key','')[:80]}")
 
-    # Raw PIT data for learning
-    if pit:
-        lines.append("\n📑 <b>SEBI PIT (last 7 days, raw)</b>")
-        for p in pit[:6]:
-            symbol  = p.get("symbol", "")
-            person  = p.get("personName") or p.get("acqName") or "?"
-            acq     = p.get("secAcq", 0)
-            sale    = p.get("secSale", 0)
-            mode    = p.get("acqMode", "")
-            action  = f"+{acq}" if float(acq or 0) > 0 else f"-{sale}"
-            lines.append(f"• {symbol}: {person[:25]} {action} shares via {mode}")
-
     lines += [
         "",
         "─" * 34,
@@ -116,27 +103,16 @@ def run():
     skip_set = filters["asm"] | filters["gsm"] | filters["ban"]
     macro    = fetch_macro()
     nse_anns = fetch_nse_announcements()
-    bse_anns = fetch_bse_announcements()
-    deals    = fetch_bse_bulk_block()
     news     = fetch_news()
-    pit      = fetch_sebi_pit()
 
     all_signals = []
 
-    for ann in nse_anns + bse_anns:
+    for ann in nse_anns:
         result = score_announcement(ann, skip_set, macro_context=macro, use_pdf=True)
         if not result.get("skip") and result["score"] >= 40:
             all_signals.append(result)
 
-    for deal in deals:
-        result = score_bulk_deal(deal)
-        if not result.get("skip") and result["score"] >= 50:
-            all_signals.append(result)
 
-    for pit_entry in pit:
-        result = score_promoter_pit(pit_entry)
-        if not result.get("skip"):
-            all_signals.append(result)
 
     all_signals.extend(score_news_velocity(news))
 
@@ -169,7 +145,7 @@ def run():
     # Reset seen so morning scan processes tomorrow's fresh announcements
     reset_seen()
 
-    msg = build_evening_brief(tier1, tier2, macro, pit)
+    msg = build_evening_brief(tier1, tier2, macro)
     send(msg)
     print(f"Evening brief sent: {len(tier1)} Tier1, {len(tier2)} Tier2")
 
