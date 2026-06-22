@@ -564,6 +564,8 @@ def fetch_news():
                         "query": query,
                         "max_results": 5,
                         "search_depth": "basic",
+                        "topic": "news",
+                        "days": 1,
                     },
                     timeout=10
                 )
@@ -573,7 +575,7 @@ def fetch_news():
                             "source":    "TAVILY",
                             "title":     item.get("title", ""),
                             "summary":   item.get("content", "")[:300],
-                            "published": "",
+                            "published": item.get("published_date", ""),
                             "url":       item.get("url", ""),
                         })
             except Exception as e:

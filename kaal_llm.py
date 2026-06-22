@@ -316,53 +316,77 @@ def gemini_final_judge(signals: list, macro: dict) -> list:
     return []
 
 
-def search_staleness(symbol: str, catalyst: str) -> dict:
+def search_staleness(symbol: str, catalyst: str, company_name: str = "") -> dict:
     """
-    Use Tavily or Serper to check if catalyst is stale.
-    Returns {"is_fresh": bool, "note": str}
+    Use Tavily (with real date filtering) to check if catalyst is stale.
+    Returns {"is_fresh": bool, "note": str, "newest_article_days_old": int|None}
     """
     _load_env()
-    query = f"{symbol} {catalyst.replace('_',' ')} NSE announcement latest"
+    from datetime import datetime, timezone
+    catalyst_label = catalyst.replace("_", " ")
+    name_part = f'"{company_name}"' if company_name else f'"{symbol}"'
+    query = f'{name_part} {catalyst_label} NSE stock India'.strip()
 
-    # Try Tavily first
     tavily_key = os.environ.get("TAVILY_API_KEY", "")
     if tavily_key:
         try:
             r = requests.post(
                 "https://api.tavily.com/search",
-                json={"api_key": tavily_key, "query": query, "max_results": 3},
+                json={
+                    "api_key": tavily_key,
+                    "query": query,
+                    "max_results": 5,
+                    "search_depth": "advanced",
+                    "topic": "news",
+                    "days": 7,
+                    "include_domains": [
+                        "moneycontrol.com", "economictimes.indiatimes.com",
+                        "livemint.com", "business-standard.com",
+                        "nseindia.com", "bseindia.com",
+                    ],
+                },
                 timeout=10
             )
             if r.status_code == 200:
                 results = r.json().get("results", [])
-                snippets = " ".join(r.get("content", "") for r in results[:3])[:500]
-                # Simple heuristic: if old dates found, likely stale
-                stale_signals = ["weeks ago", "last month", "announced in", "previously"]
-                is_stale = any(s in snippets.lower() for s in stale_signals)
-                return {"is_fresh": not is_stale, "note": snippets[:200]}
+                if not results:
+                    return {"is_fresh": True, "note": "no recent articles found (7d window)", "newest_article_days_old": None}
+
+                # Find the most recent article's actual age in days
+                newest_days_old = None
+                now = datetime.now(timezone.utc)
+                for item in results:
+                    pub = item.get("published_date", "")
+                    if not pub:
+                        continue
+                    try:
+                        # Tavily returns RFC822-style: "Sat, 20 Jun 2026 21:34:28 GMT"
+                        from email.utils import parsedate_to_datetime
+                        pub_dt = parsedate_to_datetime(pub)
+                        if pub_dt.tzinfo is None:
+                            pub_dt = pub_dt.replace(tzinfo=timezone.utc)
+                        days_old = (now - pub_dt).days
+                        if newest_days_old is None or days_old < newest_days_old:
+                            newest_days_old = days_old
+                    except Exception:
+                        continue
+
+                snippets = " ".join(item.get("content", "") for item in results[:3])[:300]
+
+                if newest_days_old is None:
+                    # Couldn't parse any dates — fall back to assuming fresh, flag uncertainty
+                    return {"is_fresh": True, "note": f"date parse failed | {snippets}", "newest_article_days_old": None}
+
+                is_fresh = newest_days_old <= 2
+                return {
+                    "is_fresh": is_fresh,
+                    "note": f"newest article {newest_days_old}d old | {snippets}",
+                    "newest_article_days_old": newest_days_old,
+                }
         except Exception as e:
             print(f"[SEARCH] Tavily error: {e}")
 
-    # Fallback to Serper
-    serper_key = os.environ.get("SERPER_API_KEY", "")
-    if serper_key:
-        try:
-            r = requests.post(
-                "https://google.serper.dev/search",
-                headers={"X-API-KEY": serper_key, "Content-Type": "application/json"},
-                json={"q": query, "num": 3},
-                timeout=10
-            )
-            if r.status_code == 200:
-                items = r.json().get("organic", [])
-                snippets = " ".join(i.get("snippet", "") for i in items[:3])[:500]
-                stale_signals = ["weeks ago", "last month", "announced in", "previously"]
-                is_stale = any(s in snippets.lower() for s in stale_signals)
-                return {"is_fresh": not is_stale, "note": snippets[:200]}
-        except Exception as e:
-            print(f"[SEARCH] Serper error: {e}")
-
-    return {"is_fresh": True, "note": "search unavailable"}
+    return {"is_fresh": True, "note": "search unavailable", "newest_article_days_old": None}
 
 
 def reset_call_count():

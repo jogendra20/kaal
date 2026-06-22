@@ -57,6 +57,7 @@ SKIP_BELOW      = 40
 RSS_FEEDS = {
     "ET":   "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
     "MINT": "https://www.livemint.com/rss/markets",
+    "BL":   "https://www.thehindubusinessline.com/markets/stock-markets/?service=rss",
 }
 # MC removed June 21 2026 — moneycontrol.com/rss/latestnews.xml confirmed
 # serving stale April 2024 broker-call archive despite filename. Both

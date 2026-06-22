@@ -278,11 +278,16 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         if use_pdf and pdf_url and (tier == 1 or cat in ("VAGUE", "OUTCOME_OF_BOARD_MEETING")):
             pdf_text = download_pdf_text(pdf_url)
 
-        # Staleness check for open offers via Tavily/Serper
-        if tier == 1 and any(k in (subject+details).lower() for k in ["open offer","buyback","merger"]):
+        # Staleness check disabled June 21 2026 — Tavily news search consistently
+        # returned irrelevant articles even with company name + domain restriction
+        # + advanced depth. Relying instead on CLOSED_OPEN_OFFERS static map
+        # (kaal_config.py) and signal_history.json days_old/pct_change tracking,
+        # both of which are proven reliable and cost zero extra API credits.
+        if False and tier == 1 and any(k in (subject+details).lower() for k in ["open offer","buyback","merger"]):
             try:
                 from kaal_llm import search_staleness
-                stale_result = search_staleness(symbol, cat)
+                company_name = ann.get("sm_name", "") if isinstance(ann, dict) else ""
+                stale_result = search_staleness(symbol, cat, company_name)
                 if not stale_result.get("is_fresh", True):
                     return {
                         "symbol": symbol, "score": 10, "tier": 3,
