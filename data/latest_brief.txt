@@ -1,26 +1,27 @@
-<b>🌙 KAAL EVENING BRIEF</b>
-<code>21 Jun 2026</code>  |  VIX: <code>13.0</code>
-Crude: <code>$77</code>  USD/INR: <code>94.34</code>
+<b>⚔️ KAAL MORNING BRIEF</b>
+<code>22 Jun 2026 11:05 AM</code>
+
+<b>🌐 MACRO</b>
+VIX: <code>12.9</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.60%</code> (Bullish)
+SPX: <code>+1.1%</code>  Crude: <code>$75</code>  Gold: <code>$4206</code>  USD/INR: <code>94.40</code>
 ──────────────────────────────────
 
-<b>📋 TOMORROW'S PRE-WATCHLIST</b>
-<i>(Morning scan will confirm with fresh announcements)</i>
+🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-🔥 <b>TIER 1</b>
+<code>[07:31 AM]</code> <b>AUROPHARMA</b> — ACQUISITION 🟢
+Score: <code>75/100</code> 🟢 FRESH
+└─ Aurobindo Pharma USA receives FTC approval to acquire Lannett Company
+└─ [WATCH] Specific high-impact catalyst (FTC acquisition approval) with clear upside potential in bullish market.
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
-<b>CYIENT</b> 🟢 [75] — BUYBACK
-💡 Cyient Limited to buyback up to 64,00,000 equity shares of face value INR 5
-🧠 The buyback announcement is a positive catalyst as it indicates the company's confidence in its financials and its commitment to rewarding shareholders. Typically, buyback announce
+👀 <b>TIER 2 — WATCHLIST</b>
 
-👀 <b>TIER 2</b>
-• <b>TMCV</b> 🟢 [73] ORDER WIN — Tata Motors receives over 3,400 eCV orders across segments
-• <b>TEXRAIL</b> 🟢 [73] ORDER WIN — Texmaco Rail & Engineering Limited receives order worth Rs. 11.65 Cror
-• <b>CONCORDBIO</b> 🟢 [73] ACQUISITION — Concord Biotech acquires 27.38% equity in FSGE Renewable Power for a w
-• <b>REFEX</b> 🟢 [73] ORDER WIN — Bagging of order for Transportation of pond ash to NHAI Road Projects
-• <b>RELIANCE</b> 🟡 [72] NEWS MOMENTUM — Mentioned 7x across MC, MINT, ET: Taking Stock: Market fails to hold o
-• <b>3IINFOLTD</b> 🟢 [70] ORDER WIN — 3i Infotech Limited has received new orders/contracts
-• <b>MCLOUD</b> 🟢 [70] ORDER WIN — Magellanic Cloud Limited has received new orders/contracts
-• <b>POWERMECH</b> 🟢 [70] ORDER WIN — Power Mech Projects Limited has received new orders/contracts
+<code>[02:14 PM]</code> <b>TMCV</b> — ORDER WIN 🟢
+Score: <code>73/100</code> 🟢 FRESH
+└─ Tata Motors receives over 3,400 eCV orders across freight, logistics, and passenger mobility segment
+└─ [WATCH] Specific order win with quantity (3,400 eCV orders) indicating strong demand; liquidity warning noted.
+└─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
-<i>Morning brief at 8:50 AM tomorrow.</i>
+<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

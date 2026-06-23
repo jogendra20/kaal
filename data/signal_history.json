@@ -28,5 +28,15 @@
     "first_seen": "2026-06-20",
     "first_price": 749.7,
     "catalyst": "USFDA_APPROVAL"
+  },
+  "AUROPHARMA": {
+    "first_seen": "2026-06-22",
+    "first_price": 1498.2,
+    "catalyst": "ACQUISITION"
+  },
+  "TMCV": {
+    "first_seen": "2026-06-22",
+    "first_price": 408.8,
+    "catalyst": "ORDER_WIN"
   }
 }
