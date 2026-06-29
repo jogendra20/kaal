@@ -38,5 +38,60 @@
     "first_seen": "2026-06-22",
     "first_price": 408.8,
     "catalyst": "ORDER_WIN"
+  },
+  "ZOTA": {
+    "first_seen": "2026-06-23",
+    "first_price": 1319.9,
+    "catalyst": "ACQUISITION"
+  },
+  "DEEDEV": {
+    "first_seen": "2026-06-23",
+    "first_price": 698.0,
+    "catalyst": "ORDER_WIN"
+  },
+  "NIACL": {
+    "first_seen": "2026-06-24",
+    "first_price": 195.1,
+    "catalyst": "PROXY_PLAY"
+  },
+  "IFCI": {
+    "first_seen": "2026-06-24",
+    "first_price": 81.95,
+    "catalyst": "PROXY_PLAY"
+  },
+  "GICRE": {
+    "first_seen": "2026-06-24",
+    "first_price": 367.8,
+    "catalyst": "PROXY_PLAY"
+  },
+  "LT": {
+    "first_seen": "2026-06-24",
+    "first_price": 4176.5,
+    "catalyst": "BUDGET_PLAY"
+  },
+  "TATASTEEL": {
+    "first_seen": "2026-06-25",
+    "first_price": 192.8,
+    "catalyst": "ACQUISITION"
+  },
+  "BHARATFORG": {
+    "first_seen": "2026-06-25",
+    "first_price": 2145.0,
+    "catalyst": "ACQUISITION"
+  },
+  "MEDIASSIST": {
+    "first_seen": "2026-06-25",
+    "first_price": 373.0,
+    "catalyst": "ACQUISITION"
+  },
+  "SETL": {
+    "first_seen": "2026-06-25",
+    "first_price": 224.0,
+    "catalyst": "ACQUISITION"
+  },
+  "PURVA": {
+    "first_seen": "2026-06-29",
+    "first_price": 215.46,
+    "catalyst": "ORDER_WIN"
   }
 }

@@ -523,6 +523,120 @@ def fetch_preopen_gainers() -> list:
     print(f"[SRC] Pre-open: {len(gainers)} gap-up, {len(losers)} gap-down stocks")
     return results
 
+
+
+def fetch_marketaux_news(limit: int = 20) -> list:
+    """
+    Fetch Indian stock market news from Marketaux.
+    Returns articles with pre-tagged stock symbols and sentiment scores.
+    Free tier: 100 requests/day.
+    """
+    from kaal_config import MARKETAUX_API_KEY
+    if not MARKETAUX_API_KEY:
+        return []
+
+    try:
+        import requests
+        url = "https://api.marketaux.com/v1/news/all"
+        params = {
+            "countries":    "in",
+            "language":     "en",
+            "limit":        limit,
+            "filter_entities": "true",
+            "api_token":    MARKETAUX_API_KEY,
+        }
+        r = requests.get(url, params=params, timeout=10)
+        if r.status_code != 200:
+            print(f"[SRC] Marketaux error: {r.status_code}")
+            return []
+
+        data = r.json()
+        articles = []
+        for item in data.get("data", []):
+            # Extract best entity (highest match_score)
+            entities = item.get("entities", [])
+            tagged_symbols = [
+                e["symbol"] for e in entities
+                if e.get("country") == "in"
+                and e.get("type") == "equity"
+                and e.get("match_score", 0) > 50
+            ]
+            sentiment = None
+            if entities:
+                best = max(entities, key=lambda e: e.get("match_score", 0))
+                sentiment = best.get("sentiment_score")
+
+            articles.append({
+                "title":      item.get("title", ""),
+                "summary":    item.get("description", "") or item.get("snippet", ""),
+                "url":        item.get("url", ""),
+                "source":     "MARKETAUX",
+                "published":  item.get("published_at", ""),
+                "symbols":    tagged_symbols,
+                "sentiment":  sentiment,
+            })
+
+        print(f"[SRC] Marketaux: {len(articles)} articles")
+        return articles
+
+    except Exception as e:
+        print(f"[SRC] Marketaux error: {e}")
+        return []
+
+
+def fetch_marketaux_news(limit: int = 20) -> list:
+    """
+    Fetch Indian stock market news from Marketaux.
+    Returns articles with pre-tagged stock symbols and sentiment scores.
+    Free tier: 100 requests/day.
+    """
+    from kaal_config import MARKETAUX_API_KEY
+    if not MARKETAUX_API_KEY:
+        return []
+    try:
+        import requests
+        url = "https://api.marketaux.com/v1/news/all"
+        params = {
+            "countries":       "in",
+            "language":        "en",
+            "limit":           limit,
+            "filter_entities": "true",
+            "api_token":       MARKETAUX_API_KEY,
+        }
+        r = requests.get(url, params=params, timeout=10)
+        if r.status_code != 200:
+            print(f"[SRC] Marketaux error: {r.status_code}")
+            return []
+        data = r.json()
+        articles = []
+        for item in data.get("data", []):
+            entities = item.get("entities", [])
+            tagged_symbols = [
+                e["symbol"] for e in entities
+                if e.get("country") == "in"
+                and e.get("type") == "equity"
+                and e.get("match_score", 0) > 50
+            ]
+            sentiment = None
+            if entities:
+                best = max(entities, key=lambda e: e.get("match_score", 0))
+                sentiment = best.get("sentiment_score")
+            articles.append({
+                "title":     item.get("title", ""),
+                "summary":   item.get("description", "") or item.get("snippet", ""),
+                "url":       item.get("url", ""),
+                "source":    "MARKETAUX",
+                "published": item.get("published_at", ""),
+                "symbols":   tagged_symbols,
+                "sentiment": sentiment,
+            })
+        print(f"[SRC] Marketaux: {len(articles)} articles")
+        return articles
+    except Exception as e:
+        print(f"[SRC] Marketaux error: {e}")
+        return []
+
+
 def fetch_news():
     """
     Fetch news from:
@@ -554,6 +668,10 @@ def fetch_news():
             "NSE BSE stocks to buy today intraday",
             "NSE stocks breakout news today",
             "India stock market movers today",
+            "anti-dumping duty safeguard duty India stock today",
+            "DGTR India trade protection sector company today",
+            "PLI scheme approved India company today",
+            "import duty India domestic manufacturer stock today",
         ]
         for query in queries:
             try:

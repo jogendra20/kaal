@@ -1,26 +1,26 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>22 Jun 2026 11:05 AM</code>
+<code>29 Jun 2026 09:09 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>12.9</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.60%</code> (Bullish)
-SPX: <code>+1.1%</code>  Crude: <code>$75</code>  Gold: <code>$4206</code>  USD/INR: <code>94.40</code>
+VIX: <code>13.1</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.02%</code> (Neutral)
+SPX: <code>-0.1%</code>  Crude: <code>$70</code>  Gold: <code>$4087</code>  USD/INR: <code>94.26</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
-
-<code>[07:31 AM]</code> <b>AUROPHARMA</b> — ACQUISITION 🟢
-Score: <code>75/100</code> 🟢 FRESH
-└─ Aurobindo Pharma USA receives FTC approval to acquire Lannett Company
-└─ [WATCH] Specific high-impact catalyst (FTC acquisition approval) with clear upside potential in bullish market.
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+⚠️ No Tier 1 stocks today — consider staying in cash
 
 👀 <b>TIER 2 — WATCHLIST</b>
 
-<code>[02:14 PM]</code> <b>TMCV</b> — ORDER WIN 🟢
-Score: <code>73/100</code> 🟢 FRESH
-└─ Tata Motors receives over 3,400 eCV orders across freight, logistics, and passenger mobility segment
-└─ [WATCH] Specific order win with quantity (3,400 eCV orders) indicating strong demand; liquidity warning noted.
+<code>[02:41 AM]</code> <b>SETL</b> — ACQUISITION 🟢
+Score: <code>68/100</code> 🟢 FRESH
+└─ Standard Engineering Technology Limited to acquire up to 51% equity stake in GScale Energy Private L
+└─ [WATCH] Strategic acquisition into AI Datacenter Infrastructure; verify liquidity.
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+
+<code>[08:50 AM]</code> <b>PURVA</b> — ORDER WIN 🟢
+Score: <code>68/100</code> 🟢 FRESH
+└─ Puravankara announces JDA for 6.4-acre land parcel in Sarjapur, Bengaluru with potential GDV of Rs 1
+└─ [WATCH] Significant land parcel JDA with Rs 1,000 Cr GDV potential; verify liquidity.
 └─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────

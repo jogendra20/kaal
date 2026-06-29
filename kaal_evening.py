@@ -42,8 +42,8 @@ def direction_emoji(direction: str) -> str:
     return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
 
 def build_evening_brief(tier1: list, tier2: list, macro: dict) -> str:
-    now = datetime.now().strftime("%d %b %Y")
-    vix = macro.get("vix", 0)
+    now      = datetime.now().strftime("%d %b %Y %I:%M %p")
+    vix      = macro.get("vix", 0)
 
     lines = [
         "<b>🌙 KAAL EVENING BRIEF</b>",
@@ -59,12 +59,24 @@ def build_evening_brief(tier1: list, tier2: list, macro: dict) -> str:
     if tier1:
         lines.append("\n🔥 <b>TIER 1</b>")
         for s in tier1:
-            de = direction_emoji(s.get("direction", "NEUTRAL"))
+            de  = direction_emoji(s.get("direction", "NEUTRAL"))
+            # Show announcement timestamp if available
+            an_dt = s.get("an_dt", "")
+            if an_dt:
+                try:
+                    from datetime import datetime as _dt
+                    ts = _dt.strptime(an_dt, "%d-%b-%Y %H:%M:%S")
+                    time_str = f"<code>[{ts.strftime('%I:%M %p')}]</code> "
+                except Exception:
+                    time_str = ""
+            else:
+                time_str = ""
             lines += [
                 f"",
-                f"<b>{s['symbol']}</b> {de} [{s['score']}] — {s.get('catalyst','').replace('_',' ')}",
-                f"💡 {s.get('key','')[:100]}",
-                f"🧠 {s.get('reason','')[:180]}",
+                f"{time_str}<b>{s['symbol']}</b> — {s.get('catalyst','').replace('_',' ')} {de}",
+                f"Score: <code>{s['score']}/100</code>",
+                f"└─ {s.get('key','')[:100]}",
+                f"└─ {s.get('reason','')[:180]}",
             ]
     if tier2:
         lines.append("\n👀 <b>TIER 2</b>")

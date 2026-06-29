@@ -278,6 +278,39 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         if use_pdf and pdf_url and (tier == 1 or cat in ("VAGUE", "OUTCOME_OF_BOARD_MEETING")):
             pdf_text = download_pdf_text(pdf_url)
 
+        # Stock-specific Tavily news for Tier1 — added June 24 2026
+        # Fetches today's news for the specific stock to give LLM more context
+        stock_news_context = ""
+        if tier == 1:
+            try:
+                from kaal_config import TAVILY_API_KEY
+                if TAVILY_API_KEY:
+                    import requests as _req
+                    company_name = ann.get("sm_name", symbol) if isinstance(ann, dict) else symbol
+                    _resp = _req.post(
+                        "https://api.tavily.com/search",
+                        json={
+                            "api_key":      TAVILY_API_KEY,
+                            "query":        f"{company_name} {symbol} stock news today India",
+                            "topic":        "news",
+                            "days":         2,
+                            "max_results":  3,
+                            "search_depth": "basic",
+                        },
+                        timeout=8,
+                    )
+                    if _resp.status_code == 200:
+                        _results = _resp.json().get("results", [])
+                        if _results:
+                            snippets = []
+                            for r in _results:
+                                t = r.get("title", "")
+                                s = r.get("content", "")[:200]
+                                snippets.append(f"- {t}: {s}")
+                            stock_news_context = "\n\nRECENT NEWS FOR THIS STOCK:\n" + "\n".join(snippets)
+            except Exception:
+                pass
+
         # Staleness check disabled June 21 2026 — Tavily news search consistently
         # returned irrelevant articles even with company name + domain restriction
         # + advanced depth. Relying instead on CLOSED_OPEN_OFFERS static map
@@ -314,6 +347,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             prompt = _build_results_prompt(subject, details, pdf_text, macro_context)
         else:
             prompt = _build_prompt(subject, details, pdf_text, macro_context)
+        prompt += stock_news_context
         llm = call_llm(prompt, fast=(tier == 2))
 
         if llm:
@@ -697,7 +731,7 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
 
     # Cooldown periods for different trigger types (days)
     COOLDOWN_DAYS = {
-        "NSE IPO": 7,
+        "NSE IPO": 30,  # increased from 7 — NSE IPO is a long-running theme, re-firing every 7 days is noise
         "NSE DRHP": 7,
         "NSE LISTING": 3,
         "NSE IPO DRHP FILED": 30,    # once DRHP filed, next milestone is SEBI obs
@@ -721,6 +755,25 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
                 except Exception:
                     pass
 
+    # Fetch pre-open gap map for edge-consumed check
+    try:
+        from kaal_sources import fetch_preopen_gainers
+        preopen_data = fetch_preopen_gainers()
+        preopen_gap_map = {s["symbol"]: s["gap_pct"] for s in preopen_data}
+    except Exception:
+        preopen_gap_map = {}
+
+    # Fetch signal history for days_old check
+    import json
+    history_file = os.path.join(os.path.dirname(__file__), "data", "signal_history.json")
+    signal_history = {}
+    if os.path.exists(history_file):
+        try:
+            with open(history_file) as f:
+                signal_history = json.load(f)
+        except Exception:
+            pass
+
     results = []
     found_triggers = set()
 
@@ -732,15 +785,35 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
                 found_triggers.add(trigger)
                 print(f"[PROXY] Trigger found: {trigger}")
                 for symbol in symbols:
+                    # Edge-consumed check
+                    gap = preopen_gap_map.get(symbol, 0)
+                    history = signal_history.get(symbol, {})
+                    days_old = history.get("days_old", 0)
+
+                    if gap > 8:
+                        # Already gapped up hard today — edge consumed
+                        print(f"[PROXY] {symbol} skipped — gap {gap:.1f}% too large, edge consumed")
+                        continue
+                    elif gap > 5 or days_old > 2:
+                        # Partial move — downgrade to Tier2, lower score
+                        score = 62
+                        tier  = 2
+                        note  = f"Partial move detected (gap {gap:.1f}%, {days_old}d old). Downgraded to Tier2."
+                        print(f"[PROXY] {symbol} downgraded — gap {gap:.1f}%, days_old {days_old}")
+                    else:
+                        score = 78
+                        tier  = 1
+                        note  = f"Proxy play — {trigger} news benefits {symbol} indirectly. Check if stock already moved before entering."
+
                     results.append({
                         "symbol":         symbol,
-                        "score":          78,
-                        "tier":           1,
+                        "score":          score,
+                        "tier":           tier,
                         "skip":           False,
                         "catalyst":       "PROXY_PLAY",
                         "direction":      "BULLISH",
                         "key":            f"Indirect beneficiary of: {trigger}",
-                        "reason":         f"Proxy play — {trigger} news benefits {symbol} indirectly. Check if stock already moved before entering.",
+                        "reason":         note,
                         "source":         "PROXY",
                         "signal_sources": ["PROXY"],
                         "offer_price":    0,
@@ -779,6 +852,179 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
 
     return results
 
+
+
+
+def score_policy_signals(news_articles: list) -> list:
+    """
+    Detect government policy / trade protection catalysts from news.
+    Examples: anti-dumping duty, PLI scheme approval, import duty, safeguard duty.
+    These are NOT in NSE announcements — they come from Ministry/DGTR gazette.
+    Scores as Tier1 POLICY_PROTECTION catalyst.
+    """
+    import os
+    from datetime import datetime
+
+    POLICY_TRIGGERS = {
+        "ANTI_DUMPING": [
+            "ANTI-DUMPING", "ANTIDUMPING", "ANTI DUMPING",
+            "DGTR", "DIRECTORATE GENERAL OF TRADE REMEDIES",
+            "DUMPING DUTY", "DUMPED IMPORTS",
+        ],
+        "SAFEGUARD_DUTY": [
+            "SAFEGUARD DUTY", "SAFEGUARD TARIFF",
+            "IMPORT DUTY HIKE", "CUSTOMS DUTY INCREASE",
+        ],
+        "PLI_APPROVAL": [
+            "PLI SCHEME", "PRODUCTION LINKED INCENTIVE",
+            "PLI APPROVED", "PLI BENEFICIARY",
+        ],
+        "TRADE_PROTECTION": [
+            "IMPORT RESTRICTION", "IMPORT BAN",
+            "MINIMUM IMPORT PRICE", "MIP IMPOSED",
+            "COUNTERVAILING DUTY", "CVD IMPOSED",
+        ],
+    }
+
+    POLICY_SECTOR_MAP = {
+        "RUBBER": ["NOCIL"],
+        "CHEMICAL": ["NOCIL", "TATACHEM", "DEEPAKNTR", "AARTI"],
+        "TYRE": ["MRF", "CEATLTD", "APOLLOTYRE", "BALKRISIND"],
+        "STEEL": ["TATASTEEL", "JSWSTEEL", "SAIL", "NMDC"],
+        "ALUMINIUM": ["HINDALCO", "NALCO", "VEDL"],
+        "TEXTILE": ["PAGEIND", "VARDHMAN", "TRIDENT"],
+        "SOLAR": ["ADANIGREEN", "TATAPOWER", "SUZLON"],
+        "CERAMIC": ["KAJARIA", "CERA", "SOMANYCER"],
+        "PHARMA": ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN"],
+        "ELECTRONICS": ["DIXON", "AMBER", "KAYNES"],
+        "TELECOM": ["TEJAS", "STLTECH", "HFCL", "KSOLVES"],
+        "PAPER": ["TNPL", "WCOSIND"],
+        "PLASTICS": ["SUPREMEIND", "ASTRAL"],
+        "AGROCHEMICAL": ["PIIND", "RALLIS", "DHANUKA"],
+    }
+
+    SECTOR_DETECT = {
+        "RUBBER": ["RUBBER", "VULCANI", "SULPHENAMIDE", "ACCELERATOR", "NOCIL"],
+        "CHEMICAL": ["CHEMICAL", "SPECIALTY CHEM", "PIGMENT", "DYE"],
+        "TYRE": ["TYRE", "TIRE", "RADIAL"],
+        "STEEL": ["STEEL", "IRON", "HOT ROLLED", "COLD ROLLED"],
+        "ALUMINIUM": ["ALUMINIUM", "ALUMINUM"],
+        "TEXTILE": ["TEXTILE", "YARN", "FABRIC", "GARMENT"],
+        "SOLAR": ["SOLAR", "PANEL", "MODULE", "PHOTOVOLTAIC"],
+        "CERAMIC": ["CERAMIC", "TILE", "SANITARYWARE"],
+        "PHARMA": ["API", "BULK DRUG", "FORMULATION"],
+        "ELECTRONICS": ["ELECTRONICS", "PCB", "SEMICONDUCTOR"],
+        "TELECOM": ["TELECOM EQUIPMENT", "TELECOMMUNICATION EQUIPMENT", "NETWORK EQUIPMENT", "5G EQUIPMENT", "OPTICAL FIBRE CABLE", "OFC"],
+        "PAPER": ["PAPER", "NEWSPRINT", "PAPERBOARD"],
+        "PLASTICS": ["PLASTIC", "PVC", "POLYMER"],
+        "AGROCHEMICAL": ["AGROCHEMICAL", "PESTICIDE", "HERBICIDE", "FUNGICIDE"],
+    }
+
+    dedup_file = os.path.join(os.path.dirname(__file__), "data", "policy_dedup.txt")
+    today = datetime.now().strftime("%Y-%m-%d")
+    already_triggered = set()
+    if os.path.exists(dedup_file):
+        for line in open(dedup_file):
+            line = line.strip()
+            if "|" in line:
+                date, trigger = line.split("|", 1)
+                if date == today:
+                    already_triggered.add(trigger)
+
+    results = []
+    found_triggers = set()
+    flagged_symbols_today = set()  # Fix 1: symbol-level dedup
+
+    for article in news_articles:
+        # Fix 2: freshness filter — skip articles older than 48 hours
+        pub = article.get("published", "") or article.get("pub_date", "") or ""
+        if pub:
+            try:
+                from email.utils import parsedate_to_datetime
+                pub_dt = parsedate_to_datetime(pub)
+                pub_dt = pub_dt.replace(tzinfo=None)
+                age_hours = (datetime.now() - pub_dt).total_seconds() / 3600
+                if age_hours > 96:  # 96h covers Thu gazette → Mon market reaction
+                    continue
+            except Exception:
+                pass  # if can't parse date, allow through
+
+        text = (article.get("title", "") + " " + article.get("summary", "")).upper()
+
+        matched_policy = None
+        for policy_type, keywords in POLICY_TRIGGERS.items():
+            if any(kw in text for kw in keywords):
+                matched_policy = policy_type
+                break
+        if not matched_policy:
+            continue
+
+        # PLI_APPROVAL needs company-specific trigger, not generic milestone
+        if matched_policy == "PLI_APPROVAL":
+            PLI_SPECIFIC = [
+                "PLI APPROVED", "PLI SELECTED", "PLI ELIGIBLE",
+                "PLI BENEFICIARY", "APPROVED UNDER PLI", "SELECTED UNDER PLI",
+                "INCENTIVE APPROVED", "PLI APPLICATION APPROVED",
+            ]
+            if not any(kw in text for kw in PLI_SPECIFIC):
+                continue
+
+        matched_sectors = []
+        for sector, sector_kws in SECTOR_DETECT.items():
+            if any(kw in text for kw in sector_kws):
+                matched_sectors.append(sector)
+
+        if not matched_sectors:
+            continue
+
+        dedup_key = matched_policy + ":" + "+".join(sorted(matched_sectors))
+        if dedup_key in already_triggered or dedup_key in found_triggers:
+            continue
+        found_triggers.add(dedup_key)
+
+        headline = article.get("title", "")[:80]
+        print(f"[POLICY] {matched_policy} | Sectors: {matched_sectors} | {headline}")
+
+        beneficiary_stocks = []
+        seen_symbols = set()
+        for sector in matched_sectors:
+            for sym in POLICY_SECTOR_MAP.get(sector, []):
+                if sym not in seen_symbols:
+                    beneficiary_stocks.append(sym)
+                    seen_symbols.add(sym)
+
+        for i, symbol in enumerate(beneficiary_stocks):
+            if symbol in flagged_symbols_today:
+                continue  # Fix 1: skip already flagged symbol
+            flagged_symbols_today.add(symbol)
+            score = 80 if i == 0 else 70
+            results.append({
+                "symbol":         symbol,
+                "score":          score,
+                "tier":           1 if i == 0 else 2,
+                "skip":           False,
+                "catalyst":       "POLICY_PROTECTION",
+                "direction":      "BULLISH",
+                "key":            f"{matched_policy} | {', '.join(matched_sectors)} sector | {headline}",
+                "reason":         (
+                    f"Government trade protection catalyst ({matched_policy.replace('_',' ')}) "
+                    f"detected in news. Sector: {', '.join(matched_sectors)}. "
+                    f"Domestic manufacturers benefit from reduced import competition. "
+                    f"Enter only after 9:30 confirmation with volume."
+                ),
+                "source":         "NEWS",
+                "signal_sources": [article.get("source", "NEWS")],
+                "offer_price":    0,
+                "is_fresh":       True,
+            })
+
+    if found_triggers:
+        with open(dedup_file, "a") as f:
+            for trigger in found_triggers:
+                f.write(f"{today}|{trigger}\n")
+        print(f"[POLICY] {len(results)} stocks flagged from {len(found_triggers)} policy triggers")
+
+    return results
 
 def score_news_velocity(articles: list, known_symbols: set = None) -> list:
     """

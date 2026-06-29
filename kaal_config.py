@@ -32,7 +32,8 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 # ── EXTRA LLM KEYS (loaded from .env)
 import os
 CEREBRAS_API_KEY = os.environ.get("CEREBRAS_API_KEY", "")
-TAVILY_API_KEY   = os.environ.get("TAVILY_API_KEY", "")
+TAVILY_API_KEY      = os.environ.get("TAVILY_API_KEY", "")
+MARKETAUX_API_KEY  = os.environ.get("MARKETAUX_API_KEY", "")
 SERPER_API_KEY   = os.environ.get("SERPER_API_KEY", "")
 
 # ── SCAN FILTERS ──────────────────────────────────────────
@@ -58,7 +59,12 @@ RSS_FEEDS = {
     "ET":   "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
     "MINT": "https://www.livemint.com/rss/markets",
     "BL":   "https://www.thehindubusinessline.com/markets/stock-markets/?service=rss",
+    "GNEWS_MARKET":  "https://news.google.com/rss/search?q=NSE+BSE+stock+India+today&hl=en-IN&gl=IN&ceid=IN:en",
 }
+# GNEWS_POLICY + GNEWS_GOVT removed — Google News search returns stale archive
+# articles (months/years old) for niche policy queries, not fresh news.
+# Policy detection now relies on Tavily queries instead.
+# PIB removed — JS-rendered, not parseable via RSS or BeautifulSoup
 # MC removed June 21 2026 — moneycontrol.com/rss/latestnews.xml confirmed
 # serving stale April 2024 broker-call archive despite filename. Both
 # marketreports.xml and latestnews.xml tested broken. Revisit if a working

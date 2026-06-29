@@ -20,7 +20,7 @@ from kaal_sources import (
 from kaal_scorer import (
     classify_announcement, score_announcement,
     score_bulk_deal, score_promoter_pit, score_news_velocity,
-    score_proxy_signals, score_negative_proxy, score_usfda_signals, score_budget_signals,
+    score_proxy_signals, score_negative_proxy, score_usfda_signals, score_budget_signals, score_policy_signals,
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
@@ -116,22 +116,35 @@ def _signal_time(s: dict) -> str:
 
 
 def _format_signal_block(s: dict) -> list:
-    de       = direction_emoji(s.get("direction", "NEUTRAL"))
-    status   = _status_emoji(s.get("hist_status", "FRESH"))
-    pct      = s.get("pct_change", 0.0)
-    catalyst = s.get("catalyst", "").replace("_", " ")
-    time_str = _signal_time(s)
+    de                  = direction_emoji(s.get("direction", "NEUTRAL"))
+    status              = _status_emoji(s.get("hist_status", "FRESH"))
+    pct                 = s.get("pct_change", 0.0)
+    prev_day            = s.get("prev_day_chg", 0.0)
+    days_catalyst       = s.get("days_since_catalyst", 0)
+    already_moved       = s.get("already_moved", False)
+    catalyst            = s.get("catalyst", "").replace("_", " ")
+    time_str            = _signal_time(s)
 
-    pct_str = f" | {pct:+.1f}% since trigger" if pct != 0 else ""
+    # Build score line parts
+    pct_str      = f" | {pct:+.1f}% since trigger" if pct != 0.0 else ""
+    prev_str     = f" | Yest: {prev_day:+.1f}%" if prev_day != 0.0 else ""
+    catalyst_age = f" | Catalyst: {days_catalyst}d old" if days_catalyst > 1 else ""
+
+    # Already moved warning
+    moved_warn = ""
+    if already_moved:
+        moved_warn = f"\n└─ ⚠️ Already moved {pct:+.1f}% since catalyst — verify edge before entry"
 
     lines = [
         "",
         f"<code>[{time_str}]</code> <b>{s['symbol']}</b> — {catalyst} {de}",
-        f"Score: <code>{s['score']}/100</code>{pct_str} {status}",
+        f"Score: <code>{s['score']}/100</code>{pct_str}{prev_str}{catalyst_age} {status}",
         f"└─ {s.get('key', '')[:100]}",
         f"└─ {s.get('reason', '')[:150]}",
-        f"└─ 🎯 {_entry_plan(s)}",
     ]
+    if moved_warn:
+        lines.append(moved_warn)
+    lines.append(f"└─ 🎯 {_entry_plan(s)}")
     return lines
 
 
@@ -264,6 +277,10 @@ def run():
     # ── Budget day sector signals ─────────────────────────
     budget_signals = score_budget_signals(news)
     all_signals.extend(budget_signals)
+
+    # ── Policy/trade protection signals ──────────────────
+    policy_signals = score_policy_signals(news)
+    all_signals.extend(policy_signals)
 
     # ── USFDA special signals ────────────────────────────
     usfda_signals = score_usfda_signals(nse_anns, news)
@@ -404,20 +421,31 @@ def run():
 
     # ── Track signal history (price since first trigger) ──
     from kaal_history import update_signal_history, cleanup_old_history
+    # Build prev_close map from preopen data
+    prev_close_map = {s['symbol']: s['prev_close'] for s in preopen if s.get('prev_close', 0) > 0}
+
     for s in final:
         sym = s.get('symbol', '')
         price = price_map.get(sym, 0)
+        prev_close = prev_close_map.get(sym, 0)
+        ann_dt = s.get('an_dt', '')
         if price > 0:
-            hist = update_signal_history(sym, price, s.get('catalyst',''))
-            s['days_old']   = hist['days_old']
-            s['pct_change'] = hist['pct_change']
-            s['hist_status'] = hist['status']
-            s['first_seen']  = hist['first_seen']
+            hist = update_signal_history(sym, price, s.get('catalyst',''), prev_close, ann_dt)
+            s['days_old']            = hist['days_old']
+            s['pct_change']          = hist['pct_change']
+            s['hist_status']         = hist['status']
+            s['first_seen']          = hist['first_seen']
+            s['prev_day_chg']        = hist['prev_day_chg']
+            s['days_since_catalyst'] = hist['days_since_catalyst']
+            s['already_moved']       = hist['already_moved']
         else:
-            s['days_old']    = 0
-            s['pct_change']  = 0.0
-            s['hist_status'] = 'FRESH'
-            s['first_seen']  = ''
+            s['days_old']            = 0
+            s['pct_change']          = 0.0
+            s['hist_status']         = 'FRESH'
+            s['first_seen']          = ''
+            s['prev_day_chg']        = 0.0
+            s['days_since_catalyst'] = 0
+            s['already_moved']       = False
     cleanup_old_history()
 
     # ── Sort and tier ─────────────────────────────────────
