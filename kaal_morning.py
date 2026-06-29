@@ -142,9 +142,21 @@ def _format_signal_block(s: dict) -> list:
         f"└─ {s.get('key', '')[:100]}",
         f"└─ {s.get('reason', '')[:150]}",
     ]
+    # Opportunity classification line
+    opp_label  = s.get('opp_label', '')
+    opp_reason = s.get('opp_reason', '')
+    opp_icons  = {
+        'PRICED_IN':    '🔴 PRICED IN',
+        'UNDERREACTED': '🟢 UNDERREACTED',
+        'CONSOLIDATING':'🟡 CONSOLIDATING',
+        'IGNORED':      '⚫ IGNORED',
+        'ACTIVE':       '🟢 ACTIVE',
+    }
+    if opp_label and opp_label != 'UNKNOWN':
+        lines.append(f'└─ 📊 {opp_icons.get(opp_label, opp_label)}: {opp_reason}')
     if moved_warn:
         lines.append(moved_warn)
-    lines.append(f"└─ 🎯 {_entry_plan(s)}")
+    lines.append(f'└─ 🎯 {_entry_plan(s)}')
     return lines
 
 
@@ -438,6 +450,11 @@ def run():
             s['prev_day_chg']        = hist['prev_day_chg']
             s['days_since_catalyst'] = hist['days_since_catalyst']
             s['already_moved']       = hist['already_moved']
+            # Classify opportunity
+            from kaal_history import classify_opportunity
+            opp = classify_opportunity(sym, price)
+            s['opp_label']  = opp['label']
+            s['opp_reason'] = opp['reason']
         else:
             s['days_old']            = 0
             s['pct_change']          = 0.0

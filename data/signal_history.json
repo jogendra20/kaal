@@ -87,7 +87,9 @@
   "SETL": {
     "first_seen": "2026-06-25",
     "first_price": 224.0,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "catalyst_day_move": 4.9,
+    "catalyst_day_close": 235.0
   },
   "PURVA": {
     "first_seen": "2026-06-29",

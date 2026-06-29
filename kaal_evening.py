@@ -14,7 +14,7 @@ from collections import defaultdict
 
 from kaal_sources import (
     fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban,
-    fetch_news,
+    fetch_news, fetch_eod_prices,
 )
 from kaal_scorer import (
     score_announcement, score_bulk_deal,
@@ -156,6 +156,13 @@ def run():
     save_watchlist([s["symbol"] for s in tier1 + tier2])
     # Reset seen so morning scan processes tomorrow's fresh announcements
     reset_seen()
+
+    # Update signal history with today's closing prices
+    from kaal_history import update_eod_prices, load_history
+    tracked_symbols = list(load_history().keys())
+    if tracked_symbols:
+        eod = fetch_eod_prices(tracked_symbols)
+        update_eod_prices(eod)
 
     msg = build_evening_brief(tier1, tier2, macro)
     import os

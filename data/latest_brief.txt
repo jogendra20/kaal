@@ -1,10 +1,10 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>29 Jun 2026 09:09 AM</code>
+<code>29 Jun 2026 09:17 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>13.1</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.02%</code> (Neutral)
-SPX: <code>-0.1%</code>  Crude: <code>$70</code>  Gold: <code>$4087</code>  USD/INR: <code>94.26</code>
+VIX: <code>13.7</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.03%</code> (Neutral)
+SPX: <code>-0.1%</code>  Crude: <code>$70</code>  Gold: <code>$4084</code>  USD/INR: <code>94.26</code>
 ──────────────────────────────────
 
 ⚠️ No Tier 1 stocks today — consider staying in cash
@@ -12,13 +12,13 @@ SPX: <code>-0.1%</code>  Crude: <code>$70</code>  Gold: <code>$4087</code>  USD/
 👀 <b>TIER 2 — WATCHLIST</b>
 
 <code>[02:41 AM]</code> <b>SETL</b> — ACQUISITION 🟢
-Score: <code>68/100</code> 🟢 FRESH
+Score: <code>68/100</code> | -5.0% since trigger | Yest: -0.5% 🟡 AGING
 └─ Standard Engineering Technology Limited to acquire up to 51% equity stake in GScale Energy Private L
 └─ [WATCH] Strategic acquisition into AI Datacenter Infrastructure; verify liquidity.
 └─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 <code>[08:50 AM]</code> <b>PURVA</b> — ORDER WIN 🟢
-Score: <code>68/100</code> 🟢 FRESH
+Score: <code>68/100</code> | Yest: +1.2% 🟢 FRESH
 └─ Puravankara announces JDA for 6.4-acre land parcel in Sarjapur, Bengaluru with potential GDV of Rs 1
 └─ [WATCH] Significant land parcel JDA with Rs 1,000 Cr GDV potential; verify liquidity.
 └─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
