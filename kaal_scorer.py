@@ -663,6 +663,46 @@ def score_usfda_signals(nse_announcements: list, news_articles: list) -> list:
     return results
 
 
+def score_bulk_buying(clean_buys: list) -> list:
+    """
+    Scores clean net bulk-deal buys (no same-day offsetting sell)
+    as Tier2 institutional accumulation signals.
+    Fund/institution buyers score higher than individual/unknown entities.
+    """
+    results = []
+    for d in clean_buys:
+        symbol  = d.get("symbol", "")
+        qty     = d.get("qty", 0)
+        price   = d.get("price", 0)
+        client  = d.get("client", "")
+        is_fund = d.get("is_fund", False)
+
+        if not symbol or qty < 50000:
+            continue
+
+        score = 62 if is_fund else 55
+        value_cr = round((qty * price) / 1e7, 2) if price else 0
+
+        results.append({
+            "symbol":         symbol,
+            "score":          score,
+            "tier":           2,
+            "skip":           False,
+            "catalyst":       "BULK_BUYING",
+            "direction":      "BULLISH",
+            "key":            f"Net bulk buy: {qty:,} shares (~Rs {value_cr}Cr) by {client[:30]}",
+            "reason":         f"{'Institutional' if is_fund else 'Large'} accumulation detected via NSE bulk deals. No offsetting sell same day. Confirm with price action before entry.",
+            "source":         "NSE_BULK",
+            "signal_sources": ["NSE_BULK"],
+        })
+
+    if results:
+        fund_count = sum(1 for r in results if "Institutional" in r["reason"])
+        print(f"[BULK] {len(results)} accumulation signals ({fund_count} from known funds)")
+
+    return results
+
+
 def score_negative_proxy(news_articles: list) -> list:
     """
     Scan news for negative proxy triggers.

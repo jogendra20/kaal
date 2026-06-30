@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_spurts,
+    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_spurts, fetch_clean_bulk_deals,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
 )
@@ -289,6 +289,12 @@ def run():
     # ── Budget day sector signals ─────────────────────────
     budget_signals = score_budget_signals(news)
     all_signals.extend(budget_signals)
+
+    # ── Bulk deal accumulation signals ────────────────────
+    clean_buys = fetch_clean_bulk_deals()
+    bulk_signals = score_bulk_buying(clean_buys)
+    announced_now = {s['symbol'] for s in all_signals}
+    all_signals.extend([b for b in bulk_signals if b['symbol'] not in announced_now])
 
     # ── Policy/trade protection signals ──────────────────
     policy_signals = score_policy_signals(news)

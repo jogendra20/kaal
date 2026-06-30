@@ -95,5 +95,10 @@
     "first_seen": "2026-06-29",
     "first_price": 215.46,
     "catalyst": "ORDER_WIN"
+  },
+  "SIS": {
+    "first_seen": "2026-06-30",
+    "first_price": 436.0,
+    "catalyst": "BUYBACK"
   }
 }
