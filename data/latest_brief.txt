@@ -1,35 +1,26 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>02 Jul 2026 10:01 AM</code>
+<code>02 Jul 2026 11:15 AM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.60%</code> (Bullish)
-SPX: <code>-0.2%</code>  Crude: <code>$68</code>  Gold: <code>$4084</code>  USD/INR: <code>94.97</code>
+GIFT Nifty: <code>+0.44%</code> (Bullish)
+SPX: <code>-0.2%</code>  Crude: <code>$68</code>  Gold: <code>$4072</code>  USD/INR: <code>94.97</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<code>[10:54 PM]</code> <b>TECHM</b> — ACQUISITION 🟢
-Score: <code>75/100</code> | Yest: +1.2% 🟢 FRESH
-└─ Tech Mahindra's subsidiary acquires Alyis Serviços Técnicos LTDA
-└─ [WATCH] Strategic acquisition indicates growth plans; bullish catalyst in a low VIX environment.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
-
-<code>[03:19 PM]</code> <b>TEAMLEASE</b> — BUYBACK 🟢
-Score: <code>75/100</code> | Yest: +0.2% 🟢 FRESH
-└─ TeamLease submits public announcement for a buyback of equity shares via the tender offer route.
-└─ [WATCH] Tender offer buyback signals strong management confidence and sets a floor price.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+<code>[10:31 PM]</code> <b>IFGLEXPOR</b> — SALE OR DISPOSAL 🟢
+Score: <code>78/100</code> 🟢 FRESH
+└─ IFGL Refractories Limited has informed the Exchange about Sale or disposal
+└─ [WATCH] Rule-based match: SALE_OR_DISPOSAL. No LLM used (low tier).
+└─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
 👀 <b>TIER 2 — WATCHLIST</b>
 
-<code>[08:10 PM]</code> <b>ADVENTHTL</b> — ACQUISITION 🟢
-Score: <code>73/100</code> | Yest: +0.4% 🟢 FRESH
-└─ Advent Hotels International Limited acquires 10,95,000 9% Non-Cumulative Redeemable Preference Share
-└─ [WATCH] Acquisition indicates expansion plans; however, undisclosed deal value limits immediate impact.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+<code>[04:42 PM]</code> <b>GROBTEA</b> — ACQUISITION 🟢
+Score: <code>73/100</code> 🟢 FRESH
+└─ Board approved acquisition of 100% equity shares of Bazaloni Group Limited, a tea manufacturing comp
+└─ [WATCH] Inorganic expansion through 100% acquisition of a peer in the same sector (Tea) typically signals revenue scaling and market share consolidati
 └─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────

@@ -227,6 +227,15 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         base_score = min(base_score, 65)
         tier = max(tier, 2)
 
+    # Sale/disposal hard cap — only valuable if deal size is disclosed
+    if cat == 'SALE_OR_DISPOSAL':
+        combined = (subject + details).lower()
+        has_value = any(kw in combined for kw in ['crore', 'cr.', 'lakh', 'million', 'billion', 'rs.', '₹'])
+        if not has_value:
+            return {**empty, 'reason': 'Sale/disposal with no deal value disclosed — insufficient detail'}
+        base_score = min(base_score, 60)
+        tier = max(tier, 2)
+
     # Buyback type detection
     if isinstance(ann, dict):
         _bt = (ann.get('desc','') + ann.get('attchmntText','') + subject).lower()
