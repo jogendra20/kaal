@@ -72,8 +72,10 @@ def _entry_plan(s: dict) -> str:
     if "OPEN_OFFER" in cat or "TAKEOVER" in cat:
         return "Entry: pullback to VWMA20 only | SL: 15M body low | Target: 1:3"
     elif "BUYBACK" in cat:
-        buyback_type = s.get("buyback_type", "OPEN_MARKET")
-        if buyback_type == "TENDER":
+        buyback_type = s.get("buyback_type", "")
+        # Also check key/reason text as fallback
+        combined = (s.get("key","") + s.get("reason","")).lower()
+        if buyback_type == "TENDER" or "tender" in combined:
             return "TENDER buyback — arbitrage only. Buy below offer price, tender shares. Not intraday tradeable."
         return "OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2"
     elif "MERGER" in cat or "AMALGAM" in cat or "DEMERGER" in cat:

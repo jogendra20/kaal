@@ -110,5 +110,10 @@
     "first_seen": "2026-07-02",
     "first_price": 1378.3,
     "catalyst": "ACQUISITION"
+  },
+  "ADVENTHTL": {
+    "first_seen": "2026-07-02",
+    "first_price": 138.65,
+    "catalyst": "ACQUISITION"
   }
 }

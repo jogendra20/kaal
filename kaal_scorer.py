@@ -227,6 +227,20 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         base_score = min(base_score, 65)
         tier = max(tier, 2)
 
+    # Buyback type detection
+    if isinstance(ann, dict):
+        _bt = (ann.get('desc','') + ann.get('attchmntText','') + subject).lower()
+        _is_buyback = 'BUYBACK' in cat.upper() or 'buyback' in _bt
+        if _is_buyback:
+            if 'tender' in _bt:
+                ann['buyback_type'] = 'TENDER'
+                base_score = min(base_score, 55)
+                cat = 'BUYBACK'
+            elif 'open market' in _bt or 'stock exchange' in _bt:
+                ann['buyback_type'] = 'OPEN_MARKET'
+                base_score = max(base_score, 75)
+                cat = 'BUYBACK'
+
     # Pre-open gap boost
     preopen_gap = ann.get('preopen_gap', 0.0) if isinstance(ann, dict) else 0.0
     if preopen_gap > 8.0:
@@ -353,6 +367,12 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         if llm:
             score = llm.get("score", base_score)
 
+            # Re-apply buyback type cap AFTER LLM (LLM overrides our pre-cap)
+            if isinstance(ann, dict) and ann.get('buyback_type') == 'TENDER':
+                score = min(score, 55)
+            elif isinstance(ann, dict) and ann.get('buyback_type') == 'OPEN_MARKET':
+                score = max(score, 75)
+
             # Staleness penalty
             if not llm.get("is_fresh", True):
                 score = min(score, 25)
@@ -427,6 +447,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         "source":         source,
         "signal_sources": [source],
         "an_dt":          ann.get("an_dt", "") if isinstance(ann, dict) else "",
+        "buyback_type":   ann.get("buyback_type", "NA") if isinstance(ann, dict) else "NA",
     }
 
 
