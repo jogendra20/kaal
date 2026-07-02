@@ -389,9 +389,9 @@ PROXY_MAP = {
     # Pharma — USFDA clearance for one benefits sector
     "USFDA APPROVAL": ["SUNPHARMA", "DRREDDY", "CIPLA", "LUPIN", "AUROPHARMA"],
 
-    # EV sector
-    "EV POLICY": ["TATAMOTORS", "MAHINDRA", "OLECTRA", "TATAPOWER"],
-    "EV SUBSIDY": ["TATAMOTORS", "MAHINDRA", "OLECTRA"],
+    # EV sector — national policy only, state-level excluded
+    "NATIONAL EV POLICY": ["TATAMOTORS", "MAHINDRA", "OLECTRA", "TATAPOWER"],
+    "PLI EV SCHEME": ["TATAMOTORS", "MAHINDRA", "OLECTRA"],
 }
 
 # News keywords that trigger proxy scan

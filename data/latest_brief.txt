@@ -1,30 +1,37 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>02 Jul 2026 09:21 AM</code>
+<code>02 Jul 2026 09:42 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>13.2</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.23%</code> (Neutral)
-SPX: <code>-0.2%</code>  Crude: <code>$68</code>  Gold: <code>$4079</code>  USD/INR: <code>94.96</code>
+VIX: <code>12.9</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.55%</code> (Bullish)
+SPX: <code>-0.2%</code>  Crude: <code>$69</code>  Gold: <code>$4068</code>  USD/INR: <code>94.97</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<code>[—]</code> <b>TATAMOTORS</b> — PROXY PLAY 🟢
+<code>[NEWS PROXY]</code> <b>TATAMOTORS</b> — PROXY PLAY 🟢
 Score: <code>78/100</code> 🟢 FRESH
 └─ Indirect beneficiary of: EV POLICY
-└─ [WATCH] High score proxy play on EV Policy. High liquidity intraday.
+└─ [WATCH] Proxy play on EV Policy. High liquidity. Monitor for pre-movement.
 └─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
-<code>[—]</code> <b>MAHINDRA</b> — PROXY PLAY 🟢
+<code>[NEWS PROXY]</code> <b>MAHINDRA</b> — PROXY PLAY 🟢
 Score: <code>78/100</code> 🟢 FRESH
 └─ Indirect beneficiary of: EV POLICY
-└─ [WATCH] High score proxy play on EV Policy. High liquidity intraday.
+└─ [WATCH] Proxy play on EV Policy. High liquidity. Monitor for pre-movement.
 └─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+<code>[10:54 PM]</code> <b>TECHM</b> — ACQUISITION 🟢
+Score: <code>75/100</code> | Yest: +1.2% 🟢 FRESH
+└─ Tech Mahindra's subsidiary acquires Alyis Serviços Técnicos LTDA
+└─ [WATCH] Strategic acquisition indicates growth. Confirm intraday strength.
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 <code>[03:19 PM]</code> <b>TEAMLEASE</b> — BUYBACK 🟢
 Score: <code>75/100</code> | Yest: +0.2% 🟢 FRESH
-└─ TeamLease to buyback equity shares through tender offer
-└─ [WATCH] Buyback catalyst positive. Verify liquidity before entry.
+└─ TeamLease submits public announcement for buyback of equity shares through tender offer
+└─ [WATCH] Buyback announcement signals confidence. Verify liquidity.
 └─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
 └─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
