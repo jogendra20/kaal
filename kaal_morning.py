@@ -21,6 +21,7 @@ from kaal_scorer import (
     classify_announcement, score_announcement,
     score_bulk_deal, score_promoter_pit, score_news_velocity,
     score_proxy_signals, score_negative_proxy, score_usfda_signals, score_budget_signals, score_policy_signals,
+    score_bulk_buying,
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
@@ -97,7 +98,7 @@ def _status_emoji(status: str) -> str:
 
 
 def _signal_time(s: dict) -> str:
-    """Returns NSE filing timestamp if available, else first_seen date."""
+    """Returns NSE filing timestamp if available, else source label."""
     raw_time = s.get("an_dt", "") or s.get("announcement_time", "")
     if raw_time:
         try:
@@ -112,7 +113,17 @@ def _signal_time(s: dict) -> str:
             return dt.strftime("%b %d")
         except Exception:
             pass
-    return "—"
+    # For proxy/news signals with no timestamp, show source
+    source = s.get("source", "")
+    if source == "PROXY":
+        return "NEWS PROXY"
+    if source == "NSE_OI":
+        return "OI SIGNAL"
+    if source == "CHARTINK":
+        return "SCREENER"
+    if source == "NSE_BULK":
+        return "BULK DEAL"
+    return "NEWS"
 
 
 def _format_signal_block(s: dict) -> list:

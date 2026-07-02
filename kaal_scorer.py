@@ -818,7 +818,26 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
     found_triggers = set()
 
     # Check news articles
+    from datetime import datetime, timezone
+    from email.utils import parsedate_to_datetime
+
+    def _is_fresh_article(article: dict, max_hours: int = 36) -> bool:
+        """Return True if article is within max_hours old."""
+        pub = article.get("published", "")
+        if not pub:
+            return True  # no date = assume fresh (Tavily sometimes omits)
+        try:
+            pub_dt = parsedate_to_datetime(pub)
+            if pub_dt.tzinfo is None:
+                pub_dt = pub_dt.replace(tzinfo=timezone.utc)
+            hours_old = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
+            return hours_old <= max_hours
+        except Exception:
+            return True
+
     for article in news_articles:
+        if not _is_fresh_article(article):
+            continue  # skip stale RSS articles
         text = (article.get("title", "") + " " + article.get("summary", "")).upper()
         for trigger, symbols in PROXY_MAP.items():
             if trigger in text and trigger not in found_triggers and trigger not in already_triggered:

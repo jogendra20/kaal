@@ -100,5 +100,10 @@
     "first_seen": "2026-06-30",
     "first_price": 436.0,
     "catalyst": "BUYBACK"
+  },
+  "TEAMLEASE": {
+    "first_seen": "2026-07-02",
+    "first_price": 1453.3,
+    "catalyst": "BUYBACK"
   }
 }
