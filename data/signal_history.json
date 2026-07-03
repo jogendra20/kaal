@@ -115,5 +115,15 @@
     "first_seen": "2026-07-02",
     "first_price": 138.65,
     "catalyst": "ACQUISITION"
+  },
+  "DIXON": {
+    "first_seen": "2026-07-03",
+    "first_price": 11970.0,
+    "catalyst": "POLICY_PROTECTION"
+  },
+  "PATINTLOG": {
+    "first_seen": "2026-07-03",
+    "first_price": 14.9,
+    "catalyst": "BUYBACK"
   }
 }

@@ -5,7 +5,8 @@ LLM engine: Groq1 -> Groq2 -> Gemini (last resort)
 import json, re, os, time
 import requests
 
-GROQ_MODEL   = "llama-3.3-70b-versatile"
+GROQ_MODEL      = "openai/gpt-oss-120b"  # deep scoring (Tier1, PDF reads)
+GROQ_FAST_MODEL = "openai/gpt-oss-20b"    # fast scoring (Tier2, announcements)
 GEMINI_MODEL = "gemini-2.5-flash"
 
 _call_count = 0
@@ -60,14 +61,14 @@ def _parse_json(text: str) -> dict:
     return {}
 
 
-def _call_groq_key(key: str, prompt: str, label: str) -> tuple:
+def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -> tuple:
     """Returns (result_dict, rate_limited_bool)"""
     if not key:
         return {}, False
     safe_prompt = prompt if "json" in prompt.lower() else prompt + "\n\nRespond in json format."
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     body = {
-        "model": GROQ_MODEL,
+        "model": model,
         "messages": [{"role": "user", "content": safe_prompt}],
         "temperature": 0.1,
         "max_tokens": 500,
@@ -182,13 +183,14 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
     # Pace calls: 2.5s between calls to stay under 30 RPM
     time.sleep(1.5)
 
-    result, rl1 = _call_groq_key(key1, prompt, "Groq1")
+    model = GROQ_FAST_MODEL if fast else GROQ_MODEL
+    result, rl1 = _call_groq_key(key1, prompt, "Groq1", model)
     if result:
         print("→ Groq1 OK")
         return result
 
     if rl1 and key2:
-        result, rl2 = _call_groq_key(key2, prompt, "Groq2")
+        result, rl2 = _call_groq_key(key2, prompt, "Groq2", model)
         if result:
             print("→ Groq2 OK")
             return result

@@ -1,27 +1,27 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>02 Jul 2026 11:15 AM</code>
+<code>03 Jul 2026 08:12 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.44%</code> (Bullish)
-SPX: <code>-0.2%</code>  Crude: <code>$68</code>  Gold: <code>$4072</code>  USD/INR: <code>94.97</code>
+VIX: <code>12.3</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.71%</code> (Bullish)
+SPX: <code>+0.0%</code>  Crude: <code>$69</code>  Gold: <code>$4190</code>  USD/INR: <code>95.38</code>
 ──────────────────────────────────
 
 🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-<code>[10:31 PM]</code> <b>IFGLEXPOR</b> — SALE OR DISPOSAL 🟢
-Score: <code>78/100</code> 🟢 FRESH
-└─ IFGL Refractories Limited has informed the Exchange about Sale or disposal
-└─ [WATCH] Rule-based match: SALE_OR_DISPOSAL. No LLM used (low tier).
+<code>[Jul 03]</code> <b>DIXON</b> — POLICY PROTECTION 🟢
+Score: <code>80/100</code> | Yest: +0.1% 🟢 FRESH
+└─ TRADE_PROTECTION | ELECTRONICS, TELECOM sector | Deeper Localisation: PLI 2.0 seeks to build a stron
+└─ [WATCH] High score TRADE_PROTECTION catalyst in Electronics sector. Strong policy support.
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
 └─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 
-👀 <b>TIER 2 — WATCHLIST</b>
-
-<code>[04:42 PM]</code> <b>GROBTEA</b> — ACQUISITION 🟢
-Score: <code>73/100</code> 🟢 FRESH
-└─ Board approved acquisition of 100% equity shares of Bazaloni Group Limited, a tea manufacturing comp
-└─ [WATCH] Inorganic expansion through 100% acquisition of a peer in the same sector (Tea) typically signals revenue scaling and market share consolidati
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+<code>[08:03 PM]</code> <b>PATINTLOG</b> — BUYBACK 🟢
+Score: <code>75/100</code> | Yest: +0.9% 🟢 FRESH
+└─ Patel Integrated Logistics Limited announces buyback of equity shares through tender offer
+└─ [WATCH] BUYBACK catalyst indicates confidence and value return. Verify liquidity.
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+└─ 🎯 TENDER buyback — arbitrage only. Buy below offer price, tender shares. Not intraday tradeable.
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
