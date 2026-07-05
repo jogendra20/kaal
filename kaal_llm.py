@@ -69,6 +69,7 @@ def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     body = {
         "model": model,
+        "response_format": {"type": "json_object"},
         "messages": [{"role": "user", "content": safe_prompt}],
         "temperature": 0.1,
         "max_tokens": 500,
