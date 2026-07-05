@@ -1,5 +1,5 @@
 <b>🌙 KAAL EVENING BRIEF</b>
-<code>05 Jul 2026 11:18 PM</code>  |  VIX: <code>11.8</code>
+<code>05 Jul 2026 11:31 PM</code>  |  VIX: <code>11.8</code>
 Crude: <code>$69</code>  USD/INR: <code>95.53</code>
 ──────────────────────────────────
 
@@ -10,23 +10,33 @@ Crude: <code>$69</code>  USD/INR: <code>95.53</code>
 
 <code>[10:15 PM]</code> <b>DIACABS</b> — ORDER WIN 🟢
 Score: <code>75/100</code>
-└─ Diamond Power Infrastructure Limited received a large order for its shares, indicating strong invest
-└─ A large order can lift the stock price and signal confidence in the company. Traders should monitor volume spikes and any subsequent price movement after the announcement. ⚠️ Verif
+└─ Diamond Power Infrastructure Limited received a substantial order, indicating strong demand.
+└─ Receiving a large order can boost revenue expectations and signal market confidence. Traders should monitor the order size relative to company revenue and subsequent earnings. ⚠️ V
+
+<code>[05:17 PM]</code> <b>GKENERGY</b> — ORDER WIN 🟢
+Score: <code>75/100</code>
+└─ GK Energy wins Rs. 235.92 crore order for 10,000 off‑grid solar PV water pumps from Maharashtra Stat
+└─ The order confirms strong demand for GK Energy’s renewable solutions, likely boosting revenue and cash flow. Traders typically react positively to such large contracts, especially 
 
 <code>[08:02 PM]</code> <b>OSWALPUMPS</b> — ORDER WIN 🟢
 Score: <code>75/100</code>
-└─ Oswal Pumps wins Rs. 235.92 Cr order for 10,000 solar pumps from MSEDCL
-└─ The sizeable order signals strong demand for solar pumps and will likely lift revenue and earnings. Traders typically react positively to such wins, especially when the order repre
+└─ Oswal Pumps wins Rs. 235.92 Cr order for 10,000 solar pumps from MSEDCL.
+└─ Securing a large, repeat‑customer order boosts revenue outlook and signals strong demand for the company’s solar pump line. Traders typically see a short‑term price lift as the mar
+
+<code>[02:53 PM]</code> <b>SHAKTIPUMP</b> — ORDER WIN 🟢
+Score: <code>75/100</code>
+└─ Shakti Pumps secured Rs. 353.89 crore order for 15,000 off‑grid solar PV water pumps from Maharashtr
+└─ Winning a large government contract signals strong demand and a significant revenue boost; such order wins typically lift the stock price. Traders should watch for order fulfillmen
 
 👀 <b>TIER 2</b>
 • <b>BIKAJI</b> 🟢 [72] ACQUISITION — Bikaji Foods International Limited has informed the Exchange about Com
 • <b>BELRISE</b> 🟢 [72] SCHEME OF ARRANGEMENT — We wish to inform that the Company has received observation letters in
 • <b>EPL</b> 🟢 [72] ACQUISITION — EPL Limited has informed the Exchange about investment in EPL Packagin
-• <b>HECPROJECT</b> 🟢 [65] ORDER WIN — HEC Infra Projects Limited reports bagging of orders/contracts, indica
-• <b>LUXIND</b> 🟢 [65] OTHER — Board approved a Rs 600 cr capacity expansion at Dankuni adding 12 lak
+• <b>LUXIND</b> 🟢 [63] OTHER — Board approved a Rs 600 cr capacity expansion at Dankuni, adding 12 la
 • <b>TCS</b> 🟡 [59] NEWS MOMENTUM — Mentioned 3x across ET, TAVILY: TCS Q1 Earnings Preview: Focus On AI, 
-• <b>PIRAMALFIN</b> 🟢 [53] MERGER — Piramal Finance and its related entities have filed a petition with NC
+• <b>ROLEXRINGS</b> 🟢 [55] BUYBACK — Rolex Rings sets buyback price at Rs 180 per share for up to 10 millio
 • <b>ADANIENT</b> 🟢 [50] PRESS RELEASE — Adani Enterprises Limited has informed the Exchange regarding a press 
+• <b>TATAPOWER</b> 🟢 [50] ISSUE OF SECURITIES — Tata Power Company Limited has informed the Exchange about issue of Se
 
 ──────────────────────────────────
 <i>Morning brief at 8:50 AM tomorrow.</i>

@@ -6,7 +6,7 @@ import json, re, os, time
 import requests
 
 GROQ_MODEL      = "openai/gpt-oss-120b"  # deep scoring (Tier1, PDF reads)
-GROQ_FAST_MODEL = "openai/gpt-oss-20b"    # fast scoring (Tier2, announcements)
+GROQ_FAST_MODEL = "qwen/qwen3.6-27b"      # fast scoring (Tier2, announcements)
 GEMINI_MODEL = "gemini-2.5-flash"
 
 _call_count = 0
@@ -65,7 +65,9 @@ def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -
     """Returns (result_dict, rate_limited_bool)"""
     if not key:
         return {}, False
-    safe_prompt = prompt if "json" in prompt.lower() else prompt + "\n\nRespond in json format."
+    # Sanitize prompt — remove characters that break JSON validation in gpt-oss models
+    safe_prompt = prompt.encode("ascii", errors="ignore").decode("ascii")
+    safe_prompt = safe_prompt if "json" in safe_prompt.lower() else safe_prompt + "\n\nReturn response as JSON object."
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     # gpt-oss models require "json" in prompt when using json_object format
     if "json" not in safe_prompt.lower():
@@ -76,8 +78,10 @@ def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -
         "messages": [{"role": "user", "content": safe_prompt}],
         "temperature": 0.1,
         "max_tokens": 500,
-        "response_format": {"type": "json_object"},
     }
+    # Only use json_object format for gpt-oss-120b deep model
+    if "gpt-oss-120b" in model:
+        body["response_format"] = {"type": "json_object"}
     try:
         r = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
@@ -91,6 +95,34 @@ def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -
     except Exception as e:
         print(f"[LLM] {label} exception: {e}")
     return {}, False
+
+
+def _call_mistral(prompt: str) -> dict:
+    """Fast scoring via Mistral API — reliable JSON, no format strictness issues."""
+    _load_env()
+    key = os.environ.get("MISTRAL_API_KEY", "")
+    if not key:
+        return {}
+    try:
+        r = requests.post(
+            "https://api.mistral.ai/v1/chat/completions",
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            json={
+                "model": "mistral-small-latest",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1,
+                "max_tokens": 800,
+                "response_format": {"type": "json_object"},
+            },
+            timeout=15
+        )
+        if r.status_code == 200:
+            text = r.json()["choices"][0]["message"]["content"]
+            return _parse_json(text)
+        print(f"[LLM] Mistral {r.status_code}: {r.text[:80]}")
+    except Exception as e:
+        print(f"[LLM] Mistral exception: {e}")
+    return {}
 
 
 def _call_cerebras(prompt: str) -> dict:
@@ -186,6 +218,15 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
 
     # Pace calls: 2.5s between calls to stay under 30 RPM
     time.sleep(1.5)
+
+    # Fast calls: Mistral first (reliable JSON), Groq as fallback
+    # Deep calls: Groq only (gpt-oss-120b)
+    if fast:
+        result = _call_mistral(prompt)
+        if result:
+            print("→ Mistral OK")
+            return result
+        print("→ Mistral failed, trying Groq")
 
     model = GROQ_FAST_MODEL if fast else GROQ_MODEL
     result, rl1 = _call_groq_key(key1, prompt, "Groq1", model)
