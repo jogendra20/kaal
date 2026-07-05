@@ -1,27 +1,32 @@
-<b>⚔️ KAAL MORNING BRIEF</b>
-<code>03 Jul 2026 08:12 AM</code>
-
-<b>🌐 MACRO</b>
-VIX: <code>12.3</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.71%</code> (Bullish)
-SPX: <code>+0.0%</code>  Crude: <code>$69</code>  Gold: <code>$4190</code>  USD/INR: <code>95.38</code>
+<b>🌙 KAAL EVENING BRIEF</b>
+<code>05 Jul 2026 11:18 PM</code>  |  VIX: <code>11.8</code>
+Crude: <code>$69</code>  USD/INR: <code>95.53</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
+<b>📋 TOMORROW'S PRE-WATCHLIST</b>
+<i>(Morning scan will confirm with fresh announcements)</i>
 
-<code>[Jul 03]</code> <b>DIXON</b> — POLICY PROTECTION 🟢
-Score: <code>80/100</code> | Yest: +0.1% 🟢 FRESH
-└─ TRADE_PROTECTION | ELECTRONICS, TELECOM sector | Deeper Localisation: PLI 2.0 seeks to build a stron
-└─ [WATCH] High score TRADE_PROTECTION catalyst in Electronics sector. Strong policy support.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+🔥 <b>TIER 1</b>
 
-<code>[08:03 PM]</code> <b>PATINTLOG</b> — BUYBACK 🟢
-Score: <code>75/100</code> | Yest: +0.9% 🟢 FRESH
-└─ Patel Integrated Logistics Limited announces buyback of equity shares through tender offer
-└─ [WATCH] BUYBACK catalyst indicates confidence and value return. Verify liquidity.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 TENDER buyback — arbitrage only. Buy below offer price, tender shares. Not intraday tradeable.
+<code>[10:15 PM]</code> <b>DIACABS</b> — ORDER WIN 🟢
+Score: <code>75/100</code>
+└─ Diamond Power Infrastructure Limited received a large order for its shares, indicating strong invest
+└─ A large order can lift the stock price and signal confidence in the company. Traders should monitor volume spikes and any subsequent price movement after the announcement. ⚠️ Verif
+
+<code>[08:02 PM]</code> <b>OSWALPUMPS</b> — ORDER WIN 🟢
+Score: <code>75/100</code>
+└─ Oswal Pumps wins Rs. 235.92 Cr order for 10,000 solar pumps from MSEDCL
+└─ The sizeable order signals strong demand for solar pumps and will likely lift revenue and earnings. Traders typically react positively to such wins, especially when the order repre
+
+👀 <b>TIER 2</b>
+• <b>BIKAJI</b> 🟢 [72] ACQUISITION — Bikaji Foods International Limited has informed the Exchange about Com
+• <b>BELRISE</b> 🟢 [72] SCHEME OF ARRANGEMENT — We wish to inform that the Company has received observation letters in
+• <b>EPL</b> 🟢 [72] ACQUISITION — EPL Limited has informed the Exchange about investment in EPL Packagin
+• <b>HECPROJECT</b> 🟢 [65] ORDER WIN — HEC Infra Projects Limited reports bagging of orders/contracts, indica
+• <b>LUXIND</b> 🟢 [65] OTHER — Board approved a Rs 600 cr capacity expansion at Dankuni adding 12 lak
+• <b>TCS</b> 🟡 [59] NEWS MOMENTUM — Mentioned 3x across ET, TAVILY: TCS Q1 Earnings Preview: Focus On AI, 
+• <b>PIRAMALFIN</b> 🟢 [53] MERGER — Piramal Finance and its related entities have filed a petition with NC
+• <b>ADANIENT</b> 🟢 [50] PRESS RELEASE — Adani Enterprises Limited has informed the Exchange regarding a press 
 
 ──────────────────────────────────
-<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
+<i>Morning brief at 8:50 AM tomorrow.</i>

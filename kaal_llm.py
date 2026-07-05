@@ -67,9 +67,12 @@ def _call_groq_key(key: str, prompt: str, label: str, model: str = GROQ_MODEL) -
         return {}, False
     safe_prompt = prompt if "json" in prompt.lower() else prompt + "\n\nRespond in json format."
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    # gpt-oss models require "json" in prompt when using json_object format
+    if "json" not in safe_prompt.lower():
+        safe_prompt += "\n\nReturn response as JSON object."
+    use_json_format = "gpt-oss" in model
     body = {
         "model": model,
-        "response_format": {"type": "json_object"},
         "messages": [{"role": "user", "content": safe_prompt}],
         "temperature": 0.1,
         "max_tokens": 500,
