@@ -103,7 +103,7 @@ def _yahoo_quote(symbol: str) -> tuple:
     try:
         url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1d&range=5d"
         headers = {"User-Agent": "Mozilla/5.0"}
-        r = requests.get(url, headers=headers, timeout=10)
+        r = requests.get(url, headers=headers, timeout=(5, 10))
         if r.status_code != 200:
             return 0, 0
         data   = r.json()
