@@ -1,47 +1,34 @@
-<b>🌙 KAAL EVENING BRIEF</b>
-<code>05 Jul 2026 11:47 PM</code>  |  VIX: <code>11.8</code>
-Crude: <code>$69</code>  USD/INR: <code>95.53</code>
+<b>⚔️ KAAL MORNING BRIEF</b>
+<code>07 Jul 2026 08:11 AM</code>
+
+<b>🌐 MACRO</b>
+VIX: <code>11.8</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.66%</code> (Bullish)
+SPX: <code>+0.7%</code>  Crude: <code>$69</code>  Gold: <code>$4156</code>  USD/INR: <code>95.38</code>
 ──────────────────────────────────
 
-<b>📋 TOMORROW'S PRE-WATCHLIST</b>
-<i>(Morning scan will confirm with fresh announcements)</i>
+🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-🔥 <b>TIER 1</b>
+<code>[07:35 PM]</code> <b>ZENTEC</b> — ACQUISITION 🟢
+Score: <code>83/100</code> | Yest: +0.7% 🟢 FRESH
+└─ Vector Technics becomes India's largest fully integrated drone propulsion manufacturer with 300,000 
+└─ [WATCH] High-impact acquisition catalyst with specific capacity expansion metrics (300,000 units). Strong alignment with PLI schemes and government ca
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
-<code>[08:27 PM]</code> <b>SJVN</b> — ORDER WIN 🟢
-Score: <code>90/100</code>
-└─ PM inaugurates 1000 MW Bikaner Solar Power Project, boosting SJVN's renewable energy capacity by 30%
-└─ Large-scale renewable energy project inauguration by the Prime Minister is a strong positive catalyst, enhancing SJVN's credibility and growth prospects in the solar sector. Market
+<code>[08:00 AM]</code> <b>CLEANMAX</b> — ORDER WIN 🟢
+Score: <code>80/100</code> | Yest: +0.7% 🟢 FRESH
+└─ CleanMax commissions 500 MW renewable energy in Q1 FY27, taking portfolio to 4.2 GW.
+└─ [WATCH] Significant operational milestone (500 MW commissioned) taking portfolio to 4.2 GW. Concrete execution data in a bullish renewable sector.
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+└─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
 
-<code>[12:03 PM]</code> <b>RADICO</b> — ORDER WIN 🟢
-Score: <code>83/100</code>
-└─ Magic Moments Vodka sells 3.25 million cases in Q1 FY2027, setting new benchmark for Indian vodka ma
-└─ This order win signals strong brand momentum and market share growth for Radico Khaitan's premium vodka segment. The Q1 FY2027 volume growth (3.25M cases) is significant and likely
-
-<code>[08:27 PM]</code> <b>CGPOWER</b> — ORDER WIN 🟢
-Score: <code>83/100</code>
-└─ CG Semi commences commercial production at G1 OSAT facility in Sanand, Gujarat, boosting capacity fo
-└─ This is a significant capacity expansion in India's semiconductor ecosystem, aligning with government PLI schemes. The OSAT facility supports global semiconductor supply chains, re
-
-<code>[07:11 PM]</code> <b>ADANIENT</b> — ACQUISITION 🟢
-Score: <code>80/100</code>
-└─ Adani Defence & Aerospace to invest ₹2,500 Cr in South Asia's largest private-sector missile ecosyst
-└─ This investment signals strong growth in India's defence sector, aligning with government's 'Make in India' push. The missile ecosystem project is a high-value, long-term strategic
-
-<code>[10:15 PM]</code> <b>DIACABS</b> — ORDER WIN 🟢
-Score: <code>75/100</code>
-└─ Diamond Power Infrastructure secures a new order (size undisclosed) with potential revenue impact
-└─ Order wins are typically bullish catalysts as they signal business growth and revenue visibility. The market often reacts positively to such announcements, especially in mid-cap st
-
-👀 <b>TIER 2</b>
-• <b>BIKAJI</b> 🟢 [72] ACQUISITION — Bikaji Foods International Limited has informed the Exchange about Com
-• <b>BELRISE</b> 🟢 [72] SCHEME OF ARRANGEMENT — We wish to inform that the Company has received observation letters in
-• <b>EPL</b> 🟢 [72] ACQUISITION — EPL Limited has informed the Exchange about investment in EPL Packagin
-• <b>LUXIND</b> 🟢 [63] OTHER — Board approved a Rs 600 cr capacity expansion at Dankuni adding ~12 la
-• <b>RITES</b> 🟢 [60] CREDIT UPGRADE — RITES Limited's credit rating upgraded by CRISIL/CARE/ICRA (specific a
-• <b>RSL</b> 🟢 [60] CREDIT UPGRADE — Rajputana Stainless Limited's credit rating upgraded by a major agency
-• <b>SKIPPER</b> 🟢 [60] CREDIT UPGRADE — Skipper Limited's credit rating upgraded by a major agency (likely CAR
-• <b>TCS</b> 🟡 [59] NEWS MOMENTUM — Mentioned 3x across TAVILY, ET: TCS Q1 Earnings Preview: Focus On AI, 
+<code>[09:00 PM]</code> <b>NAUKRI</b> — ACQUISITION 🟢
+Score: <code>77/100</code> 🟢 FRESH
+└─ Info Edge to acquire 100% of CodingNinjas for ~Rs 39.91 crore, paying Rs 5,340.23 per share
+└─ [WATCH] Strategic acquisition (CodingNinjas) at disclosed valuation (~Rs 39.91 crore). Cross-selling potential in education sector.
+└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
-<i>Morning brief at 8:50 AM tomorrow.</i>
+<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

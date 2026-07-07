@@ -5,7 +5,7 @@ LLM engine: Groq1 -> Groq2 -> Gemini (last resort)
 import json, re, os, time
 import requests
 
-GROQ_MODEL      = "openai/gpt-oss-120b"  # deep scoring (Tier1, PDF reads)
+GROQ_MODEL      = "openai/gpt-oss-120b"  # deep scoring — fallback only now
 GROQ_FAST_MODEL = "qwen/qwen3.6-27b"      # fast scoring (Tier2, announcements)
 GEMINI_MODEL = "gemini-2.5-flash"
 
@@ -219,14 +219,12 @@ def call_llm(prompt: str, fast: bool = False) -> dict:
     # Pace calls: 2.5s between calls to stay under 30 RPM
     time.sleep(1.5)
 
-    # Fast calls: Mistral first (reliable JSON), Groq as fallback
-    # Deep calls: Groq only (gpt-oss-120b)
-    if fast:
-        result = _call_mistral(prompt)
-        if result:
-            print("→ Mistral OK")
-            return result
-        print("→ Mistral failed, trying Groq")
+    # Both fast and deep: Mistral first, Groq as fallback
+    result = _call_mistral(prompt)
+    if result:
+        print("→ Mistral OK")
+        return result
+    print("→ Mistral failed, trying Groq")
 
     model = GROQ_FAST_MODEL if fast else GROQ_MODEL
     result, rl1 = _call_groq_key(key1, prompt, "Groq1", model)

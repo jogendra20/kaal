@@ -125,5 +125,35 @@
     "first_seen": "2026-07-03",
     "first_price": 14.9,
     "catalyst": "BUYBACK"
+  },
+  "GRANULES": {
+    "first_seen": "2026-07-06",
+    "first_price": 828.9,
+    "catalyst": "USFDA"
+  },
+  "OBEROIRLTY": {
+    "first_seen": "2026-07-06",
+    "first_price": 1885.0,
+    "catalyst": "PROXY_PLAY"
+  },
+  "GLENMARK": {
+    "first_seen": "2026-07-06",
+    "first_price": 2185.2,
+    "catalyst": "USFDA"
+  },
+  "ZENTEC": {
+    "first_seen": "2026-07-07",
+    "first_price": 1758.3,
+    "catalyst": "ACQUISITION"
+  },
+  "CLEANMAX": {
+    "first_seen": "2026-07-07",
+    "first_price": 1266.0,
+    "catalyst": "ORDER_WIN"
+  },
+  "NAUKRI": {
+    "first_seen": "2026-07-07",
+    "first_price": 1034.65,
+    "catalyst": "ACQUISITION"
   }
 }
