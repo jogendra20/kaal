@@ -167,6 +167,14 @@ def _format_signal_block(s: dict) -> list:
     }
     if opp_label and opp_label != 'UNKNOWN':
         lines.append(f'└─ 📊 {opp_icons.get(opp_label, opp_label)}: {opp_reason}')
+    # Delivery signal from yesterday's bhavcopy
+    deliv_per   = s.get('deliv_per', 0)
+    deliv_label = s.get('deliv_label', '')
+    deliv_note  = s.get('deliv_note', '')
+    if deliv_per > 0:
+        deliv_icons = {'GENUINE_DEMAND': '🟢', 'ACCUMULATION': '🔵', 'SHORT_SQUEEZE': '⚠️', 'WEAK': '🔴', 'NEUTRAL': '⚪'}
+        icon = deliv_icons.get(deliv_label, '⚪')
+        lines.append(f'└─ 📦 Delivery: {deliv_per:.1f}% {icon} {deliv_note[:80]}')
     if moved_warn:
         lines.append(moved_warn)
     lines.append(f'└─ 🎯 {_entry_plan(s)}')
@@ -474,6 +482,12 @@ def run():
             opp = classify_opportunity(sym, price)
             s['opp_label']  = opp['label']
             s['opp_reason'] = opp['reason']
+            # Add delivery data from signal history if available
+            from kaal_history import load_history
+            hist_data = load_history().get(sym, {})
+            s['deliv_per']   = hist_data.get('deliv_per', 0)
+            s['deliv_label'] = hist_data.get('deliv_label', '')
+            s['deliv_note']  = hist_data.get('deliv_note', '')
         else:
             s['days_old']            = 0
             s['pct_change']          = 0.0

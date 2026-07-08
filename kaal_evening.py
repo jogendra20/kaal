@@ -14,7 +14,7 @@ from collections import defaultdict
 
 from kaal_sources import (
     fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban,
-    fetch_news, fetch_eod_prices,
+    fetch_news, fetch_eod_prices, fetch_bhavcopy, classify_delivery,
 )
 from kaal_scorer import (
     score_announcement, score_bulk_deal,
@@ -163,6 +163,25 @@ def run():
     if tracked_symbols:
         eod = fetch_eod_prices(tracked_symbols)
         update_eod_prices(eod)
+
+    # Fetch bhavcopy and store delivery % for watchlist stocks
+    from datetime import datetime
+    today_str = datetime.now().strftime('%d%m%Y')
+    bhavcopy = fetch_bhavcopy(today_str)
+    if bhavcopy:
+        import json, os
+        hist_file = os.path.join(os.path.dirname(__file__), 'data', 'signal_history.json')
+        hist = json.load(open(hist_file)) if os.path.exists(hist_file) else {}
+        for sym in tracked_symbols:
+            if sym in bhavcopy and sym in hist:
+                b = bhavcopy[sym]
+                hist[sym]['deliv_per']  = b['deliv_per']
+                hist[sym]['deliv_chg_pct'] = b['chg_pct']
+                dc = classify_delivery(b['deliv_per'], b['chg_pct'])
+                hist[sym]['deliv_label'] = dc['label']
+                hist[sym]['deliv_note']  = dc['note']
+        json.dump(hist, open(hist_file, 'w'), indent=2)
+        print(f'[HIST] Delivery data stored for {len(tracked_symbols)} symbols')
 
     msg = build_evening_brief(tier1, tier2, macro)
     import os

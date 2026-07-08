@@ -1,34 +1,47 @@
-<b>⚔️ KAAL MORNING BRIEF</b>
-<code>07 Jul 2026 08:11 AM</code>
-
-<b>🌐 MACRO</b>
-VIX: <code>11.8</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.66%</code> (Bullish)
-SPX: <code>+0.7%</code>  Crude: <code>$69</code>  Gold: <code>$4156</code>  USD/INR: <code>95.38</code>
+<b>🌙 KAAL EVENING BRIEF</b>
+<code>07 Jul 2026 10:10 PM</code>  |  VIX: <code>11.7</code>
+Crude: <code>$69</code>  USD/INR: <code>95.21</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
+<b>📋 TOMORROW'S PRE-WATCHLIST</b>
+<i>(Morning scan will confirm with fresh announcements)</i>
 
-<code>[07:35 PM]</code> <b>ZENTEC</b> — ACQUISITION 🟢
-Score: <code>83/100</code> | Yest: +0.7% 🟢 FRESH
-└─ Vector Technics becomes India's largest fully integrated drone propulsion manufacturer with 300,000 
-└─ [WATCH] High-impact acquisition catalyst with specific capacity expansion metrics (300,000 units). Strong alignment with PLI schemes and government ca
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+🔥 <b>TIER 1</b>
 
-<code>[08:00 AM]</code> <b>CLEANMAX</b> — ORDER WIN 🟢
-Score: <code>80/100</code> | Yest: +0.7% 🟢 FRESH
-└─ CleanMax commissions 500 MW renewable energy in Q1 FY27, taking portfolio to 4.2 GW.
-└─ [WATCH] Significant operational milestone (500 MW commissioned) taking portfolio to 4.2 GW. Concrete execution data in a bullish renewable sector.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 Entry: 9:30 breakout or VWMA20 retest | SL: 15M low | Target: 1:2
+<code>[06:17 PM]</code> <b>RELIGARE</b> — MERGER 🟢
+Score: <code>83/100</code>
+└─ Religare Enterprises demerger into Religare Finvest approved by NSE and BSE with no objections/adver
+└─ Demerger approvals from exchanges signal regulatory clearance for the scheme, reducing uncertainty. Historically, such corporate actions unlock value for shareholders of the demerg
 
-<code>[09:00 PM]</code> <b>NAUKRI</b> — ACQUISITION 🟢
-Score: <code>77/100</code> 🟢 FRESH
-└─ Info Edge to acquire 100% of CodingNinjas for ~Rs 39.91 crore, paying Rs 5,340.23 per share
-└─ [WATCH] Strategic acquisition (CodingNinjas) at disclosed valuation (~Rs 39.91 crore). Cross-selling potential in education sector.
-└─ 📊 🟢 UNDERREACTED: Market barely moved on catalyst day (+0.0%) — more room ahead
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+<code>[05:57 PM]</code> <b>UNOMINDA</b> — ACQUISITION 🟢
+Score: <code>83/100</code>
+└─ UNO Minda approves Rs. 320 Cr greenfield 4W passenger vehicle seating systems facility with JV partn
+└─ Capacity addition in high-growth 4W seating segment signals long-term growth potential. Market typically reacts positively to greenfield expansions in auto ancillaries, especially 
+
+<code>[08:17 PM]</code> <b>CEIGALL</b> — ORDER WIN 🟢
+Score: <code>80/100</code>
+└─ Ceigall India secures 3 HAM projects worth ₹4,050 Crore with appointed dates, expanding infrastructu
+└─ Large order wins (HAM projects) signal revenue growth and operational expansion, typically bullish for infrastructure stocks. Traders should watch for execution timelines, margin i
+
+<code>[09:48 PM]</code> <b>ORBTEXP</b> — BUYBACK 🟢
+Score: <code>78/100</code>
+└─ Orbit Exports approves ₹250/share buyback via tender route for up to 100% of shares tendered (max 4.
+└─ Buybacks at prices above market (₹250 vs current ~₹200) signal undervaluation and return capital to shareholders. Tender route ensures fixed price certainty, typically boosting sen
+
+<code>[09:40 PM]</code> <b>RBA</b> — ACQUISITION 🟢
+Score: <code>77/100</code>
+└─ Inspira Global acquires Restaurant Brands Asia Limited, consolidating QSR brands under one entity.
+└─ This acquisition signals strategic consolidation in the QSR sector, potentially improving operational efficiencies and market positioning. The market typically reacts positively to
+
+👀 <b>TIER 2</b>
+• <b>MMP</b> 🟢 [73] OTHER — MMP Industries commences production of Low Tension Power Cables, expan
+• <b>AXISBANK</b> 🟢 [73] CREDIT UPGRADE — Axis Bank's credit rating upgraded by CRISIL to AA+/Stable from AA/Sta
+• <b>OCCLLTD</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from OCCL Limited for the quarte
+• <b>SIMBHALS</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Simbhaoli Sugars Limited fo
+• <b>JBFIND</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from JBF Industries Limited for 
+• <b>MUFIN</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Mufin Green Finance Limited
+• <b>APTECHT</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Aptech Limited for the quar
+• <b>DPWIRES</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from D P Wires Limited for the q
 
 ──────────────────────────────────
-<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
+<i>Morning brief at 8:50 AM tomorrow.</i>
