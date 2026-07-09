@@ -428,6 +428,8 @@ FNO_UNIVERSE_HINT = {
 
 def check_keys():
     warnings = []
+    if not os.environ.get("MISTRAL_API_KEY"):
+        warnings.append("MISTRAL_API_KEY missing (primary LLM \u2014 calls silently fall through to Groq)")
     if not GROQ_API_KEY:
         warnings.append("GROQ_API_KEY missing")
     if not GEMINI_API_KEY:

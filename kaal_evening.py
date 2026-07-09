@@ -41,7 +41,7 @@ def reset_seen():
 def direction_emoji(direction: str) -> str:
     return {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}.get(direction, "⚪")
 
-def build_evening_brief(tier1: list, tier2: list, macro: dict) -> str:
+def build_evening_brief(tier1: list, tier2: list, macro: dict, llm_capped: bool = False) -> str:
     now      = datetime.now().strftime("%d %b %Y %I:%M %p")
     vix      = macro.get("vix", 0)
 
@@ -97,6 +97,13 @@ def build_evening_brief(tier1: list, tier2: list, macro: dict) -> str:
             de = direction_emoji(s.get("direction", "NEUTRAL"))
             lines.append(f"• {s['symbol']} {de} — {s.get('key','')[:80]}")
 
+    if llm_capped:
+        lines.append(
+            "\n\u26a0\ufe0f <i>LLM call cap hit during this run \u2014 some Tier 2 scores "
+            "are rule-based only (no AI differentiation). Treat identical "
+            "scores in this batch with extra caution.</i>"
+        )
+
     lines += [
         "",
         "─" * 34,
@@ -128,6 +135,11 @@ def run():
 
     all_signals.extend(score_news_velocity(news))
 
+    import kaal_llm as _kaal_llm_mod
+    llm_capped = _kaal_llm_mod._call_count >= _kaal_llm_mod.MAX_LLM_CALLS_PER_RUN
+    if llm_capped:
+        print(f"[KAAL] \u26a0\ufe0f  LLM call cap ({_kaal_llm_mod.MAX_LLM_CALLS_PER_RUN}) reached this run \u2014 remaining signals used rule-based fallback only")
+
     by_symbol = defaultdict(list)
     for s in all_signals:
         by_symbol[s["symbol"]].append(s)
@@ -140,9 +152,14 @@ def run():
         all_src       = []
         for s in sigs: all_src.extend(s.get("signal_sources", []))
         unique_src    = list(dict.fromkeys(all_src))
-        source_bonus  = (len(set(unique_src)) - 1) * 5
         best          = dict(best)
-        best["score"] = min(best["score"] + source_bonus, 100)
+        if best.get("catalyst") == "NEWS_MOMENTUM":
+            # News-outlet mention count is NOT independent confirmation —
+            # keep the hard Tier-2 cap regardless of how many outlets ran the story
+            best["score"] = min(best["score"], 62)
+        else:
+            source_bonus  = (len(set(unique_src)) - 1) * 5
+            best["score"] = min(best["score"] + source_bonus, 100)
         best["signal_sources"] = unique_src
         if len(set(unique_src)) > 1:
             best["reason"] = f"[{'+'.join(set(unique_src))}] " + best.get("reason", "")
@@ -165,7 +182,6 @@ def run():
         update_eod_prices(eod)
 
     # Fetch bhavcopy and store delivery % for watchlist stocks
-    from datetime import datetime
     today_str = datetime.now().strftime('%d%m%Y')
     bhavcopy = fetch_bhavcopy(today_str)
     if bhavcopy:
@@ -183,7 +199,7 @@ def run():
         json.dump(hist, open(hist_file, 'w'), indent=2)
         print(f'[HIST] Delivery data stored for {len(tracked_symbols)} symbols')
 
-    msg = build_evening_brief(tier1, tier2, macro)
+    msg = build_evening_brief(tier1, tier2, macro, llm_capped=llm_capped)
     import os
     brief_file = os.path.join(os.path.dirname(__file__), "data", "latest_brief.txt")
     with open(brief_file, "w") as f:

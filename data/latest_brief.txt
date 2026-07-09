@@ -1,6 +1,6 @@
 <b>🌙 KAAL EVENING BRIEF</b>
-<code>07 Jul 2026 10:10 PM</code>  |  VIX: <code>11.7</code>
-Crude: <code>$69</code>  USD/INR: <code>95.21</code>
+<code>09 Jul 2026 09:59 PM</code>  |  VIX: <code>13.4</code>
+Crude: <code>$74</code>  USD/INR: <code>95.59</code>
 ──────────────────────────────────
 
 <b>📋 TOMORROW'S PRE-WATCHLIST</b>
@@ -8,40 +8,20 @@ Crude: <code>$69</code>  USD/INR: <code>95.21</code>
 
 🔥 <b>TIER 1</b>
 
-<code>[06:17 PM]</code> <b>RELIGARE</b> — MERGER 🟢
-Score: <code>83/100</code>
-└─ Religare Enterprises demerger into Religare Finvest approved by NSE and BSE with no objections/adver
-└─ Demerger approvals from exchanges signal regulatory clearance for the scheme, reducing uncertainty. Historically, such corporate actions unlock value for shareholders of the demerg
-
-<code>[05:57 PM]</code> <b>UNOMINDA</b> — ACQUISITION 🟢
-Score: <code>83/100</code>
-└─ UNO Minda approves Rs. 320 Cr greenfield 4W passenger vehicle seating systems facility with JV partn
-└─ Capacity addition in high-growth 4W seating segment signals long-term growth potential. Market typically reacts positively to greenfield expansions in auto ancillaries, especially 
-
-<code>[08:17 PM]</code> <b>CEIGALL</b> — ORDER WIN 🟢
-Score: <code>80/100</code>
-└─ Ceigall India secures 3 HAM projects worth ₹4,050 Crore with appointed dates, expanding infrastructu
-└─ Large order wins (HAM projects) signal revenue growth and operational expansion, typically bullish for infrastructure stocks. Traders should watch for execution timelines, margin i
-
-<code>[09:48 PM]</code> <b>ORBTEXP</b> — BUYBACK 🟢
-Score: <code>78/100</code>
-└─ Orbit Exports approves ₹250/share buyback via tender route for up to 100% of shares tendered (max 4.
-└─ Buybacks at prices above market (₹250 vs current ~₹200) signal undervaluation and return capital to shareholders. Tender route ensures fixed price certainty, typically boosting sen
-
-<code>[09:40 PM]</code> <b>RBA</b> — ACQUISITION 🟢
-Score: <code>77/100</code>
-└─ Inspira Global acquires Restaurant Brands Asia Limited, consolidating QSR brands under one entity.
-└─ This acquisition signals strategic consolidation in the QSR sector, potentially improving operational efficiencies and market positioning. The market typically reacts positively to
+<b>TCS</b> — NEWS MOMENTUM 🟡
+Score: <code>82/100</code>
+└─ Mentioned 35x across BL, ET, MINT, TAVILY: Tata Consultancy Services Stock Update: Shares Slip Ahead
+└─ [MINT+TAVILY+BL+NSE+ET] Stock appearing in 35 news articles today across BL, ET, MINT, TAVILY. Snippet: # Tata Consultancy Services Stock Update: Shares Slip Ahead of Q1 Earnings. 
 
 👀 <b>TIER 2</b>
-• <b>MMP</b> 🟢 [73] OTHER — MMP Industries commences production of Low Tension Power Cables, expan
-• <b>AXISBANK</b> 🟢 [73] CREDIT UPGRADE — Axis Bank's credit rating upgraded by CRISIL to AA+/Stable from AA/Sta
-• <b>OCCLLTD</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from OCCL Limited for the quarte
-• <b>SIMBHALS</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Simbhaoli Sugars Limited fo
-• <b>JBFIND</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from JBF Industries Limited for 
-• <b>MUFIN</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Mufin Green Finance Limited
-• <b>APTECHT</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Aptech Limited for the quar
-• <b>DPWIRES</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from D P Wires Limited for the q
+• <b>REGAAL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Regaal Resources Limited fo
+• <b>SSDL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Saraswati Saree Depot Limit
+• <b>DAVANGERE</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Davangere Sugar Company Lim
+• <b>TREL</b> 🟢 [72] ACQUISITION — Transindia Real Estate Limited has informed the Exchange about update 
+• <b>PRITI</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Priti International Limited
+• <b>BOHRAIND</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Bohra Industries Limited fo
+• <b>MUNJALAU</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Munjal Auto Industries Limi
+• <b>AIIL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Authum Investment & Infrast
 
 ──────────────────────────────────
 <i>Morning brief at 8:50 AM tomorrow.</i>
