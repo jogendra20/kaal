@@ -25,6 +25,16 @@ load_env()
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT  = os.environ.get("TELEGRAM_CHAT_ID", "")
 
+# Multi-recipient support - every ID here gets every alert/brief.
+# Override/extend via TELEGRAM_CHAT_IDS env var (comma-separated) without
+# touching this file; defaults to your primary chat + the friend's ID
+# added below if the env var isn't set.
+TELEGRAM_CHAT_IDS = [
+    c.strip() for c in os.environ.get(
+        "TELEGRAM_CHAT_IDS", f"{TELEGRAM_CHAT},8333171890"
+    ).split(",") if c.strip()
+]
+
 # ── GROQ + GEMINI ─────────────────────────────────────────
 GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -47,7 +57,12 @@ MAX_TIER1 = 5
 MAX_TIER2 = 8   # reduced from 10, quality over quantity
 
 # ── LLM CALL CAP ─────────────────────────────────────────
-MAX_LLM_CALLS = 80   # per run (Groq free tier, 80 is safe)
+# Single source of truth — kaal_llm.py imports this instead of hardcoding
+# its own value. Was 30 in kaal_llm.py and 80 here (two constants disagreed;
+# only the 30 was ever actually enforced). Kept at the value that was
+# actually running in production — raise it yourself if you want more calls
+# per run now that Mistral (not Groq) is primary.
+MAX_LLM_CALLS = 30
 
 # ── SCORE THRESHOLDS ─────────────────────────────────────
 TIER1_MIN_SCORE = 75   # was 75, slightly relaxed for Groq
@@ -442,3 +457,25 @@ def check_keys():
         print(f"[KAAL] ⚠️  KEY WARNING: {', '.join(warnings)}")
         print("[KAAL] Scores will be rule-based only if LLM keys are missing.")
     return warnings
+
+
+# ── PCR / MAX PAIN THRESHOLDS ─────────────────────────────
+# PCR = total Put OI / total Call OI for the nearest expiry.
+# Conventional retail interpretation (contrarian): high PCR = heavy put
+# writing = oversold/bullish tilt; low PCR = heavy call writing =
+# overbought/bearish tilt. Max Pain pinning is only meaningful within a
+# few days of expiry -- outside that window it's noise.
+PCR_BULLISH_THRESHOLD    = 1.3
+PCR_BEARISH_THRESHOLD    = 0.7
+MAX_PAIN_EXPIRY_WINDOW_DAYS = 3
+
+
+# ── VWAP DISTANCE THRESHOLDS ───────────────────────────────
+# Distance of today's indicative/gap price from YESTERDAY's actual
+# volume-weighted average price (from bhavcopy turnover/volume - not a
+# live intraday VWAP, KAAL has no tick feed for that yet). A stock already
+# far above yesterday's real "fair value" traded price is more overextended
+# than a simple gap% suggests; far below with a fresh catalyst can mean
+# better relative entry value.
+VWAP_EXTENDED_THRESHOLD_PCT = 7.0
+VWAP_DISCOUNT_THRESHOLD_PCT = -5.0

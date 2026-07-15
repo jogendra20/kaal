@@ -4,13 +4,14 @@ LLM engine: Groq1 -> Groq2 -> Gemini (last resort)
 """
 import json, re, os, time
 import requests
+from kaal_config import MAX_LLM_CALLS
 
 GROQ_MODEL      = "openai/gpt-oss-120b"  # deep scoring — fallback only now
-GROQ_FAST_MODEL = "qwen/qwen3.6-27b"      # fast scoring (Tier2, announcements)
+GROQ_FAST_MODEL = "qwen/qwen3.6-27b"      # fast scoring (Tier2, announcements) — verified correct, Groq's own migration docs recommend this exact ID
 GEMINI_MODEL = "gemini-2.5-flash"
 
 _call_count = 0
-MAX_LLM_CALLS_PER_RUN = 30
+MAX_LLM_CALLS_PER_RUN = MAX_LLM_CALLS  # single source of truth — see kaal_config.py
 
 
 def _load_env():
@@ -323,7 +324,8 @@ def _merge_judge_verdicts(signals: list, ranked: list, source_name: str) -> list
             continue
         s = dict(s)
         s["score"]  = g.get("final_score", s["score"])
-        s["reason"] = f"[{action}] {g.get("final_reason", s.get("reason",""))}"
+        final_reason = g.get("final_reason", s.get("reason", ""))
+        s["reason"] = f"[{action}] {final_reason}"
         s["action"] = action
         updated.append(s)
     updated.sort(key=lambda x: -x["score"])

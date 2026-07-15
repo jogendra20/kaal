@@ -1,6 +1,6 @@
 <b>🌙 KAAL EVENING BRIEF</b>
-<code>09 Jul 2026 09:59 PM</code>  |  VIX: <code>13.4</code>
-Crude: <code>$74</code>  USD/INR: <code>95.59</code>
+<code>15 Jul 2026 08:04 PM</code>  |  VIX: <code>13.3</code>
+Crude: <code>$79</code>  USD/INR: <code>96.30</code>
 ──────────────────────────────────
 
 <b>📋 TOMORROW'S PRE-WATCHLIST</b>
@@ -8,20 +8,22 @@ Crude: <code>$74</code>  USD/INR: <code>95.59</code>
 
 🔥 <b>TIER 1</b>
 
-<b>TCS</b> — NEWS MOMENTUM 🟡
-Score: <code>82/100</code>
-└─ Mentioned 35x across BL, ET, MINT, TAVILY: Tata Consultancy Services Stock Update: Shares Slip Ahead
-└─ [MINT+TAVILY+BL+NSE+ET] Stock appearing in 35 news articles today across BL, ET, MINT, TAVILY. Snippet: # Tata Consultancy Services Stock Update: Shares Slip Ahead of Q1 Earnings. 
+<code>[07:22 PM]</code> <b>SHANKARA</b> — OPEN OFFER 🟢
+Score: <code>90/100</code>
+└─ Corporate Professionals Capital Private Ltd submits open offer under SEBI (SAST) Regulations 2011 fo
+└─ Open offers typically signal potential acquisition or consolidation, often viewed positively by markets due to perceived undervaluation or strategic interest. Traders should watch 
 
 👀 <b>TIER 2</b>
-• <b>REGAAL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Regaal Resources Limited fo
-• <b>SSDL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Saraswati Saree Depot Limit
-• <b>DAVANGERE</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Davangere Sugar Company Lim
-• <b>TREL</b> 🟢 [72] ACQUISITION — Transindia Real Estate Limited has informed the Exchange about update 
-• <b>PRITI</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Priti International Limited
-• <b>BOHRAIND</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Bohra Industries Limited fo
-• <b>MUNJALAU</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Munjal Auto Industries Limi
-• <b>AIIL</b> 🟢 [72] REPLY TO CLARIFICATION- F — The Exchange had sought clarification from Authum Investment & Infrast
+• <b>TVSHLTD</b> 🟢 [72] ACQUISITION — TVS Holdings Limited has informed the Exchange about Acquisition
+• <b>ASIANTILES</b> 🟢 [72] DIVERSIFICATION DISINVEST — Asian Granito India Limited has informed the Exchange about Diversific
+• <b>HEROMOTOCO</b> 🟢 [72] ACQUISITION — Pursuant to Regulation 30 of the SEBI (Listing Obligations and Disclos
+• <b>ARSSBL</b> 🟢 [72] ACQUISITION — Anand Rathi Share and Stock Brokers Limited has informed the Exchange 
+• <b>IKS</b> 🟢 [72] ACQUISITION — Inventurus Knowledge Solutions Limited has informed the Exchange about
+• <b>63MOONS</b> 🟢 [72] ACQUISITION — 63 moons technologies limited has informed the Exchange about Acquisit
+• <b>NTPCGREEN</b> 🟢 [70] ORDER WIN — Ayana Renewable Power wins 50 MW Wind Project in SECI tender, enhancin
+• <b>VRAJ</b> 🟢 [70] CAPACITY ADDITION — Vraj Iron and Steel Limited has informed the Exchange about Capacity a
+
+⚠️ <i>LLM call cap hit during this run — some Tier 2 scores are rule-based only (no AI differentiation). Treat identical scores in this batch with extra caution.</i>
 
 ──────────────────────────────────
 <i>Morning brief at 8:50 AM tomorrow.</i>

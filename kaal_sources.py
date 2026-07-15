@@ -60,24 +60,10 @@ def fetch_nse_announcements():
         return []
 
 
-def fetch_bse_bulk_block():
-    today = datetime.now().strftime("%Y%m%d")
-    deals = []
-    for dtype in ["BulkDeal", "BlockDeal"]:
-        try:
-            url = f"https://api.bseindia.com/BseIndiaAPI/api/{dtype}/w?strDt={today}&strEDt={today}"
-            r   = requests.get(url, headers=HEADERS_BSE, timeout=15)
-            if r.status_code == 200 and r.text.strip().startswith("{"):
-                items = r.json().get("Table", [])
-                for item in items:
-                    item["_deal_type"] = dtype.replace("Deal", "").upper()
-                deals.extend(items)
-        except Exception:
-            pass
-    return deals
-
-
 # ── MACRO DATA ────────────────────────────────────────────────────────────────
+# NOTE: fetch_bse_bulk_block() removed (June-July 2026 audit) — dead code,
+# never called. All BSE endpoints confirmed dead; NSE bulk/block deals
+# (kaal_sources.py fetch_nse_bulk_block) is the live path used instead.
 def _stooq_quote(symbol: str) -> tuple:
     """Returns (price, chg_pct) using Stooq — more reliable from India/Termux."""
     try:
@@ -433,8 +419,14 @@ def fetch_bhavcopy(date_str: str = None) -> dict:
     import requests as req
 
     if not date_str:
-        # Use yesterday by default (today's file not published till 7PM)
-        date_str = (datetime.now() - timedelta(days=1)).strftime("%d%m%Y")
+        # Use last TRADING day by default (today's file not published till
+        # 7PM, and simple "yesterday" breaks on Mon/holidays - e.g. on a
+        # Monday, calendar-yesterday is Sunday, a non-trading day with no
+        # real bhavcopy). Walk back skipping Sat/Sun.
+        d = datetime.now() - timedelta(days=1)
+        while d.weekday() >= 5:  # 5=Saturday, 6=Sunday
+            d -= timedelta(days=1)
+        date_str = d.strftime("%d%m%Y")
 
     url = f"https://nsearchives.nseindia.com/products/content/sec_bhavdata_full_{date_str}.csv"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
@@ -461,6 +453,13 @@ def fetch_bhavcopy(date_str: str = None) -> dict:
                 deliv_qty  = int(float(row.get("DELIV_QTY", 0)))
                 deliv_per  = float(row.get("DELIV_PER", 0))
                 volume     = int(float(row.get("TTL_TRD_QNTY", 0)))
+                turnover_lacs = float(row.get("TURNOVER_LACS", 0) or 0)
+                # VWAP proxy: prior day's actual volume-weighted average price,
+                # computed from real traded value/quantity - not a live intraday
+                # VWAP (KAAL has no tick feed for that), but a genuine reference
+                # point for "already extended vs where most volume actually
+                # traded", which is more robust than a single close/prev_close print.
+                vwap = round((turnover_lacs * 100000) / volume, 2) if volume else close
                 result[symbol] = {
                     "close":      close,
                     "prev_close": prev_close,
@@ -468,6 +467,7 @@ def fetch_bhavcopy(date_str: str = None) -> dict:
                     "deliv_qty":  deliv_qty,
                     "deliv_per":  deliv_per,
                     "volume":     volume,
+                    "vwap":       vwap,
                 }
             except Exception:
                 continue
@@ -503,6 +503,7 @@ def fetch_eod_prices(symbols: list) -> dict:
     """
     s = nse_session()
     prices = {}
+    consecutive_failures = 0
     for symbol in symbols:
         try:
             r = s.get(
@@ -521,8 +522,20 @@ def fetch_eod_prices(symbols: list) -> dict:
                         "prev_close": prev_close,
                         "change_pct": chg_pct,
                     }
+                consecutive_failures = 0
+            else:
+                consecutive_failures += 1
         except Exception as e:
             print(f"[SRC] EOD price error {symbol}: {e}")
+            consecutive_failures += 1
+            # A bad/invalid symbol (or NSE's WAF flagging the session) can
+            # poison the shared session for every subsequent request in this
+            # loop - recreate it after repeated failures so one bad symbol
+            # doesn't take down the whole batch silently.
+            if consecutive_failures >= 3:
+                print(f"[SRC] {consecutive_failures} consecutive failures - recreating session")
+                s = nse_session()
+                consecutive_failures = 0
     print(f"[SRC] EOD prices fetched: {len(prices)}/{len(symbols)} symbols")
     return prices
 
@@ -748,59 +761,6 @@ def fetch_marketaux_news(limit: int = 20) -> list:
         return []
 
 
-def fetch_marketaux_news(limit: int = 20) -> list:
-    """
-    Fetch Indian stock market news from Marketaux.
-    Returns articles with pre-tagged stock symbols and sentiment scores.
-    Free tier: 100 requests/day.
-    """
-    from kaal_config import MARKETAUX_API_KEY
-    if not MARKETAUX_API_KEY:
-        return []
-    try:
-        import requests
-        url = "https://api.marketaux.com/v1/news/all"
-        params = {
-            "countries":       "in",
-            "language":        "en",
-            "limit":           limit,
-            "filter_entities": "true",
-            "api_token":       MARKETAUX_API_KEY,
-        }
-        r = requests.get(url, params=params, timeout=10)
-        if r.status_code != 200:
-            print(f"[SRC] Marketaux error: {r.status_code}")
-            return []
-        data = r.json()
-        articles = []
-        for item in data.get("data", []):
-            entities = item.get("entities", [])
-            tagged_symbols = [
-                e["symbol"] for e in entities
-                if e.get("country") == "in"
-                and e.get("type") == "equity"
-                and e.get("match_score", 0) > 50
-            ]
-            sentiment = None
-            if entities:
-                best = max(entities, key=lambda e: e.get("match_score", 0))
-                sentiment = best.get("sentiment_score")
-            articles.append({
-                "title":     item.get("title", ""),
-                "summary":   item.get("description", "") or item.get("snippet", ""),
-                "url":       item.get("url", ""),
-                "source":    "MARKETAUX",
-                "published": item.get("published_at", ""),
-                "symbols":   tagged_symbols,
-                "sentiment": sentiment,
-            })
-        print(f"[SRC] Marketaux: {len(articles)} articles")
-        return articles
-    except Exception as e:
-        print(f"[SRC] Marketaux error: {e}")
-        return []
-
-
 def fetch_news():
     """
     Fetch news from:
@@ -889,21 +849,10 @@ def fetch_news():
     return articles
 
 
-# ── SEBI PIT (promoter transactions) ─────────────────────────────────────────
-def fetch_sebi_pit():
-    today    = datetime.now().strftime("%d-%m-%Y")
-    week_ago = (datetime.now() - timedelta(days=7)).strftime("%d-%m-%Y")
-    try:
-        s    = nse_session()
-        url  = f"https://www.nseindia.com/api/corporates-pit?index=equities&from_date={week_ago}&to_date={today}"
-        r    = s.get(url, timeout=15)
-        data = r.json()
-        return data if isinstance(data, list) else data.get("data", [])
-    except Exception:
-        return []
-
-
 # ── LIQUIDITY CHECK ───────────────────────────────────────────────────────────
+# NOTE: fetch_sebi_pit() removed (June-July 2026 audit) — dead code, never
+# called. NSE PIT endpoint confirmed to always return empty; promoter PIT
+# buying remains a structural blind spot documented in KAAL's known limits.
 def check_liquidity(symbol: str) -> dict:
     """
     Returns avg 20-day traded value in crore.
@@ -959,3 +908,112 @@ def download_pdf_text(url: str) -> str:
     except Exception:
         pass
     return ""
+
+
+# ── PCR / MAX PAIN (F&O option-chain analysis) ────────────────────────────────
+def fetch_option_chain(symbol: str, is_index: bool = False) -> dict:
+    """
+    Fetch raw NSE option-chain JSON for an index (NIFTY/BANKNIFTY) or an
+    F&O-eligible stock. Returns {} on any failure.
+    """
+    s = nse_session()
+    endpoint = "option-chain-indices" if is_index else "option-chain-equities"
+    try:
+        r = s.get(
+            f"https://www.nseindia.com/api/{endpoint}?symbol={symbol}",
+            timeout=12
+        )
+        if r.status_code != 200:
+            print(f"[SRC] Option chain {symbol}: HTTP {r.status_code}")
+            return {}
+        return r.json()
+    except Exception as e:
+        print(f"[SRC] Option chain {symbol} error: {e}")
+        return {}
+
+
+def compute_pcr_max_pain(chain_data: dict) -> dict:
+    """
+    Parses raw NSE option-chain JSON (nearest expiry only) into PCR
+    (put/call OI ratio) and Max Pain strike (the strike that minimizes
+    total payout to option buyers -- price tends to gravitate here close
+    to expiry). Returns {} on any parsing failure or empty chain.
+    """
+    try:
+        records = chain_data.get("records", {})
+        expiry_dates = records.get("expiryDates", [])
+        if not expiry_dates:
+            return {}
+        nearest_expiry = expiry_dates[0]
+        underlying     = float(records.get("underlyingValue", 0))
+
+        rows = [r for r in records.get("data", []) if r.get("expiryDate") == nearest_expiry]
+        if not rows:
+            return {}
+
+        strikes = []
+        total_call_oi = 0
+        total_put_oi  = 0
+        for r in rows:
+            strike = r.get("strikePrice")
+            ce_oi  = int((r.get("CE") or {}).get("openInterest", 0))
+            pe_oi  = int((r.get("PE") or {}).get("openInterest", 0))
+            strikes.append({"strike": strike, "ce_oi": ce_oi, "pe_oi": pe_oi})
+            total_call_oi += ce_oi
+            total_put_oi  += pe_oi
+
+        if total_call_oi == 0:
+            return {}
+
+        pcr = round(total_put_oi / total_call_oi, 2)
+
+        best_strike = None
+        min_pain    = None
+        for candidate in strikes:
+            k = candidate["strike"]
+            pain = 0
+            for st in strikes:
+                if st["strike"] <= k:
+                    pain += st["ce_oi"] * (k - st["strike"])
+                if st["strike"] >= k:
+                    pain += st["pe_oi"] * (st["strike"] - k)
+            if min_pain is None or pain < min_pain:
+                min_pain    = pain
+                best_strike = k
+
+        from datetime import datetime as _dt
+        exp_dt      = _dt.strptime(nearest_expiry, "%d-%b-%Y")
+        days_to_exp = (exp_dt - _dt.now()).days
+
+        return {
+            "pcr":              pcr,
+            "max_pain_strike":  best_strike,
+            "underlying":       underlying,
+            "distance_to_pain": round(((underlying - best_strike) / best_strike) * 100, 2) if best_strike else 0,
+            "nearest_expiry":   nearest_expiry,
+            "days_to_expiry":   days_to_exp,
+        }
+    except Exception as e:
+        print(f"[SRC] PCR/Max Pain parse error: {e}")
+        return {}
+
+
+def fetch_pcr_map(symbols: list) -> dict:
+    """
+    Fetches PCR/Max Pain for a specific list of F&O-eligible symbols only
+    (not the whole ~180-stock F&O universe) -- keeps this to a handful of
+    calls per run, scoped to stocks that already have another reason to
+    be considered today (announcement, screener, etc).
+    Returns {symbol: {pcr, max_pain_strike, distance_to_pain, days_to_expiry}}.
+    """
+    result = {}
+    for sym in symbols:
+        chain = fetch_option_chain(sym, is_index=False)
+        if not chain:
+            continue
+        parsed = compute_pcr_max_pain(chain)
+        if parsed:
+            result[sym] = parsed
+    if result:
+        print(f"[SRC] PCR/Max Pain: {len(result)}/{len(symbols)} symbols resolved")
+    return result

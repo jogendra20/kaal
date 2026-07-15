@@ -8,8 +8,8 @@ import sys, os, time
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime
-from kaal_sources import fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban
-from kaal_scorer import score_announcement, score_bulk_deal
+from kaal_sources import fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban, fetch_clean_bulk_deals
+from kaal_scorer import score_announcement, score_bulk_buying
 from kaal_telegram import send
 from kaal_config import VIX_HIGH, TIER1_MIN_SCORE
 
@@ -60,7 +60,6 @@ def check_once(watchlist: set, skip_set: set, macro: dict):
 
     nse_anns   = fetch_nse_announcements()
     bse_anns   = []
-    bulk_deals = []
 
     for ann in nse_anns :
         aid = get_ann_id(ann)
@@ -80,10 +79,18 @@ def check_once(watchlist: set, skip_set: set, macro: dict):
         elif score >= TIER1_MIN_SCORE:
             send_alert(result, f"Fresh Tier 1 catalyst detected (not on watchlist — consider adding)")
 
-    for deal in bulk_deals:
-        result = score_bulk_deal(deal)
-        if result.get("skip"):
+    # NOTE: NSE publishes bulk/block deal data with a same-day lag (often
+    # batch-updated, not tick-by-tick) - this won't be truly live, but it
+    # was previously never wired at all (bulk_deals was hardcoded to []).
+    # Paired with score_bulk_buying() to match fetch_clean_bulk_deals()'s
+    # actual key names (symbol/qty/price/client) - score_bulk_deal() expects
+    # different raw NSE key names and would silently score everything as 0.
+    bulk_deals = fetch_clean_bulk_deals()
+    for result in score_bulk_buying(bulk_deals):
+        deal_key = f"BULKDEAL:{result['symbol']}:{result['key']}"
+        if deal_key in seen:
             continue
+        new_seen.add(deal_key)
         if result["symbol"] in watchlist:
             send_alert(result, f"Institutional bulk/block deal on watchlist stock")
 
@@ -95,9 +102,22 @@ def run():
     market_open  = now.replace(hour=9,  minute=15, second=0, microsecond=0)
     market_close = now.replace(hour=15, minute=30, second=0, microsecond=0)
 
-    if not (market_open <= now <= market_close):
-        print("Market closed. Monitor not running.")
+    if now > market_close:
+        print("Market already closed for today. Monitor not running.")
         return
+
+    if now < market_open:
+        wait_seconds = (market_open - now).total_seconds()
+        # If started more than an hour early, this is probably a mistake
+        # (e.g. run manually at the wrong time) rather than the normal
+        # morning-scan-finished-early case - don't silently hang for hours.
+        if wait_seconds > 3600:
+            print(f"[KAAL] Started {wait_seconds/60:.0f} min before market open - "
+                  f"that's more than an hour early. Re-run closer to 9:15 AM.")
+            return
+        print(f"[KAAL] Started {wait_seconds/60:.0f} min before market open (9:15 AM) - waiting...")
+        time.sleep(wait_seconds)
+        now = datetime.now()
 
     print(f"[{now.strftime('%H:%M:%S')}] KAAL Monitor started")
 

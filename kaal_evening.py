@@ -66,7 +66,14 @@ def build_evening_brief(tier1: list, tier2: list, macro: dict, llm_capped: bool 
                 try:
                     from datetime import datetime as _dt
                     ts = _dt.strptime(an_dt, "%d-%b-%Y %H:%M:%S")
-                    time_str = f"<code>[{ts.strftime('%I:%M %p')}]</code> "
+                    # If this announcement isn't from today (e.g. carried
+                    # over from Friday when checked on a Sat/Sun evening
+                    # run), show the date too - a bare clock time reads as
+                    # "just happened" even when it's days old.
+                    if ts.date() != _dt.now().date():
+                        time_str = f"<code>[{ts.strftime('%b %d, %I:%M %p')}]</code> "
+                    else:
+                        time_str = f"<code>[{ts.strftime('%I:%M %p')}]</code> "
                 except Exception:
                     time_str = ""
             else:

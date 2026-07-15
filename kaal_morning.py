@@ -16,6 +16,8 @@ from kaal_sources import (
     fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_spurts, fetch_clean_bulk_deals,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
+    fetch_pcr_map, fetch_option_chain, compute_pcr_max_pain,
+    fetch_bhavcopy,
 )
 from kaal_scorer import (
     classify_announcement, score_announcement,
@@ -25,7 +27,7 @@ from kaal_scorer import (
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
-     MAX_TIER1, MAX_TIER2, VIX_HIGH
+     MAX_TIER1, MAX_TIER2, VIX_HIGH, FNO_UNIVERSE_HINT
 from kaal_llm import reset_call_count
 
 DATA_DIR       = os.path.join(os.path.dirname(__file__), "data")
@@ -68,6 +70,8 @@ def macro_bias_label(macro: dict) -> str:
 
 def _entry_plan(s: dict) -> str:
     cat = s.get("catalyst", "").upper()
+    if s.get("event_type") == "CORPORATE_ACTION":
+        return "ARBITRAGE ONLY — entity being absorbed/delisted via scheme, not re-rated. Check swap ratio/scheme terms. Not a momentum entry."
     vix = 15  # default fallback
     if "OPEN_OFFER" in cat or "TAKEOVER" in cat:
         return "Entry: pullback to VWMA20 only | SL: 15M body low | Target: 1:3"
@@ -105,6 +109,11 @@ def _signal_time(s: dict) -> str:
     if raw_time:
         try:
             dt = datetime.strptime(raw_time[:20], "%d-%b-%Y %H:%M:%S")
+            # If this catalyst is being carried forward from a previous day,
+            # show the date too - a bare clock time reads as "just happened"
+            # even when the filing is days old.
+            if s.get("days_since_catalyst", 0) > 0:
+                return dt.strftime("%b %d, %I:%M %p")
             return dt.strftime("%I:%M %p")
         except Exception:
             pass
@@ -148,6 +157,10 @@ def _format_signal_block(s: dict) -> list:
     if already_moved:
         moved_warn = f"\n└─ ⚠️ Already moved {pct:+.1f}% since catalyst — verify edge before entry"
 
+    demoted_warn = ""
+    if s.get('demoted'):
+        demoted_warn = "\n└─ 🔻 Demoted from Tier 1 — stale + already moved + short-covering delivery stacked together"
+
     lines = [
         "",
         f"<code>[{time_str}]</code> <b>{s['symbol']}</b> — {catalyst} {de}",
@@ -177,6 +190,8 @@ def _format_signal_block(s: dict) -> list:
         lines.append(f'└─ 📦 Delivery: {deliv_per:.1f}% {icon} {deliv_note[:80]}')
     if moved_warn:
         lines.append(moved_warn)
+    if demoted_warn:
+        lines.append(demoted_warn)
     lines.append(f'└─ 🎯 {_entry_plan(s)}')
     return lines
 
@@ -194,7 +209,8 @@ def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
         "",
         "<b>🌐 MACRO</b>",
         f"VIX: <code>{vix:.1f}</code>  |  Bias: {bias}",
-        f"GIFT Nifty: <code>{giftp:+.2f}%</code> ({gift})",
+        f"GIFT Nifty: <code>{giftp:+.2f}%</code> ({gift})"
+        + (f"  |  Nifty PCR: <code>{macro.get('nifty_pcr', 0):.2f}</code>" if macro.get('nifty_pcr', 0) else ""),
         f"SPX: <code>{macro.get('spx_chg', 0):+.1f}%</code>  "
         f"Crude: <code>${macro.get('crude', 0):.0f}</code>  "
         f"Gold: <code>${macro.get('gold', 0):.0f}</code>  "
@@ -239,6 +255,14 @@ def run():
     macro    = fetch_macro()
     log(f"Macro: VIX={macro.get('vix', 0):.1f}, Bias={macro.get('gift_nifty_bias')}, SPX={macro.get('spx_chg', 0):+.1f}%")
 
+    # Nifty-level PCR for overall market bias context in the macro line
+    try:
+        nifty_chain = fetch_option_chain("NIFTY", is_index=True)
+        nifty_pcr   = compute_pcr_max_pain(nifty_chain)
+        macro['nifty_pcr'] = nifty_pcr.get('pcr', 0)
+    except Exception:
+        macro['nifty_pcr'] = 0
+
     nse_anns = fetch_nse_announcements()
     news     = fetch_news()
     preopen  = fetch_preopen_gainers()
@@ -248,6 +272,19 @@ def run():
     sectors   = fetch_sector_strength()
     screeners = fetch_chartink_screeners()
     oi_map    = fetch_oi_spurts()
+
+    # PCR/Max Pain -- scoped to F&O-eligible stocks that already appear in
+    # today's announcements (not the whole F&O universe -- keeps this to a
+    # handful of calls per run instead of ~180)
+    fno_candidates = {a.get('symbol', '') for a in nse_anns} & FNO_UNIVERSE_HINT
+    pcr_map = fetch_pcr_map(list(fno_candidates)) if fno_candidates else {}
+
+    # VWAP distance — yesterday's actual volume-weighted average price
+    # from bhavcopy (turnover/volume), used as a mean-reversion reference
+    # separate from the existing prev-close-based gap filter
+    bhavcopy_yday = fetch_bhavcopy()
+    vwap_map = {sym: d.get('vwap', 0) for sym, d in bhavcopy_yday.items() if d.get('vwap')}
+
     # All screener symbols in one set
     screener_stocks = set()
     for name, stocks in screeners.items():
@@ -280,6 +317,13 @@ def run():
         ann['in_screener']  = ann.get('symbol','') in screener_stocks
         oi_data = oi_map.get(ann.get('symbol',''), {})
         ann['oi_spurt']    = oi_data.get('avg_oi_pct', 0)
+        pcr_data = pcr_map.get(ann.get('symbol',''), {})
+        ann['pcr']               = pcr_data.get('pcr', 0)
+        ann['max_pain_distance'] = pcr_data.get('distance_to_pain', 0)
+        ann['days_to_expiry']    = pcr_data.get('days_to_expiry', 99)
+        sym_price = price_map.get(ann.get('symbol',''), 0)
+        sym_vwap  = vwap_map.get(ann.get('symbol',''), 0)
+        ann['vwap_distance'] = round((sym_price - sym_vwap) / sym_vwap * 100, 2) if (sym_price and sym_vwap) else 0
         aid = get_ann_id(ann)
         if aid in seen:
             continue
@@ -497,6 +541,28 @@ def run():
             s['days_since_catalyst'] = 0
             s['already_moved']       = False
     cleanup_old_history()
+
+    # -- Compound demotion: STALE + already-moved + SHORT_SQUEEZE stacking --
+    # Three independent warning flags (freshness, price already ran,
+    # delivery pattern says "don't chase") should not still present as
+    # Tier-1 "HIGH CONVICTION" with no score penalty. Cap below Tier1.
+    from kaal_config import TIER1_MIN_SCORE as _T1_THRESH
+    for s in final:
+        if (s.get('hist_status') == 'STALE'
+                and s.get('already_moved')
+                and s.get('deliv_label') == 'SHORT_SQUEEZE'
+                and s['score'] >= _T1_THRESH):
+            s['score']   = _T1_THRESH - 1
+            s['demoted'] = True
+        elif (s.get('hist_status') == 'STALE'
+                and s.get('opp_label') == 'IGNORED'
+                and s['score'] >= _T1_THRESH):
+            # KAAL's own opportunity classifier already says "market
+            # ignoring catalyst - low conviction" - that should never sit
+            # under a Tier-1 "HIGH CONVICTION" header regardless of
+            # delivery pattern or exact price-move threshold.
+            s['score']   = _T1_THRESH - 1
+            s['demoted'] = True
 
     # ── Sort and tier ─────────────────────────────────────
     final.sort(key=lambda x: -x["score"])

@@ -17,12 +17,62 @@ from kaal_config import (
     TIER1_SUBJECTS, TIER2_SUBJECTS,
     TIER1_MIN_SCORE, TIER2_MIN_SCORE, SKIP_BELOW,
     FNO_UNIVERSE_HINT,
+    PCR_BULLISH_THRESHOLD, PCR_BEARISH_THRESHOLD, MAX_PAIN_EXPIRY_WINDOW_DAYS,
+    VWAP_EXTENDED_THRESHOLD_PCT, VWAP_DISCOUNT_THRESHOLD_PCT,
 )
 from kaal_llm import call_llm
 from kaal_sources import download_pdf_text
 
 
 # ── RULE-BASED PRE-CLASSIFIER ─────────────────────────────────────────────────
+# ── EVENT-TYPE GATE (runs before classify_announcement, no LLM cost) ──────────
+# Root-cause fix: classify_announcement() buckets by SUBJECT STRING match,
+# not by event TYPE - a regulatory clarification and a real corporate
+# action can land in the same NSE_TIER1_EXACT bucket with the same base
+# score. This gate catches two specific failure patterns before any
+# scoring happens:
+#   - REGULATORY_SCRUTINY: exchange clarifications/rumour checks have no
+#     inherent trade edge and should never reach Tier 1.
+#   - CORPORATE_ACTION: a trading suspension tied to scheme completion
+#     means the entity is being absorbed/delisted, not re-rated - this is
+#     an arbitrage-only situation, not a momentum entry (same category as
+#     tender buybacks, already special-cased elsewhere in this file).
+REGULATORY_SCRUTINY_KEYWORDS = [
+    "reply to clarification", "clarification sought", "rumour verification",
+    "news verification", "exchange has sought", "seeking clarification",
+    "sought clarification",
+]
+
+CORPORATE_ACTION_SUSPENSION_KEYWORDS = [
+    "trading suspension", "suspension of trading", "shall be suspended",
+    "trading in the shares of the company",
+]
+
+CORPORATE_ACTION_STRUCTURAL_KEYWORDS = [
+    "scheme of amalgamation", "scheme of arrangement", "amalgamated with",
+    "merged with and into", "ceases to exist", "dissolved without winding up",
+]
+
+
+def classify_event_type(subject: str, details: str) -> str:
+    """
+    Returns 'REGULATORY_SCRUTINY', 'CORPORATE_ACTION', or 'MOMENTUM_CATALYST'.
+    Only MOMENTUM_CATALYST is a normal tradeable setup - the other two get
+    special handling in score_announcement() and _entry_plan().
+    """
+    full = (subject + " " + details).lower()
+
+    if any(kw in full for kw in REGULATORY_SCRUTINY_KEYWORDS):
+        return "REGULATORY_SCRUTINY"
+
+    has_suspension = any(kw in full for kw in CORPORATE_ACTION_SUSPENSION_KEYWORDS)
+    has_structural = any(kw in full for kw in CORPORATE_ACTION_STRUCTURAL_KEYWORDS)
+    if has_suspension and has_structural:
+        return "CORPORATE_ACTION"
+
+    return "MOMENTUM_CATALYST"
+
+
 def classify_announcement(subject: str, details: str) -> tuple:
     """Returns (category, base_score, tier)"""
     subj = subject.strip()
@@ -222,6 +272,21 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         pass
 
     cat, base_score, tier = classify_announcement(subject, details)
+
+    # Event-type gate - runs before any further scoring/LLM cost
+    event_type = classify_event_type(subject, details)
+    if event_type == "REGULATORY_SCRUTINY":
+        # Pure exchange clarification/rumour-verification - no inherent
+        # trade edge. Cap below Tier1 regardless of what subject-matching
+        # assigned, so it can never masquerade as high-conviction.
+        base_score = min(base_score, 50)
+        tier = max(tier, 2)
+    elif event_type == "CORPORATE_ACTION" and isinstance(ann, dict):
+        # Trading suspension tied to scheme completion - the entity is
+        # being absorbed/delisted, not re-rated. Tag it so _entry_plan()
+        # shows an arbitrage-only note instead of a momentum entry plan.
+        ann['event_type'] = 'CORPORATE_ACTION'
+
     # Order wins hard cap — never Tier1
     if cat in ('BAGGING_RECEIVING_OF_ORDE', 'AWARDING_OF_ORDER(S)_CONT', 'ORDER_WIN'):
         base_score = min(base_score, 65)
@@ -272,6 +337,36 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             base_score = min(base_score + 12, 95)
         elif oi_pct > 10:
             base_score = min(base_score + 6, 95)
+
+        # PCR / Max Pain boost -- F&O positioning context.
+        # PCR shifts score a little either way (contrarian read: high PCR =
+        # oversold/bullish, low PCR = overbought/bearish). Max Pain pinning
+        # only applies as a directional nudge within a few days of expiry --
+        # outside that window a stale max-pain figure is not predictive.
+        pcr           = ann.get('pcr', 0)
+        days_to_exp   = ann.get('days_to_expiry', 99)
+        pain_distance = ann.get('max_pain_distance', 0)
+        if pcr:
+            if pcr > PCR_BULLISH_THRESHOLD:
+                base_score = min(base_score + 5, 95)
+            elif pcr < PCR_BEARISH_THRESHOLD:
+                base_score = max(base_score - 5, 0)
+            if days_to_exp <= MAX_PAIN_EXPIRY_WINDOW_DAYS and abs(pain_distance) > 3:
+                if pain_distance > 0:
+                    base_score = max(base_score - 6, 0)
+                else:
+                    base_score = min(base_score + 6, 95)
+
+        # VWAP distance boost — mean-reversion filter using yesterday's
+        # actual volume-weighted average price (not live intraday VWAP).
+        # Catches stocks that are more overextended than a simple gap%
+        # suggests, since VWAP reflects where most volume actually traded.
+        vwap_dist = ann.get('vwap_distance', 0)
+        if vwap_dist:
+            if vwap_dist > VWAP_EXTENDED_THRESHOLD_PCT:
+                base_score = max(base_score - 8, 0)
+            elif vwap_dist < VWAP_DISCOUNT_THRESHOLD_PCT:
+                base_score = min(base_score + 4, 95)
 
     # Subsidiary AGM upgrade — if parent owns majority, treat as Tier1
     if cat == "AGM_POSSIBLE":
@@ -364,11 +459,6 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         if is_results:
             prompt = _build_results_prompt(subject, details, pdf_text, macro_context)
         else:
-            results_keywords = ['financial result', 'outcome of board', 'quarterly result', 'annual result']
-        is_results = any(k in (subject + details).lower() for k in results_keywords)
-        if is_results:
-            prompt = _build_results_prompt(subject, details, pdf_text, macro_context)
-        else:
             prompt = _build_prompt(subject, details, pdf_text, macro_context)
         prompt += stock_news_context
         llm = call_llm(prompt, fast=(tier == 2))
@@ -387,7 +477,10 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 score = min(score, 25)
 
             # Open offer price check — if offer price < market price, arbitrage is dead
-            catalyst_type = llm.get("catalyst_type", cat).upper()
+            # NOTE: LLM can return "catalyst_type": null explicitly (key present,
+            # value None), which bypasses .get()'s default arg entirely — that
+            # crashed the July 10 morning run. Guard with `or` instead.
+            catalyst_type = (llm.get("catalyst_type") or cat or "OTHER").upper()
             if "OPEN_OFFER" in catalyst_type:
                 deal_val = llm.get("deal_value_cr", 0)
                 offer_price = llm.get("offer_price", 0)
@@ -439,6 +532,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 "source":          source,
                 "signal_sources":  [source],
                 "an_dt":           ann.get("an_dt", "") if isinstance(ann, dict) else "",
+                "event_type":      ann.get("event_type", "MOMENTUM_CATALYST") if isinstance(ann, dict) else "MOMENTUM_CATALYST",
             }
 
 
@@ -457,6 +551,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         "signal_sources": [source],
         "an_dt":          ann.get("an_dt", "") if isinstance(ann, dict) else "",
         "buyback_type":   ann.get("buyback_type", "NA") if isinstance(ann, dict) else "NA",
+        "event_type":     ann.get("event_type", "MOMENTUM_CATALYST") if isinstance(ann, dict) else "MOMENTUM_CATALYST",
     }
 
 
