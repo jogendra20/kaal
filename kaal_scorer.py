@@ -19,6 +19,7 @@ from kaal_config import (
     FNO_UNIVERSE_HINT,
     PCR_BULLISH_THRESHOLD, PCR_BEARISH_THRESHOLD, MAX_PAIN_EXPIRY_WINDOW_DAYS,
     VWAP_EXTENDED_THRESHOLD_PCT, VWAP_DISCOUNT_THRESHOLD_PCT,
+    MIN_VOLUME_CR,
 )
 from kaal_llm import call_llm
 from kaal_sources import download_pdf_text
@@ -287,6 +288,16 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
         # shows an arbitrage-only note instead of a momentum entry plan.
         ann['event_type'] = 'CORPORATE_ACTION'
 
+    # Liquidity gate — a catalyst score with no volume confirmation is a
+    # news filter, not a momentum filter. Crude proxy: yesterday's actual
+    # traded value from bhavcopy (already fetched for VWAP) vs a floor.
+    # 0 means no data found (not necessarily illiquid) - don't penalize
+    # on missing data, only on confirmed low liquidity.
+    liquidity_cr = ann.get('liquidity_cr', 0) if isinstance(ann, dict) else 0
+    if 0 < liquidity_cr < MIN_VOLUME_CR:
+        base_score = min(base_score, 45)
+        tier = max(tier, 2)
+
     # Order wins hard cap — never Tier1
     if cat in ('BAGGING_RECEIVING_OF_ORDE', 'AWARDING_OF_ORDER(S)_CONT', 'ORDER_WIN'):
         base_score = min(base_score, 65)
@@ -462,6 +473,32 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
             prompt = _build_prompt(subject, details, pdf_text, macro_context)
         prompt += stock_news_context
         llm = call_llm(prompt, fast=(tier == 2))
+
+        if llm.get("_cap_reached"):
+            # LLM budget exhausted for this run - previously this fell
+            # through to the rule-based fallback below and returned the
+            # SAME identical base_score for every capped announcement
+            # (the "eight identical 72s" bug from July 9). Emitting
+            # fake-precision numbers is worse than no score at all -
+            # label it explicitly and exclude it from Tier1/Tier2 rather
+            # than pretend it was meaningfully differentiated.
+            return {
+                "symbol":         symbol,
+                "subject":        subject,
+                "score":          0,
+                "tier":           3,
+                "skip":           True,
+                "catalyst":       cat,
+                "key":            details[:80] if details else subject,
+                "reason":         "UNSCORED — LLM call cap reached this run, no differentiation available",
+                "direction":      "BULLISH",
+                "source":         source,
+                "signal_sources": [source],
+                "an_dt":          ann.get("an_dt", "") if isinstance(ann, dict) else "",
+                "buyback_type":   ann.get("buyback_type", "NA") if isinstance(ann, dict) else "NA",
+                "event_type":     ann.get("event_type", "MOMENTUM_CATALYST") if isinstance(ann, dict) else "MOMENTUM_CATALYST",
+                "unscored":       True,
+            }
 
         if llm:
             score = llm.get("score", base_score)

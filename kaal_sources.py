@@ -460,6 +460,11 @@ def fetch_bhavcopy(date_str: str = None) -> dict:
                 # point for "already extended vs where most volume actually
                 # traded", which is more robust than a single close/prev_close print.
                 vwap = round((turnover_lacs * 100000) / volume, 2) if volume else close
+                # Real traded value in crore for the day - crude but genuine
+                # liquidity proxy (a full 15-day rolling average would need
+                # 15x the API calls; this is the "cheap version" using data
+                # already being fetched for VWAP).
+                liquidity_cr = round(turnover_lacs / 100, 2)
                 result[symbol] = {
                     "close":      close,
                     "prev_close": prev_close,
@@ -468,6 +473,7 @@ def fetch_bhavcopy(date_str: str = None) -> dict:
                     "deliv_per":  deliv_per,
                     "volume":     volume,
                     "vwap":       vwap,
+                    "liquidity_cr": liquidity_cr,
                 }
             except Exception:
                 continue

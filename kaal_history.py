@@ -151,13 +151,25 @@ def classify_opportunity(symbol: str, current_price: float) -> dict:
 
     entry              = history[symbol]
     first_price        = entry.get("first_price", current_price)
-    catalyst_day_move  = entry.get("catalyst_day_move", 0)
     first_seen         = entry.get("first_seen", "")
 
     try:
         days_old = (datetime.now() - datetime.strptime(first_seen, "%Y-%m-%d")).days
     except Exception:
         days_old = 0
+
+    # Same-day-first-seen signals haven't had a real EOD close captured yet
+    # (that only happens in tonight's evening run via update_eod_prices()) -
+    # catalyst_day_move is genuinely ABSENT from the entry until then.
+    # Defaulting it to 0 and classifying that as "market moved 0% today"
+    # was a real bug - it can't be distinguished from a real flat day.
+    if "catalyst_day_move" not in entry:
+        return {
+            "label":  "PENDING",
+            "reason": "First seen today — catalyst-day move not available until tonight's update"
+        }
+
+    catalyst_day_move  = entry.get("catalyst_day_move", 0)
 
     total_move = 0.0
     if first_price > 0:

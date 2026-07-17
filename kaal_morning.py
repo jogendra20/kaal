@@ -177,6 +177,7 @@ def _format_signal_block(s: dict) -> list:
         'CONSOLIDATING':'🟡 CONSOLIDATING',
         'IGNORED':      '⚫ IGNORED',
         'ACTIVE':       '🟢 ACTIVE',
+        'PENDING':      '⏳ PENDING',
     }
     if opp_label and opp_label != 'UNKNOWN':
         lines.append(f'└─ 📊 {opp_icons.get(opp_label, opp_label)}: {opp_reason}')
@@ -284,6 +285,7 @@ def run():
     # separate from the existing prev-close-based gap filter
     bhavcopy_yday = fetch_bhavcopy()
     vwap_map = {sym: d.get('vwap', 0) for sym, d in bhavcopy_yday.items() if d.get('vwap')}
+    liquidity_map = {sym: d.get('liquidity_cr', 0) for sym, d in bhavcopy_yday.items()}
 
     # All screener symbols in one set
     screener_stocks = set()
@@ -324,6 +326,7 @@ def run():
         sym_price = price_map.get(ann.get('symbol',''), 0)
         sym_vwap  = vwap_map.get(ann.get('symbol',''), 0)
         ann['vwap_distance'] = round((sym_price - sym_vwap) / sym_vwap * 100, 2) if (sym_price and sym_vwap) else 0
+        ann['liquidity_cr'] = liquidity_map.get(ann.get('symbol',''), 0)
         aid = get_ann_id(ann)
         if aid in seen:
             continue

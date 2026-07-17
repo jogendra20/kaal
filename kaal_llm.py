@@ -202,7 +202,11 @@ _rate_limited_until = 0
 def call_llm(prompt: str, fast: bool = False) -> dict:
     global _call_count, _rate_limited_until
     if _call_count >= MAX_LLM_CALLS_PER_RUN:
-        return {}
+        # Distinguishable from a genuine per-call failure (plain {}) so
+        # score_announcement() can label this "unscored" instead of
+        # silently converging every capped item to the same rule-based
+        # base_score (the "eight identical 72s" bug).
+        return {"_cap_reached": True}
     _call_count += 1
     _load_env()
 
