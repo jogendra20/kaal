@@ -22,8 +22,9 @@ from kaal_market_data import (
     fetch_pcr_map, fetch_option_chain, compute_pcr_max_pain,
     fetch_bhavcopy,
 )
-from kaal_scorer import (
-    classify_announcement, score_announcement,
+from kaal_event_classifier import classify_announcement
+from kaal_scorer import score_announcement
+from kaal_deterministic_scorers import (
     score_bulk_deal, score_promoter_pit, score_news_velocity,
     score_proxy_signals, score_negative_proxy, score_usfda_signals, score_budget_signals, score_policy_signals,
     score_bulk_buying,
@@ -309,7 +310,7 @@ def run():
     all_signals = []
 
     # ── Score announcements — Tier 1 first, then Tier 2 ──
-    from kaal_scorer import classify_announcement as _classify
+    from kaal_event_classifier import classify_announcement as _classify
     tier1_anns, tier2_anns, new_anns = [], [], []
     for ann in nse_anns:
         # Pre-open gap boost

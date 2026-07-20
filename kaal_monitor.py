@@ -10,7 +10,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from datetime import datetime
 from kaal_sources import fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban
 from kaal_market_data import fetch_clean_bulk_deals
-from kaal_scorer import score_announcement, score_bulk_buying
+from kaal_scorer import score_announcement
+from kaal_deterministic_scorers import score_bulk_buying
 from kaal_telegram import send
 from kaal_config import VIX_HIGH, TIER1_MIN_SCORE
 

@@ -16,9 +16,9 @@ from kaal_sources import (
     fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban, fetch_news,
 )
 from kaal_market_data import fetch_eod_prices, fetch_bhavcopy, classify_delivery
-from kaal_scorer import (
-    score_announcement, score_bulk_deal,
-    score_promoter_pit, score_news_velocity,
+from kaal_scorer import score_announcement
+from kaal_deterministic_scorers import (
+    score_bulk_deal, score_promoter_pit, score_news_velocity,
 )
 from kaal_telegram import send
 from kaal_config import check_keys,\
