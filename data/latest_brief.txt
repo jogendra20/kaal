@@ -1,37 +1,22 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>17 Jul 2026 08:58 AM</code>
+<code>20 Jul 2026 09:12 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>12.9</code>  |  Bias: ➡️ NEUTRAL
-GIFT Nifty: <code>-0.02%</code> (Neutral)
-SPX: <code>-0.5%</code>  Crude: <code>$79</code>  Gold: <code>$3994</code>  USD/INR: <code>96.33</code>
+VIX: <code>13.2</code>  |  Bias: 📉 BEARISH
+GIFT Nifty: <code>-0.59%</code> (Bearish)
+SPX: <code>-1.0%</code>  Crude: <code>$84</code>  Gold: <code>$4028</code>  USD/INR: <code>96.41</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
-
-<code>[Jul 16, 09:37 PM]</code> <b>CYIENT</b> — BUYBACK 🟢
-Score: <code>78/100</code> | -1.9% since trigger | Yest: +0.7% 🔴 STALE
-└─ Cyient completes buyback of 64 lakh shares at INR 1,125 per share, reducing equity capital by ~5.76%
-└─ [WATCH] Buyback completion at premium signals capital discipline and shareholder value enhancement. High liquidity stock suitable for intraday momentu
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 📦 Delivery: 39.9% ⚪ Delivery 39.9% — mixed signal
-└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
-
-<code>[Jul 16, 03:55 PM]</code> <b>HCLTECH</b> — ACQUISITION 🟢
-Score: <code>77/100</code> | Yest: +0.6% 🟢 FRESH
-└─ HCLTech expands AI-powered partnership with Guardian Life Insurance for 7 years, signaling long-term
-└─ [WATCH] Multi-source confirmed long-term AI partnership with Guardian Life. Strategic growth catalyst in IT sector with high liquidity.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+⚠️ No Tier 1 stocks today — consider staying in cash
 
 👀 <b>TIER 2 — WATCHLIST</b>
 
-<code>[Jul 16, 08:03 PM]</code> <b>PWL</b> — ACQUISITION 🟢
-Score: <code>72/100</code> | Yest: +0.8% 🟢 FRESH
-└─ Physicswallah completes Tranche I (40% stake) in Sarrthi IAS and approves revised valuation for Tran
-└─ [WATCH] Strategic acquisition in high-margin UPSC vertical. Revised valuation indicates confidence. Verify liquidity before entry.
+<code>[Jul 19, 04:29 PM]</code> <b>ROSSARI</b> — RESULTS BEAT 🟡
+Score: <code>65/100</code> | Yest: -3.2% 🟢 FRESH
+└─ Q1 FY 27 results announcement
+└─ Q1 FY 27 results are a routine corporate announcement but can impact sentiment based on actual vs. expected performance. Traders should watch for PAT 
 └─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+└─ 🎯 Entry: wait for 9:30 candle direction | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

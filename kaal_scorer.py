@@ -230,6 +230,8 @@ Return ONLY a JSON object with exactly these keys:
   "macro_impact": "<one line: how current market context affects this stock's setup>"
 }}
 
+CRITICAL: Only state a specific number (price, %, ₹ crore amount, share count) in "key_detail", "reason", "offer_price", or "macro_impact" if that exact figure literally appears in the Subject/Details/PDF Excerpt above. Never invent or estimate a plausible-sounding number for a detail that wasn't actually given. If a figure isn't present in the source text, describe it qualitatively instead (e.g. "at a premium to CMP", "value not disclosed") and leave the numeric field at 0.
+
 Scoring reference (adjust for macro context):
 - USFDA / EMA approval (genuine): 78-88
 - Open offer by external acquirer: 85-95
@@ -536,7 +538,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
 
             # Macro adjustment — skip for structural floor catalysts
             FLOOR_CATALYSTS = {"OPEN_OFFER", "BUYBACK", "BUY_BACK", "BUY-BACK", "TAKEOVER", "DELISTING"}
-            catalyst_type = llm.get("catalyst_type", cat).upper()
+            catalyst_type = (llm.get("catalyst_type") or cat).upper()
             has_floor = any(fc in catalyst_type for fc in FLOOR_CATALYSTS)
 
             if macro_context and not has_floor:

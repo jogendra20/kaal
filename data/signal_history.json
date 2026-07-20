@@ -1,9 +1,4 @@
 {
-  "TESTSTOCK": {
-    "first_seen": "2026-06-17",
-    "first_price": 100.0,
-    "catalyst": "USFDA_APPROVAL"
-  },
   "CYIENT": {
     "first_seen": "2026-06-20",
     "first_price": 861.0,
@@ -386,5 +381,20 @@
     "first_seen": "2026-07-17",
     "first_price": 137.95,
     "catalyst": "ACQUISITION"
+  },
+  "DCMSHRIRAM": {
+    "first_seen": "2026-07-18",
+    "first_price": 1017.3,
+    "catalyst": "ACQUISITION"
+  },
+  "ABCAPITAL": {
+    "first_seen": "2026-07-18",
+    "first_price": 399.95,
+    "catalyst": "ACQUISITION"
+  },
+  "ROSSARI": {
+    "first_seen": "2026-07-20",
+    "first_price": 514.55,
+    "catalyst": "RESULTS_BEAT"
   }
 }

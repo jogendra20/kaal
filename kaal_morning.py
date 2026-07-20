@@ -13,7 +13,7 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_spurts, fetch_clean_bulk_deals,
+    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_from_bhavcopy, fetch_clean_bulk_deals,
     fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
     fetch_pcr_map, fetch_option_chain, compute_pcr_max_pain,
@@ -272,7 +272,7 @@ def run():
     price_map = {s['symbol']: s['price'] for s in preopen if s.get('price', 0) > 0}
     sectors   = fetch_sector_strength()
     screeners = fetch_chartink_screeners()
-    oi_map    = fetch_oi_spurts()
+    oi_map    = fetch_oi_from_bhavcopy()
 
     # PCR/Max Pain -- scoped to F&O-eligible stocks that already appear in
     # today's announcements (not the whole F&O universe -- keeps this to a
@@ -513,6 +513,15 @@ def run():
     for s in final:
         sym = s.get('symbol', '')
         price = price_map.get(sym, 0)
+        if price <= 0:
+            # price_map only covers pre-open GAP movers. Catalysts that
+            # don't move price pre-market (buybacks, M&A, most Tier1
+            # corporate actions) are absent from it, which was silently
+            # resetting their days_since_catalyst/first_seen/hist_status
+            # to "brand new" every single run regardless of how old the
+            # signal actually was. Fall back to yesterday's bhavcopy close
+            # so real history still gets tracked for these.
+            price = bhavcopy_yday.get(sym, {}).get('close', 0)
         prev_close = prev_close_map.get(sym, 0)
         ann_dt = s.get('an_dt', '')
         if price > 0:
