@@ -13,9 +13,9 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban,
-    fetch_news, fetch_eod_prices, fetch_bhavcopy, classify_delivery,
+    fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban, fetch_news,
 )
+from kaal_market_data import fetch_eod_prices, fetch_bhavcopy, classify_delivery
 from kaal_scorer import (
     score_announcement, score_bulk_deal,
     score_promoter_pit, score_news_velocity,

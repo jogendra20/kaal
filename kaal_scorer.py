@@ -961,7 +961,7 @@ def score_proxy_signals(news_articles: list, nse_announcements: list) -> list:
 
     # Fetch pre-open gap map for edge-consumed check
     try:
-        from kaal_sources import fetch_preopen_gainers
+        from kaal_market_data import fetch_preopen_gainers
         preopen_data = fetch_preopen_gainers()
         preopen_gap_map = {s["symbol"]: s["gap_pct"] for s in preopen_data}
     except Exception:

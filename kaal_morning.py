@@ -13,9 +13,12 @@ from kaal_log import log, log_section
 from collections import defaultdict
 
 from kaal_sources import (
-    fetch_nse_announcements, fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners, fetch_oi_from_bhavcopy, fetch_clean_bulk_deals,
-    fetch_macro, fetch_asm_gsm_ban,
+    fetch_nse_announcements, fetch_macro, fetch_asm_gsm_ban,
     fetch_news, check_liquidity,
+)
+from kaal_market_data import (
+    fetch_preopen_gainers, fetch_sector_strength, fetch_chartink_screeners,
+    fetch_oi_from_bhavcopy, fetch_clean_bulk_deals,
     fetch_pcr_map, fetch_option_chain, compute_pcr_max_pain,
     fetch_bhavcopy,
 )
@@ -295,7 +298,7 @@ def run():
     hot_kw   = set(w.upper() for w in sectors.get('hot_keywords', []))
     cold_kw  = set()
     for sec in sectors.get('cold_sectors', []):
-        from kaal_sources import SECTOR_MAP
+        from kaal_market_data import SECTOR_MAP
         cold_kw.update(SECTOR_MAP.get(sec['sector'], []))
 
 
