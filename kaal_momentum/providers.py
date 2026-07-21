@@ -151,7 +151,7 @@ class NSEBhavcopyProvider(OHLCDataProvider):
                 if not name:
                     continue
                 try:
-                    result[name] = {
+                    result[name.strip().upper()] = {
                         "date":  d.strftime("%Y-%m-%d"),
                         "open":  float(row.get("Open Index Value", 0)),
                         "high":  float(row.get("High Index Value", 0)),
@@ -177,7 +177,8 @@ class NSEBhavcopyProvider(OHLCDataProvider):
             if d.weekday() >= 5:
                 continue
             day_data = self._fetch_index_bhavcopy_day(d)
-            if index_symbol in day_data:
-                bars.append(day_data[index_symbol])
+            key = index_symbol.strip().upper()
+            if key in day_data:
+                bars.append(day_data[key])
         bars.reverse()
         return bars
