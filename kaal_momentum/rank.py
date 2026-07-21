@@ -14,12 +14,17 @@ not a smooth continuous score.
 from kaal_momentum import factors_eod as fe
 
 DEFAULT_WEIGHTS = {
-    "rs_vs_index":   0.25,
+    "rs_vs_index":   0.20,
     "rs_vs_sector":  0.20,
-    "atr_expansion": 0.20,
-    "trend":         0.15,
-    "liquidity":     0.10,
-    "volatility":    0.10,
+    "atr_expansion": 0.15,
+    "trend":         0.30,  # raised from 0.15 - a stock scoring near-worst on
+                             # trend (structural downtrend) was still reaching
+                             # top-3 on strong RS/ATR alone. Note: this is
+                             # still a weighted average, not a gate - extreme
+                             # enough RS/ATR can still outvote a bad trend
+                             # score, just needs to be more extreme now.
+    "liquidity":     0.075,
+    "volatility":    0.075,
 }
 
 MIN_BARS_REQUIRED = 71  # atr_expansion needs atr_period(14)+baseline(50)+1
