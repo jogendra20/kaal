@@ -8,3 +8,4 @@ logs/
 calibration.json
 venv/
 .DS_Store
+data/bhavcopy_cache/
