@@ -223,10 +223,12 @@ TIER1_DETAIL_KEYWORDS = [
     "strategic investment",
     "qualified institutional placement", "qip",
     "rights issue",                # dilution signal — LLM scores direction
+    "financial results for the period", "quarterly results", "half yearly results",
+    # moved from Tier2 (2026-07-21): results are the primary FY27 earnings-
+    # season catalyst, want them scored with Tier1 urgency, not Tier2
 ]
 
 TIER2_DETAIL_KEYWORDS = [
-    "financial results for the period", "quarterly results", "half yearly results",
     "resignation of", "cessation of", "appointment of", "appoints",
     "allotment of equity", "issue of securities",
     "esop", "employee stock option",
