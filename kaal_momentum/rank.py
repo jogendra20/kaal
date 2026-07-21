@@ -118,8 +118,38 @@ def compute_universe_scores(symbols: list, provider, index_symbol: str = "NIFTY 
     return results
 
 
-def build_watchlist(symbols: list, provider, top_n: int = 3, **kwargs) -> dict:
+def build_watchlist(symbols: list, provider, top_n: int = 3,
+                     max_per_sector: int = 1, **kwargs) -> dict:
+    """
+    max_per_sector=1 (default): walk the full ranked list best-first and
+    take the top_n, skipping any stock whose sector already has a pick -
+    raw percentile ranking within one universe can't tell "this stock
+    genuinely outperformed" apart from "this stock's whole sector moved
+    together". Needs sector_map passed through kwargs; with no
+    sector_map, this is a no-op (falls back to plain top_n).
+    Set max_per_sector=None to disable and take the raw top_n instead.
+    """
+    sector_map = kwargs.get("sector_map")
     scores = compute_universe_scores(symbols, provider, **kwargs)
     ranked_symbols = {r["symbol"] for r in scores}
     excluded = [s for s in symbols if s not in ranked_symbols]
-    return {"ranked": scores[:top_n], "excluded": excluded}
+
+    skipped_for_diversity = []
+    if max_per_sector and sector_map:
+        picked = []
+        sector_counts = {}
+        for r in scores:
+            sector = sector_map.get(r["symbol"], "UNKNOWN")
+            if sector_counts.get(sector, 0) >= max_per_sector:
+                skipped_for_diversity.append(r["symbol"])
+                continue
+            picked.append(r)
+            sector_counts[sector] = sector_counts.get(sector, 0) + 1
+            if len(picked) >= top_n:
+                break
+        ranked = picked
+    else:
+        ranked = scores[:top_n]
+
+    return {"ranked": ranked, "excluded": excluded,
+            "skipped_for_sector_diversity": skipped_for_diversity}

@@ -122,6 +122,8 @@ class NSEBhavcopyProvider(OHLCDataProvider):
             if d.weekday() >= 5:
                 continue
             day_data = self._fetch_equity_bhavcopy_day(d)
+            print(f"  [{symbol}] {d.strftime('%d-%b')}: {'ok' if symbol in day_data else 'no data'} "
+                  f"({len(bars) + (1 if symbol in day_data else 0)}/{n})")
             if symbol in day_data:
                 bars.append(day_data[symbol])
         bars.reverse()
@@ -178,6 +180,8 @@ class NSEBhavcopyProvider(OHLCDataProvider):
                 continue
             day_data = self._fetch_index_bhavcopy_day(d)
             key = index_symbol.strip().upper()
+            print(f"  [{index_symbol}] {d.strftime('%d-%b')}: {'ok' if key in day_data else 'no data'} "
+                  f"({len(bars) + (1 if key in day_data else 0)}/{n})")
             if key in day_data:
                 bars.append(day_data[key])
         bars.reverse()
