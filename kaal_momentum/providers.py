@@ -29,13 +29,16 @@ class OHLCDataProvider(ABC):
     """Anything that can hand the momentum engine price/volume history."""
 
     @abstractmethod
-    def get_daily_bars(self, symbol: str, n: int) -> list:
-        """Return up to n most recent daily bars, oldest first."""
+    def get_daily_bars(self, symbol: str, n: int, as_of_date=None) -> list:
+        """Return up to n most recent daily bars, oldest first.
+        as_of_date=None means as-of-today (live). A past datetime means
+        as-of-the-close-of-that-date (backtesting) - only data that
+        would actually have existed on that day."""
         raise NotImplementedError
 
     @abstractmethod
-    def get_index_bars(self, index_symbol: str, n: int) -> list:
-        """Same shape, for a benchmark index (e.g. 'NIFTY 50')."""
+    def get_index_bars(self, index_symbol: str, n: int, as_of_date=None) -> list:
+        """Same shape and as_of_date semantics, for a benchmark index (e.g. 'NIFTY 50')."""
         raise NotImplementedError
 
     def get_intraday_bars(self, symbol: str, interval: str, n: int) -> list:
@@ -112,9 +115,9 @@ class NSEBhavcopyProvider(OHLCDataProvider):
             print(f"[MOMENTUM] bhavcopy fetch error {date_str}: {e}")
             return {}
 
-    def get_daily_bars(self, symbol: str, n: int) -> list:
+    def get_daily_bars(self, symbol: str, n: int, as_of_date=None) -> list:
         bars = []
-        d = datetime.now()
+        d = as_of_date or datetime.now()
         attempts = 0
         while len(bars) < n and attempts < n * 3 + 15:
             d -= timedelta(days=1)
@@ -122,8 +125,6 @@ class NSEBhavcopyProvider(OHLCDataProvider):
             if d.weekday() >= 5:
                 continue
             day_data = self._fetch_equity_bhavcopy_day(d)
-            print(f"  [{symbol}] {d.strftime('%d-%b')}: {'ok' if symbol in day_data else 'no data'} "
-                  f"({len(bars) + (1 if symbol in day_data else 0)}/{n})")
             if symbol in day_data:
                 bars.append(day_data[symbol])
         bars.reverse()
@@ -169,9 +170,9 @@ class NSEBhavcopyProvider(OHLCDataProvider):
             print(f"[MOMENTUM] index bhavcopy fetch error {date_str}: {e}")
             return {}
 
-    def get_index_bars(self, index_symbol: str, n: int) -> list:
+    def get_index_bars(self, index_symbol: str, n: int, as_of_date=None) -> list:
         bars = []
-        d = datetime.now()
+        d = as_of_date or datetime.now()
         attempts = 0
         while len(bars) < n and attempts < n * 3 + 15:
             d -= timedelta(days=1)
@@ -180,8 +181,6 @@ class NSEBhavcopyProvider(OHLCDataProvider):
                 continue
             day_data = self._fetch_index_bhavcopy_day(d)
             key = index_symbol.strip().upper()
-            print(f"  [{index_symbol}] {d.strftime('%d-%b')}: {'ok' if key in day_data else 'no data'} "
-                  f"({len(bars) + (1 if key in day_data else 0)}/{n})")
             if key in day_data:
                 bars.append(day_data[key])
         bars.reverse()
