@@ -75,10 +75,10 @@ class FakeProvider(OHLCDataProvider):
         self.series = series
         self.index_bars = index_bars
 
-    def get_daily_bars(self, symbol, n):
+    def get_daily_bars(self, symbol, n, as_of_date=None):
         return self.series.get(symbol, [])[-n:]
 
-    def get_index_bars(self, index_symbol, n):
+    def get_index_bars(self, index_symbol, n, as_of_date=None):
         return self.index_bars[-n:]
 
 
