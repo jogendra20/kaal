@@ -56,15 +56,19 @@ def run_backtest():
     valid_days = 0
     skipped_days = 0
 
-    for d in test_dates:
+    for i, d in enumerate(test_dates, 1):
+        print(f"[{i}/{len(test_dates)}] processing {d.strftime('%Y-%m-%d')}...", flush=True)
         result = build_watchlist(
             symbols=symbols, provider=provider, top_n=3,
             sector_map=TEST_UNIVERSE, as_of_date=d,
+            lookback=75,  # MIN_BARS_REQUIRED is 71 - don't fetch 120
         )
         if not result["ranked"]:
             skipped_days += 1
+            print(f"  -> skipped (insufficient history)")
             continue
         valid_days += 1
+        print(f"  -> picks: {[r[\'symbol\'] for r in result[\'ranked\']]}")
 
         for r in result["ranked"]:
             nxt = _next_trading_bar(provider, r["symbol"], d)
