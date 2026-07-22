@@ -6,6 +6,10 @@ signals, news velocity. Pure rule-based math on structured input -
 matches the project rule that LLM is for classification only, never
 for scoring.
 """
+import os
+import re
+import json
+from datetime import datetime, timezone
 from kaal_config import TIER1_MIN_SCORE, SKIP_BELOW, FNO_UNIVERSE_HINT
 
 def score_bulk_deal(deal: dict) -> dict:

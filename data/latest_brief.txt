@@ -1,22 +1,27 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>20 Jul 2026 09:12 AM</code>
+<code>22 Jul 2026 01:30 PM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>13.2</code>  |  Bias: 📉 BEARISH
-GIFT Nifty: <code>-0.59%</code> (Bearish)
-SPX: <code>-1.0%</code>  Crude: <code>$84</code>  Gold: <code>$4028</code>  USD/INR: <code>96.41</code>
+VIX: <code>13.2</code>  |  Bias: ➡️ NEUTRAL
+GIFT Nifty: <code>-0.85%</code> (Bearish)
+SPX: <code>+0.9%</code>  Crude: <code>$85</code>  Gold: <code>$4120</code>  USD/INR: <code>96.53</code>
 ──────────────────────────────────
 
-⚠️ No Tier 1 stocks today — consider staying in cash
+🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-👀 <b>TIER 2 — WATCHLIST</b>
-
-<code>[Jul 19, 04:29 PM]</code> <b>ROSSARI</b> — RESULTS BEAT 🟡
-Score: <code>65/100</code> | Yest: -3.2% 🟢 FRESH
-└─ Q1 FY 27 results announcement
-└─ Q1 FY 27 results are a routine corporate announcement but can impact sentiment based on actual vs. expected performance. Traders should watch for PAT 
+<code>[Jul 21, 07:23 AM]</code> <b>LUPIN</b> — ACQUISITION 🟡
+Score: <code>85/100</code> | Yest: -0.8% 🟢 FRESH
+└─ Lupin Inc. grants exclusive perpetual license for two oncology programs (LNP7457 and LNP8701) to Kav
+└─ [WATCH] High-impact acquisition catalyst with multi-source confirmation. Monetization of non-core assets provides capital infusion potential.
 └─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: wait for 9:30 candle direction | SL: 15M low | Target: 1:2
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+
+<code>[Jul 21, 12:58 PM]</code> <b>INDOBORAX</b> — MERGER 🟡
+Score: <code>75/100</code> | Yest: -1.2% 🟢 FRESH
+└─ Scheme of Amalgamation of Indoborax Infrastructure Private Limited with Indo Borax & Chemicals Limit
+└─ [WATCH] Merger of wholly owned subsidiary approved. Potential operational synergies, but liquidity risk remains.
+└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
+└─ 🎯 Entry: pullback after gap-up | SL: 15M low | Target: 1:2.5
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>

@@ -1,49 +1,4 @@
 {
-  "CYIENT": {
-    "first_seen": "2026-06-20",
-    "first_price": 861.0,
-    "catalyst": "BUYBACK",
-    "deliv_per": 39.85,
-    "deliv_chg_pct": 2.39,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 39.9% \u2014 mixed signal"
-  },
-  "AMBER": {
-    "first_seen": "2026-06-20",
-    "first_price": 8218.0,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 26.57,
-    "deliv_chg_pct": 2.11,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 26.6% \u2014 mixed signal"
-  },
-  "WIPRO": {
-    "first_seen": "2026-06-20",
-    "first_price": 176.76,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 38.2,
-    "deliv_chg_pct": 1.77,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 38.2% \u2014 mixed signal"
-  },
-  "WELSPUNLIV": {
-    "first_seen": "2026-06-20",
-    "first_price": 162.0,
-    "catalyst": "BUYBACK",
-    "deliv_per": 42.81,
-    "deliv_chg_pct": -0.66,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 42.8% \u2014 mixed signal"
-  },
-  "APLLTD": {
-    "first_seen": "2026-06-20",
-    "first_price": 749.7,
-    "catalyst": "USFDA_APPROVAL",
-    "deliv_per": 44.42,
-    "deliv_chg_pct": -1.21,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 44.4% \u2014 mixed signal"
-  },
   "AUROPHARMA": {
     "first_seen": "2026-06-22",
     "first_price": 1498.2,
@@ -396,5 +351,15 @@
     "first_seen": "2026-07-20",
     "first_price": 514.55,
     "catalyst": "RESULTS_BEAT"
+  },
+  "LUPIN": {
+    "first_seen": "2026-07-22",
+    "first_price": 2495.0,
+    "catalyst": "ACQUISITION"
+  },
+  "INDOBORAX": {
+    "first_seen": "2026-07-22",
+    "first_price": 424.9,
+    "catalyst": "MERGER"
   }
 }

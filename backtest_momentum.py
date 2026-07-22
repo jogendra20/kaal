@@ -68,7 +68,8 @@ def run_backtest():
             print(f"  -> skipped (insufficient history)")
             continue
         valid_days += 1
-        print(f"  -> picks: {[r[\'symbol\'] for r in result[\'ranked\']]}")
+        picks_str = [r["symbol"] for r in result["ranked"]]
+        print(f"  -> picks: {picks_str}")
 
         for r in result["ranked"]:
             nxt = _next_trading_bar(provider, r["symbol"], d)
