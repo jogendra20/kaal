@@ -50,13 +50,15 @@ def _band_percentile_ranks(values: dict, target_pctl: float = 0.6) -> dict:
 
 def compute_universe_scores(symbols: list, provider, index_symbol: str = "NIFTY 50",
                              sector_map: dict = None, weights: dict = None,
-                             lookback: int = 120) -> list:
+                             lookback: int = 120, as_of_date=None) -> list:
+    """as_of_date: None = live (today). A past datetime = backtesting -
+    only sees data that would have existed as of that date's close."""
     weights = dict(weights or DEFAULT_WEIGHTS)
-    index_bars = provider.get_index_bars(index_symbol, lookback)
+    index_bars = provider.get_index_bars(index_symbol, lookback, as_of_date=as_of_date)
 
     bars_by_symbol = {}
     for sym in symbols:
-        bars = provider.get_daily_bars(sym, lookback)
+        bars = provider.get_daily_bars(sym, lookback, as_of_date=as_of_date)
         if len(bars) >= MIN_BARS_REQUIRED:
             bars_by_symbol[sym] = bars
 
