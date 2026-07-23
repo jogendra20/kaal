@@ -278,6 +278,32 @@ def run():
     screeners = fetch_chartink_screeners()
     oi_map    = fetch_oi_from_bhavcopy()
 
+    # Regime display (Phase 2) — DISPLAY ONLY, does not affect scoring or
+    # picks yet. Wrapped in its own try/except so a bug here can never
+    # take down the working morning scan around it.
+    try:
+        from kaal_regime.classify import classify_vix, classify_trend_choppy, classify_sector_rotation
+        from kaal_momentum.providers import NSEBhavcopyProvider
+
+        vix_regime = classify_vix(macro.get('vix'))
+        if vix_regime:
+            log(f"Regime — VIX: {vix_regime['regime']} ({vix_regime['vix']:.1f})")
+
+        sector_regime = classify_sector_rotation(sectors.get('sector_scores', {}))
+        if sector_regime:
+            leading_str = ', '.join(f"{s}({c:+.1f}%)" for s, c in sector_regime['leading'])
+            log(f"Regime — Sector breadth: {sector_regime['breadth_pct']:.0f}% of sectors positive | "
+                f"Leading: {leading_str}")
+
+        _regime_provider = NSEBhavcopyProvider()
+        nifty_bars = _regime_provider.get_index_bars("NIFTY 50", 20)
+        trend_regime = classify_trend_choppy(nifty_bars)
+        if trend_regime:
+            log(f"Regime — Nifty: {trend_regime['regime']} "
+                f"(efficiency ratio {trend_regime['efficiency_ratio']})")
+    except Exception as e:
+        log(f"Regime display skipped (non-fatal): {e}")
+
     # PCR/Max Pain -- scoped to F&O-eligible stocks that already appear in
     # today's announcements (not the whole F&O universe -- keeps this to a
     # handful of calls per run instead of ~180)
