@@ -1,27 +1,15 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>23 Jul 2026 08:59 AM</code>
+<code>23 Jul 2026 09:42 AM</code>
 
 <b>🌐 MACRO</b>
 VIX: <code>13.3</code>  |  Bias: ➡️ NEUTRAL
-GIFT Nifty: <code>-0.79%</code> (Bearish)
-SPX: <code>-0.1%</code>  Crude: <code>$88</code>  Gold: <code>$4128</code>  USD/INR: <code>96.55</code>
+GIFT Nifty: <code>-0.37%</code> (Bearish)
+SPX: <code>-0.1%</code>  Crude: <code>$88</code>  Gold: <code>$4126</code>  USD/INR: <code>96.52</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
+⚠️ No Tier 1 stocks today — consider staying in cash
 
-<code>[Jul 22, 03:43 PM]</code> <b>KAJARIACER</b> — BUYBACK 🔴
-Score: <code>78/100</code> 🟢 FRESH
-└─ Completion of extinguishment of 21,50,000 equity shares of Re. 1 each
-└─ [WATCH] BUYBACK completion reduces equity, signaling capital allocation. High score meets threshold.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 OPEN MARKET buyback — daily buying pressure. Entry: breakout or VWMA20 retest | SL: 15M low | Target: 1:2
-
-<code>[Jul 22, 08:02 PM]</code> <b>INOXGREEN</b> — MERGER 🟡
-Score: <code>75/100</code> | Yest: +0.1% 🟢 FRESH
-└─ 122 equity shares of Inox Renewable Solutions Limited issued for every 1,000 shares of Inox Green En
-└─ [WATCH] MERGER/Demerger scheme creates structural volatility and arbitrage opportunities. High score meets threshold.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback after gap-up | SL: 15M low | Target: 1:2.5
+⚠️ No qualifying stocks today — stay in cash, protect capital
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
