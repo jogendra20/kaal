@@ -1,22 +1,4 @@
 {
-  "AUROPHARMA": {
-    "first_seen": "2026-06-22",
-    "first_price": 1498.2,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 49.66,
-    "deliv_chg_pct": -2.92,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 49.7% \u2014 mixed signal"
-  },
-  "TMCV": {
-    "first_seen": "2026-06-22",
-    "first_price": 408.8,
-    "catalyst": "ORDER_WIN",
-    "deliv_per": 50.85,
-    "deliv_chg_pct": -1.53,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 50.9% \u2014 mixed signal"
-  },
   "ZOTA": {
     "first_seen": "2026-06-23",
     "first_price": 1319.9,
@@ -389,5 +371,15 @@
     "deliv_chg_pct": -7.77,
     "deliv_label": "NEUTRAL",
     "deliv_note": "Delivery 40.8% \u2014 mixed signal"
+  },
+  "KAJARIACER": {
+    "first_seen": "2026-07-23",
+    "first_price": 1229.3,
+    "catalyst": "BUYBACK"
+  },
+  "INOXGREEN": {
+    "first_seen": "2026-07-23",
+    "first_price": 195.49,
+    "catalyst": "MERGER"
   }
 }
