@@ -45,6 +45,15 @@ def _next_trading_bar(provider, symbol: str, after_date: datetime):
     return None
 
 
+def _next_trading_index_bar(provider, index_symbol: str, after_date: datetime):
+    """Same as _next_trading_bar but for the benchmark index."""
+    bars = provider.get_index_bars(index_symbol, 10, as_of_date=after_date + timedelta(days=10))
+    for b in bars:
+        if b["date"] > after_date.strftime("%Y-%m-%d"):
+            return b
+    return None
+
+
 def run_backtest():
     provider = NSEBhavcopyProvider()
     symbols = list(TEST_UNIVERSE.keys())
@@ -71,12 +80,18 @@ def run_backtest():
         picks_str = [r["symbol"] for r in result["ranked"]]
         print(f"  -> picks: {picks_str}")
 
+        nifty_nxt = _next_trading_index_bar(provider, INDEX_SYMBOL, d)
+        nifty_oc_pct = None
+        if nifty_nxt and nifty_nxt["open"] != 0:
+            nifty_oc_pct = (nifty_nxt["close"] - nifty_nxt["open"]) / nifty_nxt["open"] * 100
+
         for r in result["ranked"]:
             nxt = _next_trading_bar(provider, r["symbol"], d)
             if not nxt or nxt["open"] == 0:
                 continue
             open_close_pct = (nxt["close"] - nxt["open"]) / nxt["open"] * 100
             open_high_pct = (nxt["high"] - nxt["open"]) / nxt["open"] * 100
+            alpha_pct = (open_close_pct - nifty_oc_pct) if nifty_oc_pct is not None else None
             picks_evaluated.append({
                 "date": d.strftime("%Y-%m-%d"),
                 "symbol": r["symbol"],
@@ -84,6 +99,8 @@ def run_backtest():
                 "next_day": nxt["date"],
                 "open_to_close_pct": round(open_close_pct, 2),
                 "open_to_high_pct": round(open_high_pct, 2),
+                "nifty_open_close_pct": round(nifty_oc_pct, 2) if nifty_oc_pct is not None else None,
+                "alpha_pct": round(alpha_pct, 2) if alpha_pct is not None else None,
             })
 
     print(f"\n{'='*70}")
@@ -98,20 +115,32 @@ def run_backtest():
         return
 
     for p in picks_evaluated:
+        alpha_str = f"  alpha vs Nifty {p['alpha_pct']:+.2f}%" if p["alpha_pct"] is not None else ""
         print(f"{p['date']} -> {p['symbol']:12s} (score {p['score']})  "
               f"next day {p['next_day']}: O->C {p['open_to_close_pct']:+.2f}%  "
-              f"O->H {p['open_to_high_pct']:+.2f}%")
+              f"O->H {p['open_to_high_pct']:+.2f}%{alpha_str}")
 
     n = len(picks_evaluated)
     wins = sum(1 for p in picks_evaluated if p["open_to_close_pct"] > 0)
     avg_oc = sum(p["open_to_close_pct"] for p in picks_evaluated) / n
     avg_oh = sum(p["open_to_high_pct"] for p in picks_evaluated) / n
+    alpha_vals = [p["alpha_pct"] for p in picks_evaluated if p["alpha_pct"] is not None]
+    nifty_vals = [p["nifty_open_close_pct"] for p in picks_evaluated if p["nifty_open_close_pct"] is not None]
 
     print(f"\n{'-'*70}")
     print(f"SUMMARY over {n} picks across {valid_days} days")
     print(f"  Win rate (next-day O->C positive): {wins}/{n} ({wins/n*100:.1f}%)")
     print(f"  Avg next-day open->close: {avg_oc:+.2f}%")
-    print(f"  Avg next-day open->high:  {avg_oh:+.2f}%  (max intraday upside available)")
+    print(f"  Avg next-day open->high:  {avg_oh:+.2f}%  (mathematically can never be negative, not evidence on its own)")
+    if nifty_vals:
+        avg_nifty = sum(nifty_vals) / len(nifty_vals)
+        avg_alpha = sum(alpha_vals) / len(alpha_vals)
+        beat_market = sum(1 for a in alpha_vals if a > 0)
+        print(f"  Avg Nifty open->close over the same days: {avg_nifty:+.2f}%")
+        print(f"  Avg ALPHA (pick return minus Nifty return, same day): {avg_alpha:+.2f}%")
+        print(f"  Beat-the-market rate: {beat_market}/{len(alpha_vals)} ({beat_market/len(alpha_vals)*100:.1f}%)")
+    else:
+        print(f"  (no Nifty benchmark data available)")
     print(f"{'-'*70}\n")
 
 

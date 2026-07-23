@@ -3,28 +3,28 @@
     "first_seen": "2026-06-22",
     "first_price": 1498.2,
     "catalyst": "ACQUISITION",
-    "deliv_per": 48.43,
-    "deliv_chg_pct": -0.12,
+    "deliv_per": 49.66,
+    "deliv_chg_pct": -2.92,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 48.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 49.7% \u2014 mixed signal"
   },
   "TMCV": {
     "first_seen": "2026-06-22",
     "first_price": 408.8,
     "catalyst": "ORDER_WIN",
-    "deliv_per": 57.67,
-    "deliv_chg_pct": -2.6,
+    "deliv_per": 50.85,
+    "deliv_chg_pct": -1.53,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 57.7% \u2014 mixed signal"
+    "deliv_note": "Delivery 50.9% \u2014 mixed signal"
   },
   "ZOTA": {
     "first_seen": "2026-06-23",
     "first_price": 1319.9,
     "catalyst": "ACQUISITION",
-    "deliv_per": 55.2,
-    "deliv_chg_pct": 0.38,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 55.2% \u2014 mixed signal"
+    "deliv_per": 64.05,
+    "deliv_chg_pct": -4.03,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 64.0% despite flat/down \u2014 institutions accumulating"
   },
   "DEEDEV": {
     "first_seen": "2026-06-23",
@@ -35,64 +35,64 @@
     "first_seen": "2026-06-24",
     "first_price": 195.1,
     "catalyst": "PROXY_PLAY",
-    "deliv_per": 28.61,
-    "deliv_chg_pct": -1.06,
-    "deliv_label": "WEAK",
-    "deliv_note": "Low delivery 28.6% + falling \u2014 weak hands, avoid"
+    "deliv_per": 32.1,
+    "deliv_chg_pct": -1.67,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 32.1% \u2014 mixed signal"
   },
   "IFCI": {
     "first_seen": "2026-06-24",
     "first_price": 81.95,
     "catalyst": "PROXY_PLAY",
-    "deliv_per": 27.54,
-    "deliv_chg_pct": -0.8,
-    "deliv_label": "WEAK",
-    "deliv_note": "Low delivery 27.5% + falling \u2014 weak hands, avoid"
+    "deliv_per": 30.6,
+    "deliv_chg_pct": -1.92,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 30.6% \u2014 mixed signal"
   },
   "GICRE": {
     "first_seen": "2026-06-24",
     "first_price": 367.8,
     "catalyst": "PROXY_PLAY",
-    "deliv_per": 38.16,
-    "deliv_chg_pct": -0.6,
+    "deliv_per": 49.12,
+    "deliv_chg_pct": -0.08,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 38.2% \u2014 mixed signal"
+    "deliv_note": "Delivery 49.1% \u2014 mixed signal"
   },
   "LT": {
     "first_seen": "2026-06-24",
     "first_price": 4176.5,
     "catalyst": "BUDGET_PLAY",
-    "deliv_per": 62.64,
-    "deliv_chg_pct": -0.22,
+    "deliv_per": 61.87,
+    "deliv_chg_pct": -0.76,
     "deliv_label": "ACCUMULATION",
-    "deliv_note": "High delivery 62.6% despite flat/down \u2014 institutions accumulating"
+    "deliv_note": "High delivery 61.9% despite flat/down \u2014 institutions accumulating"
   },
   "TATASTEEL": {
     "first_seen": "2026-06-25",
     "first_price": 192.8,
     "catalyst": "ACQUISITION",
-    "deliv_per": 50.1,
-    "deliv_chg_pct": 0.12,
+    "deliv_per": 51.46,
+    "deliv_chg_pct": -0.38,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 50.1% \u2014 mixed signal"
+    "deliv_note": "Delivery 51.5% \u2014 mixed signal"
   },
   "BHARATFORG": {
     "first_seen": "2026-06-25",
     "first_price": 2145.0,
     "catalyst": "ACQUISITION",
-    "deliv_per": 50.76,
-    "deliv_chg_pct": 0.2,
+    "deliv_per": 51.1,
+    "deliv_chg_pct": -0.74,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 50.8% \u2014 mixed signal"
+    "deliv_note": "Delivery 51.1% \u2014 mixed signal"
   },
   "MEDIASSIST": {
     "first_seen": "2026-06-25",
     "first_price": 373.0,
     "catalyst": "ACQUISITION",
-    "deliv_per": 49.06,
-    "deliv_chg_pct": 0.44,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 49.1% \u2014 mixed signal"
+    "deliv_per": 67.47,
+    "deliv_chg_pct": -2.57,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 67.5% despite flat/down \u2014 institutions accumulating"
   },
   "SETL": {
     "first_seen": "2026-06-25",
@@ -100,64 +100,64 @@
     "catalyst": "ACQUISITION",
     "catalyst_day_move": 4.9,
     "catalyst_day_close": 235.0,
-    "deliv_per": 50.82,
-    "deliv_chg_pct": 0.96,
+    "deliv_per": 56.37,
+    "deliv_chg_pct": -0.62,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 50.8% \u2014 mixed signal"
+    "deliv_note": "Delivery 56.4% \u2014 mixed signal"
   },
   "PURVA": {
     "first_seen": "2026-06-29",
     "first_price": 215.46,
     "catalyst": "ORDER_WIN",
-    "deliv_per": 41.05,
-    "deliv_chg_pct": -3.21,
+    "deliv_per": 46.16,
+    "deliv_chg_pct": -1.83,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 41.0% \u2014 mixed signal"
+    "deliv_note": "Delivery 46.2% \u2014 mixed signal"
   },
   "SIS": {
     "first_seen": "2026-06-30",
     "first_price": 436.0,
     "catalyst": "BUYBACK",
-    "deliv_per": 63.95,
-    "deliv_chg_pct": 0.33,
-    "deliv_label": "GENUINE_DEMAND",
-    "deliv_note": "High delivery 64.0% + rising \u2014 real buyers accumulating"
+    "deliv_per": 61.26,
+    "deliv_chg_pct": -0.99,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 61.3% despite flat/down \u2014 institutions accumulating"
   },
   "TEAMLEASE": {
     "first_seen": "2026-07-02",
     "first_price": 1453.3,
     "catalyst": "BUYBACK",
-    "deliv_per": 57.12,
-    "deliv_chg_pct": 0.44,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 57.1% \u2014 mixed signal"
+    "deliv_per": 76.38,
+    "deliv_chg_pct": 0.98,
+    "deliv_label": "GENUINE_DEMAND",
+    "deliv_note": "High delivery 76.4% + rising \u2014 real buyers accumulating"
   },
   "TECHM": {
     "first_seen": "2026-07-02",
     "first_price": 1378.3,
     "catalyst": "ACQUISITION",
-    "deliv_per": 41.39,
-    "deliv_chg_pct": 0.77,
+    "deliv_per": 46.31,
+    "deliv_chg_pct": -1.0,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 41.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 46.3% \u2014 mixed signal"
   },
   "ADVENTHTL": {
     "first_seen": "2026-07-02",
     "first_price": 138.65,
     "catalyst": "ACQUISITION",
-    "deliv_per": 37.73,
-    "deliv_chg_pct": 1.52,
+    "deliv_per": 57.18,
+    "deliv_chg_pct": -0.91,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 37.7% \u2014 mixed signal"
+    "deliv_note": "Delivery 57.2% \u2014 mixed signal"
   },
   "DIXON": {
     "first_seen": "2026-07-03",
     "first_price": 11970.0,
     "catalyst": "POLICY_PROTECTION",
-    "deliv_per": 40.2,
-    "deliv_chg_pct": 6.27,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 40.2% \u2014 mixed signal"
+    "deliv_per": 21.11,
+    "deliv_chg_pct": -1.67,
+    "deliv_label": "WEAK",
+    "deliv_note": "Low delivery 21.1% + falling \u2014 weak hands, avoid"
   },
   "PATINTLOG": {
     "first_seen": "2026-07-03",
@@ -168,55 +168,55 @@
     "first_seen": "2026-07-06",
     "first_price": 828.9,
     "catalyst": "USFDA",
-    "deliv_per": 61.09,
-    "deliv_chg_pct": 0.58,
-    "deliv_label": "GENUINE_DEMAND",
-    "deliv_note": "High delivery 61.1% + rising \u2014 real buyers accumulating"
+    "deliv_per": 47.44,
+    "deliv_chg_pct": -2.5,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 47.4% \u2014 mixed signal"
   },
   "OBEROIRLTY": {
     "first_seen": "2026-07-06",
     "first_price": 1885.0,
     "catalyst": "PROXY_PLAY",
-    "deliv_per": 57.46,
-    "deliv_chg_pct": -1.4,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 57.5% \u2014 mixed signal"
+    "deliv_per": 28.19,
+    "deliv_chg_pct": -1.77,
+    "deliv_label": "WEAK",
+    "deliv_note": "Low delivery 28.2% + falling \u2014 weak hands, avoid"
   },
   "GLENMARK": {
     "first_seen": "2026-07-06",
     "first_price": 2185.2,
     "catalyst": "USFDA",
-    "deliv_per": 49.79,
-    "deliv_chg_pct": -0.46,
+    "deliv_per": 48.06,
+    "deliv_chg_pct": -1.88,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 49.8% \u2014 mixed signal"
+    "deliv_note": "Delivery 48.1% \u2014 mixed signal"
   },
   "ZENTEC": {
     "first_seen": "2026-07-07",
     "first_price": 1758.3,
     "catalyst": "ACQUISITION",
-    "deliv_per": 33.55,
-    "deliv_chg_pct": -0.74,
+    "deliv_per": 31.56,
+    "deliv_chg_pct": -0.22,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 33.5% \u2014 mixed signal"
+    "deliv_note": "Delivery 31.6% \u2014 mixed signal"
   },
   "CLEANMAX": {
     "first_seen": "2026-07-07",
     "first_price": 1266.0,
     "catalyst": "ORDER_WIN",
-    "deliv_per": 39.43,
-    "deliv_chg_pct": 1.84,
+    "deliv_per": 43.2,
+    "deliv_chg_pct": 0.4,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 39.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 43.2% \u2014 mixed signal"
   },
   "NAUKRI": {
     "first_seen": "2026-07-07",
     "first_price": 1034.65,
     "catalyst": "ACQUISITION",
-    "deliv_per": 53.43,
-    "deliv_chg_pct": 1.77,
+    "deliv_per": 58.59,
+    "deliv_chg_pct": -1.52,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 53.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 58.6% \u2014 mixed signal"
   },
   "ORBTEXP": {
     "first_seen": "2026-07-08",
@@ -227,37 +227,37 @@
     "first_seen": "2026-07-08",
     "first_price": 263.55,
     "catalyst": "MERGER",
-    "deliv_per": 60.36,
-    "deliv_chg_pct": -1.64,
-    "deliv_label": "ACCUMULATION",
-    "deliv_note": "High delivery 60.4% despite flat/down \u2014 institutions accumulating"
+    "deliv_per": 52.58,
+    "deliv_chg_pct": 2.15,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 52.6% \u2014 mixed signal"
   },
   "CEIGALL": {
     "first_seen": "2026-07-08",
     "first_price": 358.1,
     "catalyst": "ORDER_WIN",
-    "deliv_per": 54.92,
-    "deliv_chg_pct": -2.89,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 54.9% \u2014 mixed signal"
+    "deliv_per": 64.15,
+    "deliv_chg_pct": -0.86,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 64.2% despite flat/down \u2014 institutions accumulating"
   },
   "AWHCL": {
     "first_seen": "2026-07-09",
     "first_price": 460.0,
     "catalyst": "OTHER",
-    "deliv_per": 40.43,
-    "deliv_chg_pct": -1.13,
+    "deliv_per": 55.49,
+    "deliv_chg_pct": -1.68,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 40.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 55.5% \u2014 mixed signal"
   },
   "UNITDSPR": {
     "first_seen": "2026-07-09",
     "first_price": 1427.0,
     "catalyst": "OTHER",
-    "deliv_per": 47.65,
-    "deliv_chg_pct": 0.6,
+    "deliv_per": 52.51,
+    "deliv_chg_pct": 0.96,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 47.6% \u2014 mixed signal"
+    "deliv_note": "Delivery 52.5% \u2014 mixed signal"
   },
   "RAJESHEXPO": {
     "first_seen": "2026-07-09",
@@ -268,19 +268,19 @@
     "first_seen": "2026-07-10",
     "first_price": 791.0,
     "catalyst": "STRATEGIC_INVESTMENT",
-    "deliv_per": 35.65,
-    "deliv_chg_pct": -1.35,
+    "deliv_per": 40.79,
+    "deliv_chg_pct": -0.94,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 35.6% \u2014 mixed signal"
+    "deliv_note": "Delivery 40.8% \u2014 mixed signal"
   },
   "MMFL": {
     "first_seen": "2026-07-10",
     "first_price": 505.2,
     "catalyst": "MERGER",
-    "deliv_per": 63.48,
-    "deliv_chg_pct": 0.69,
-    "deliv_label": "GENUINE_DEMAND",
-    "deliv_note": "High delivery 63.5% + rising \u2014 real buyers accumulating"
+    "deliv_per": 49.7,
+    "deliv_chg_pct": -0.66,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 49.7% \u2014 mixed signal"
   },
   "JBCHEPHARM": {
     "first_seen": "2026-07-14",
@@ -295,71 +295,99 @@
     "first_seen": "2026-07-14",
     "first_price": 33.5,
     "catalyst": "OTHER",
-    "deliv_per": 29.23,
-    "deliv_chg_pct": 0.14,
+    "deliv_per": 30.63,
+    "deliv_chg_pct": -0.17,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 29.2% \u2014 mixed signal"
+    "deliv_note": "Delivery 30.6% \u2014 mixed signal"
   },
   "SHANKARA": {
     "first_seen": "2026-07-16",
     "first_price": 134.6,
     "catalyst": "OPEN_OFFER",
-    "deliv_per": 79.51,
-    "deliv_chg_pct": 1.31,
+    "deliv_per": 76.72,
+    "deliv_chg_pct": 0.88,
     "deliv_label": "GENUINE_DEMAND",
-    "deliv_note": "High delivery 79.5% + rising \u2014 real buyers accumulating"
+    "deliv_note": "High delivery 76.7% + rising \u2014 real buyers accumulating"
   },
   "ACMESOLAR": {
     "first_seen": "2026-07-16",
     "first_price": 387.4,
     "catalyst": "DEBT_EVENT",
-    "deliv_per": 44.4,
-    "deliv_chg_pct": 0.47,
+    "deliv_per": 50.81,
+    "deliv_chg_pct": -0.94,
     "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 44.4% \u2014 mixed signal"
+    "deliv_note": "Delivery 50.8% \u2014 mixed signal"
   },
   "POWERICA": {
     "first_seen": "2026-07-16",
     "first_price": 569.9,
     "catalyst": "ORDER_WIN",
-    "deliv_per": 60.07,
-    "deliv_chg_pct": 2.96,
-    "deliv_label": "GENUINE_DEMAND",
-    "deliv_note": "High delivery 60.1% + rising \u2014 real buyers accumulating"
+    "deliv_per": 46.41,
+    "deliv_chg_pct": -1.58,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 46.4% \u2014 mixed signal"
   },
   "HCLTECH": {
     "first_seen": "2026-07-17",
     "first_price": 1175.4,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "deliv_per": 65.13,
+    "deliv_chg_pct": -0.18,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 65.1% despite flat/down \u2014 institutions accumulating"
   },
   "PWL": {
     "first_seen": "2026-07-17",
     "first_price": 137.95,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "deliv_per": 23.06,
+    "deliv_chg_pct": -1.44,
+    "deliv_label": "WEAK",
+    "deliv_note": "Low delivery 23.1% + falling \u2014 weak hands, avoid"
   },
   "DCMSHRIRAM": {
     "first_seen": "2026-07-18",
     "first_price": 1017.3,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "deliv_per": 62.79,
+    "deliv_chg_pct": -2.35,
+    "deliv_label": "ACCUMULATION",
+    "deliv_note": "High delivery 62.8% despite flat/down \u2014 institutions accumulating"
   },
   "ABCAPITAL": {
     "first_seen": "2026-07-18",
     "first_price": 399.95,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "deliv_per": 52.96,
+    "deliv_chg_pct": -2.07,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 53.0% \u2014 mixed signal"
   },
   "ROSSARI": {
     "first_seen": "2026-07-20",
     "first_price": 514.55,
-    "catalyst": "RESULTS_BEAT"
+    "catalyst": "RESULTS_BEAT",
+    "deliv_per": 59.69,
+    "deliv_chg_pct": -3.03,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 59.7% \u2014 mixed signal"
   },
   "LUPIN": {
     "first_seen": "2026-07-22",
     "first_price": 2495.0,
-    "catalyst": "ACQUISITION"
+    "catalyst": "ACQUISITION",
+    "deliv_per": 52.08,
+    "deliv_chg_pct": -4.29,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 52.1% \u2014 mixed signal"
   },
   "INDOBORAX": {
     "first_seen": "2026-07-22",
     "first_price": 424.9,
-    "catalyst": "MERGER"
+    "catalyst": "MERGER",
+    "deliv_per": 40.75,
+    "deliv_chg_pct": -7.77,
+    "deliv_label": "NEUTRAL",
+    "deliv_note": "Delivery 40.8% \u2014 mixed signal"
   }
 }

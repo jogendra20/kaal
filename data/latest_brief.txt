@@ -1,27 +1,29 @@
-<b>⚔️ KAAL MORNING BRIEF</b>
-<code>22 Jul 2026 01:30 PM</code>
-
-<b>🌐 MACRO</b>
-VIX: <code>13.2</code>  |  Bias: ➡️ NEUTRAL
-GIFT Nifty: <code>-0.85%</code> (Bearish)
-SPX: <code>+0.9%</code>  Crude: <code>$85</code>  Gold: <code>$4120</code>  USD/INR: <code>96.53</code>
+<b>🌙 KAAL EVENING BRIEF</b>
+<code>22 Jul 2026 09:04 PM</code>  |  VIX: <code>13.3</code>
+Crude: <code>$85</code>  USD/INR: <code>96.49</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
+<b>📋 TOMORROW'S PRE-WATCHLIST</b>
+<i>(Morning scan will confirm with fresh announcements)</i>
 
-<code>[Jul 21, 07:23 AM]</code> <b>LUPIN</b> — ACQUISITION 🟡
-Score: <code>85/100</code> | Yest: -0.8% 🟢 FRESH
-└─ Lupin Inc. grants exclusive perpetual license for two oncology programs (LNP7457 and LNP8701) to Kav
-└─ [WATCH] High-impact acquisition catalyst with multi-source confirmation. Monetization of non-core assets provides capital infusion potential.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+🔥 <b>TIER 1</b>
 
-<code>[Jul 21, 12:58 PM]</code> <b>INDOBORAX</b> — MERGER 🟡
-Score: <code>75/100</code> | Yest: -1.2% 🟢 FRESH
-└─ Scheme of Amalgamation of Indoborax Infrastructure Private Limited with Indo Borax & Chemicals Limit
-└─ [WATCH] Merger of wholly owned subsidiary approved. Potential operational synergies, but liquidity risk remains.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback after gap-up | SL: 15M low | Target: 1:2.5
+<code>[08:02 PM]</code> <b>INOXGREEN</b> — MERGER 🟡
+Score: <code>78/100</code>
+└─ Record Date fixed for 1st August 2026 for demerger of Inox Renewable Solutions Limited (IRSL) at 122
+└─ Demerger schemes typically lead to neutral to slightly positive sentiment due to potential unlocking of value in the resulting entities. Traders should watch for arbitrage opportun
+
+👀 <b>TIER 2</b>
+• <b>UNITDSPR</b> 🟢 [72] ACQUISITION — United Spirits Limited enters into Share Subscription and Shareholder 
+• <b>SAREGAMA</b> 🟢 [72] ACQUISITION — Acquired 4.82% stake in Pocket Aces for ~INR 20.05 Crore, increasing t
+• <b>SAATVIKGL</b> 🟢 [70] ORDER WIN — Awarding of order(s)/contract(s
+• <b>WAAREEENER</b> 🟢 [68] ORDER WIN — Receipt of order by Waaree Energies Limited
+• <b>SCHAEFFLER</b> 🟡 [68] RESULTS BEAT — Quarterly results announcement for Q2 FY2026 and H1 FY2026
+• <b>TCS</b> 🟡 [62] NEWS MOMENTUM — Mentioned 18x across TAVILY: TCS study reveals Physical AI is now main
+• <b>SAMHI</b> 🟡 [58] CREDIT UPGRADE — Credit rating action by a rating agency for Samhi Hotels Limited
+• <b>BPCL</b> 🟡 [52] NEWS MOMENTUM — Mentioned 4x across MINT, ET: BPCL Q1 Results: PSU firm posts net loss
+
+⚠️ <i>LLM call cap hit during this run — some Tier 2 scores are rule-based only (no AI differentiation). Treat identical scores in this batch with extra caution.</i>
 
 ──────────────────────────────────
-<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
+<i>Morning brief at 8:50 AM tomorrow.</i>
