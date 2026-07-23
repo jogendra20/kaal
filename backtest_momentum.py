@@ -24,7 +24,6 @@ from kaal_momentum.rank import build_watchlist, MIN_BARS_REQUIRED
 from run_momentum import TEST_UNIVERSE
 
 INDEX_SYMBOL = "NIFTY 50"
-INDEX_SYMBOL = "NIFTY 50"
 TEST_TRADING_DAYS = 60
 
 
