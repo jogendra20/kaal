@@ -1,18 +1,4 @@
 {
-  "ZOTA": {
-    "first_seen": "2026-06-23",
-    "first_price": 1319.9,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 64.05,
-    "deliv_chg_pct": -4.03,
-    "deliv_label": "ACCUMULATION",
-    "deliv_note": "High delivery 64.0% despite flat/down \u2014 institutions accumulating"
-  },
-  "DEEDEV": {
-    "first_seen": "2026-06-23",
-    "first_price": 698.0,
-    "catalyst": "ORDER_WIN"
-  },
   "NIACL": {
     "first_seen": "2026-06-24",
     "first_price": 195.1,
@@ -381,5 +367,10 @@
     "first_seen": "2026-07-23",
     "first_price": 195.49,
     "catalyst": "MERGER"
+  },
+  "PETRONET": {
+    "first_seen": "2026-07-24",
+    "first_price": 268.95,
+    "catalyst": "CLARIFICATION"
   }
 }

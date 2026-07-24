@@ -20,6 +20,7 @@ import re
 from datetime import datetime
 
 from kaal_scorer import check_results_freshness
+from kaal_fy27_symbol_tagging import build_symbol_lookup, extract_symbol_from_text
 
 FY27_PATTERNS = [
     r'\bFY\s*-?\s*27\b',
@@ -47,6 +48,7 @@ def gather_fy27_items(announcements: list, news: list) -> list:
     a reliable per-company filing date the way NSE announcements do.
     """
     results = []
+    symbol_lookup = build_symbol_lookup(announcements)
 
     for ann in announcements or []:
         subject = ann.get("subject", "") if isinstance(ann, dict) else ""
@@ -70,9 +72,12 @@ def gather_fy27_items(announcements: list, news: list) -> list:
         combined = f"{title} {summary}"
         if not is_fy27_relevant(combined):
             continue
+        symbol = item.get("symbol", "") if isinstance(item, dict) else ""
+        if not symbol:
+            symbol = extract_symbol_from_text(combined, symbol_lookup) or ""
         results.append({
             "source": "NEWS",
-            "symbol": item.get("symbol", "") if isinstance(item, dict) else "",
+            "symbol": symbol,
             "headline": title or summary[:100],
             "an_dt": item.get("published", item.get("date", "")) if isinstance(item, dict) else "",
             "freshness": {"status": "UNKNOWN", "days_old": None,
