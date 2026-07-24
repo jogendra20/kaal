@@ -56,6 +56,35 @@ def _fiscal_quarter_label(an_dt: str):
     return f"Q{q}FY{str(fy)[2:]}"
 
 
+def check_results_freshness(an_dt: str, stale_threshold_days: int = 5) -> dict:
+    """
+    Deterministic staleness check for results announcements - no LLM.
+    Targets a known pre-existing problem: old filings resurfacing in
+    the "new announcements" feed and getting treated as breaking news.
+    stale_threshold_days=5: results are normally acted on within days
+    of filing; wide enough to not flag normal processing delay as
+    stale, tight enough to catch genuinely old filings.
+    UNKNOWN (unparseable date) is never treated as FRESH - a missing
+    date should never silently pass as "new".
+    """
+    dt = None
+    if an_dt:
+        for fmt in ("%d-%b-%Y %H:%M:%S", "%d-%b-%Y", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
+            try:
+                dt = datetime.strptime(an_dt.strip()[:len(fmt) + 2], fmt)
+                break
+            except Exception:
+                continue
+    if dt is None:
+        return {"status": "UNKNOWN", "days_old": None,
+                "reason": "could not parse announcement date - treat with caution, not as fresh"}
+    days_old = (datetime.now() - dt).days
+    if days_old > stale_threshold_days:
+        return {"status": "STALE", "days_old": days_old,
+                "reason": f"filed {days_old} days ago but appearing as a new alert - likely a resurfaced/old filing"}
+    return {"status": "FRESH", "days_old": days_old, "reason": f"filed {days_old} day(s) ago"}
+
+
 def _build_results_prompt(subject, details, pdf_text, macro_context):
     ctx = "Subject: " + subject + "\nDetails: " + details[:600]
     if pdf_text:
@@ -480,13 +509,18 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
 
             pat_growth_pct = llm.get("pat_growth_pct") if is_results else None
             revenue_growth_pct = llm.get("revenue_growth_pct") if is_results else None
-            if is_results and pat_growth_pct is not None and revenue_growth_pct is not None:
+            freshness = None
+            if is_results:
                 an_dt_val = ann.get("an_dt", "") if isinstance(ann, dict) else ""
-                quarter_label = _fiscal_quarter_label(an_dt_val)
-                try:
-                    record_result(symbol, quarter_label, pat_growth_pct, revenue_growth_pct)
-                except Exception as e:
-                    print(f"[SCORER] failed to record results history for {symbol}: {e}")
+                freshness = check_results_freshness(an_dt_val)
+                if freshness["status"] == "STALE":
+                    print(f"[SCORER] {symbol}: STALE results announcement - {freshness['reason']}")
+                if pat_growth_pct is not None and revenue_growth_pct is not None:
+                    quarter_label = _fiscal_quarter_label(an_dt_val)
+                    try:
+                        record_result(symbol, quarter_label, pat_growth_pct, revenue_growth_pct)
+                    except Exception as e:
+                        print(f"[SCORER] failed to record results history for {symbol}: {e}")
 
             return {
                 "symbol":          symbol,
@@ -507,6 +541,7 @@ def score_announcement(ann: dict, skip_set: set, macro_context: dict = None, use
                 "event_type":      ann.get("event_type", "MOMENTUM_CATALYST") if isinstance(ann, dict) else "MOMENTUM_CATALYST",
                 "pat_growth_pct":       pat_growth_pct,
                 "revenue_growth_pct":   revenue_growth_pct,
+                "results_freshness":    freshness,
             }
 
 
