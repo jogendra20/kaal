@@ -46,17 +46,28 @@ def _name_candidates(root: str) -> list:
     return [' '.join(words[:i]) for i in range(len(words), 1, -1)]
 
 
+# Tickers that double as ordinary financial vocabulary or exchange
+# names - matching these as literal words produces false positives on
+# nearly any market article. BSE confirmed as a real false-positive
+# source on 2026-07-24 (matched an unrelated headline purely because
+# "BSE" appears in routine market boilerplate text).
+_OVERLOADED_SYMBOLS = {"BSE"}
+
+
 def extract_symbol_from_text(text: str, symbol_lookup: dict) -> str:
     """
-    Tries: 1) exact symbol as a standalone word in the text, then
-    2) company name or a shortened word-prefix of it. Returns None if
-    nothing matches - never guesses.
+    Tries: 1) exact symbol as a standalone word in the text (skipping
+    a small set of overloaded tickers), then 2) company name or a
+    shortened word-prefix of it. Returns None if nothing matches -
+    never guesses.
     """
     if not text:
         return None
     text_upper = text.upper()
 
     for company_name, symbol in symbol_lookup.items():
+        if symbol in _OVERLOADED_SYMBOLS:
+            continue
         if re.search(r'\b' + re.escape(symbol) + r'\b', text_upper):
             return symbol
 

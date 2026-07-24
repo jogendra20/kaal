@@ -1,20 +1,20 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>24 Jul 2026 10:37 AM</code>
+<code>24 Jul 2026 01:39 PM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>14.5</code>  |  Bias: 📉 BEARISH
-GIFT Nifty: <code>-1.05%</code> (Bearish)
-SPX: <code>-1.2%</code>  Crude: <code>$92</code>  Gold: <code>$4029</code>  USD/INR: <code>96.53</code>
+VIX: <code>14.2</code>  |  Bias: 📉 BEARISH
+GIFT Nifty: <code>-0.44%</code> (Bearish)
+SPX: <code>-1.2%</code>  Crude: <code>$90</code>  Gold: <code>$4051</code>  USD/INR: <code>96.49</code>
 ──────────────────────────────────
 
 ⚠️ No Tier 1 stocks today — consider staying in cash
 
 👀 <b>TIER 2 — WATCHLIST</b>
 
-<code>[Jul 23, 03:46 PM]</code> <b>PETRONET</b> — CLARIFICATION 🔴
+<code>[11:32 AM]</code> <b>PETRONET</b> — CLARIFICATION 🔴
 Score: <code>70/100</code> | Yest: -0.2% 🟢 FRESH
-└─ Exchange seeks clarification from Petronet LNG on QatarEnergy force majeure report
-└─ [WATCH] Bearish catalyst due to force majeure clarification request. High risk in current market conditions.
+└─ Exchange sought clarification from Petronet LNG on QatarEnergy force majeure report
+└─ [WATCH] High-impact clarification request regarding QatarEnergy force majeure; potential supply chain disruption creates volatility opportunity.
 └─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
 └─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
 

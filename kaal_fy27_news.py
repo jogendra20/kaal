@@ -74,7 +74,11 @@ def gather_fy27_items(announcements: list, news: list) -> list:
             continue
         symbol = item.get("symbol", "") if isinstance(item, dict) else ""
         if not symbol:
-            symbol = extract_symbol_from_text(combined, symbol_lookup) or ""
+            # Title only, not the combined title+summary body text -
+            # real evidence (2026-07-24) showed body text mentions
+            # companies that aren't the article's actual subject
+            # (analyst names, roundup lists), producing false tags.
+            symbol = extract_symbol_from_text(title, symbol_lookup) or ""
         results.append({
             "source": "NEWS",
             "symbol": symbol,
