@@ -270,6 +270,16 @@ def run():
 
     nse_anns = fetch_nse_announcements()
     news     = fetch_news()
+
+    # FY27 news report - DISPLAY ONLY, does not affect scoring or picks.
+    # Same non-fatal try/except pattern as the regime lines - a bug here
+    # can never take down the working morning scan around it.
+    try:
+        from kaal_fy27_news import gather_fy27_items, build_fy27_report
+        fy27_items = gather_fy27_items(nse_anns, news)
+        log(build_fy27_report(fy27_items))
+    except Exception as e:
+        log(f"FY27 news report skipped (non-fatal): {e}")
     preopen  = fetch_preopen_gainers()
     # Build gap map for quick lookup
     gap_map   = {s['symbol']: s['gap_pct'] for s in preopen if abs(s['gap_pct']) >= 2.0}
