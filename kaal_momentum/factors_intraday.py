@@ -14,7 +14,7 @@ live numbers.
 Every function returns None on insufficient data - never a fake
 number standing in for "don't know".
 """
-from datetime import datetime, time as dtime
+from datetime import datetime, time as dtime, timedelta
 
 SESSION_START = dtime(9, 15)
 SESSION_END = dtime(15, 30)
@@ -98,11 +98,98 @@ def vwap_position(symbol: str, provider, interval: str = "5min") -> dict:
     }
 
 
-def opening_range_breakout(symbol: str, provider, range_minutes: int = 15) -> dict:
-    """Not yet implemented - next increment."""
-    raise NotImplementedError("ORB not yet built - separate step")
+def opening_range_breakout(symbol: str, provider, range_minutes: int = 15,
+                            interval: str = "5min") -> dict:
+    """
+    Opening range = high/low of the first `range_minutes` of trading.
+    Returns None if the opening range window itself isn't complete yet
+    (e.g. called very early in the session) - a partial range would
+    understate the true high/low and produce a false breakout signal.
+    """
+    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+    today_bars = _today_bars(bars)
+    if not today_bars:
+        return None
+
+    session_start_dt = datetime.combine(datetime.today(), SESSION_START)
+    range_end_dt = session_start_dt + timedelta(minutes=range_minutes)
+
+    opening_bars = [b for b in today_bars
+                    if datetime.combine(datetime.today(), _parse_bar_time(b)) < range_end_dt]
+    if not opening_bars:
+        return None
+
+    latest_bar_dt = datetime.combine(datetime.today(), _parse_bar_time(today_bars[-1]))
+    if latest_bar_dt < range_end_dt:
+        return None
+
+    range_high = max(b["high"] for b in opening_bars)
+    range_low = min(b["low"] for b in opening_bars)
+    current_price = today_bars[-1]["close"]
+
+    if current_price > range_high:
+        direction = "BREAKOUT_UP"
+        breakout_pct = (current_price - range_high) / range_high * 100
+    elif current_price < range_low:
+        direction = "BREAKOUT_DOWN"
+        breakout_pct = (range_low - current_price) / range_low * 100
+    else:
+        direction = "INSIDE_RANGE"
+        breakout_pct = 0.0
+
+    return {
+        "opening_range_high": round(range_high, 2),
+        "opening_range_low": round(range_low, 2),
+        "current_price": current_price,
+        "direction": direction,
+        "breakout_pct": round(breakout_pct, 3),
+    }
 
 
-def gap_quality(symbol: str, provider) -> dict:
-    """Not yet implemented - next increment."""
-    raise NotImplementedError("gap_quality not yet built - separate step")
+def gap_quality(symbol: str, provider, prior_close: float, interval: str = "5min") -> dict:
+    """
+    prior_close: yesterday's close, from kaal_momentum's EOD bhavcopy
+    data (NOT fetched fresh from Angel One).
+    Distinguishes a gap that's holding/extending from one that's
+    fading back toward (or through) yesterday's close.
+    """
+    if not prior_close or prior_close <= 0:
+        return None
+
+    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+    today_bars = _today_bars(bars)
+    if not today_bars:
+        return None
+
+    today_open = today_bars[0]["open"]
+    current_price = today_bars[-1]["close"]
+
+    gap_pct = (today_open - prior_close) / prior_close * 100
+    if gap_pct == 0:
+        return {"gap_pct": 0.0, "regime": "NO_GAP", "current_price": current_price}
+
+    direction = "UP" if gap_pct > 0 else "DOWN"
+    current_vs_open_pct = (current_price - today_open) / today_open * 100
+
+    if direction == "UP":
+        filled = current_price <= prior_close
+        extending = current_vs_open_pct > 0
+    else:
+        filled = current_price >= prior_close
+        extending = current_vs_open_pct < 0
+
+    if filled:
+        regime = "FILLED"
+    elif extending:
+        regime = "HELD_AND_EXTENDING"
+    else:
+        regime = "HELD_FADING"
+
+    return {
+        "gap_pct": round(gap_pct, 3),
+        "direction": direction,
+        "today_open": today_open,
+        "current_price": current_price,
+        "current_vs_open_pct": round(current_vs_open_pct, 3),
+        "regime": regime,
+    }
