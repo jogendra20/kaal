@@ -56,6 +56,15 @@ class AngelOneProvider:
         days_needed = max(1, (n // bars_per_day) + 2)
 
         to_date = datetime.now()
+        # NSE doesn't trade on weekends - querying a non-trading day as
+        # the range endpoint produced corrupted/garbage candle data in
+        # testing (confirmed 2026-07-26: Saturday's "data" was
+        # internally impossible, the same request scoped to the prior
+        # real trading day was clean and accurate). Does not yet
+        # account for NSE holidays (a fixed calendar KAAL doesn't have
+        # loaded anywhere), only weekends - a real but rarer gap.
+        while to_date.weekday() >= 5:
+            to_date -= timedelta(days=1)
         from_date = to_date - timedelta(days=days_needed * 2)
 
         client = self._client_lazy()
