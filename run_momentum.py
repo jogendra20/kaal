@@ -10,6 +10,7 @@ separate decision - don't mistake this list for that component.
 """
 from kaal_momentum.providers import NSEBhavcopyProvider
 from kaal_momentum.rank import build_watchlist
+from kaal_momentum.factors_intraday import relative_volume, vwap_position, opening_range_breakout, gap_quality
 
 TEST_UNIVERSE = {
     "RELIANCE":  "ENERGY",
@@ -64,6 +65,44 @@ def main():
         print(f"\n{'-'*60}")
         print(f"SKIPPED (would have ranked in top 3, but sector already picked):")
         print(f"  {', '.join(result['skipped_for_sector_diversity'])}")
+
+    # --- Live intraday factors: INFORMATIONAL ONLY ---
+    # Not blended into the score above - zero live verification yet
+    # (first real market-hours run for all four). Watch whether the
+    # numbers look sane before folding these into rank.py's weights.
+    print(f"\n{'='*60}")
+    print(f"LIVE INTRADAY FACTORS (informational only - NOT in the score above)")
+    print(f"{'='*60}")
+    try:
+        from angel_provider import AngelOneProvider
+        angel = AngelOneProvider()
+    except Exception as e:
+        print(f"Could not start Angel One provider: {e}")
+        angel = None
+
+    if angel:
+        for r in result["ranked"]:
+            symbol = r["symbol"]
+            print(f"\n{symbol}:")
+            try:
+                daily_bars = provider.get_daily_bars(symbol, n=20)
+                if len(daily_bars) < 2:
+                    print("    not enough EOD history for avg volume / prior close")
+                    continue
+                avg_daily_volume = sum(b["volume"] for b in daily_bars) / len(daily_bars)
+                prior_close = daily_bars[-1]["close"]
+
+                rvol = relative_volume(symbol, angel, avg_daily_volume)
+                vwap = vwap_position(symbol, angel)
+                orb = opening_range_breakout(symbol, angel)
+                gap = gap_quality(symbol, angel, prior_close)
+
+                print(f"    RVOL:  {rvol}")
+                print(f"    VWAP:  {vwap}")
+                print(f"    ORB:   {orb}")
+                print(f"    Gap:   {gap}")
+            except Exception as e:
+                print(f"    error fetching intraday factors: {e}")
     print()
 
 
