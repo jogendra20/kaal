@@ -27,9 +27,20 @@ def _parse_bar_time(bar: dict) -> dtime:
 
 
 def _today_bars(bars: list) -> list:
+    """
+    Bug found live, pre-market, 2026-07-27: before market open, Angel
+    One's API returns the most recent available session (e.g. Friday's
+    full day) instead of nothing. The old version only checked that
+    all returned bars shared the same date as each other - it never
+    checked that date was actually today's real calendar date. Result:
+    it silently treated Friday's closing price as "live now" data.
+    """
     if not bars:
         return []
+    real_today = datetime.now().strftime("%Y-%m-%d")
     latest_date = bars[-1]["timestamp"][:10]
+    if latest_date != real_today:
+        return []
     return [b for b in bars if b["timestamp"][:10] == latest_date]
 
 
