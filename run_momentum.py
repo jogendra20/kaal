@@ -92,15 +92,25 @@ def main():
                 avg_daily_volume = sum(b["volume"] for b in daily_bars) / len(daily_bars)
                 prior_close = daily_bars[-1]["close"]
 
-                rvol = relative_volume(symbol, angel, avg_daily_volume)
-                vwap = vwap_position(symbol, angel)
-                orb = opening_range_breakout(symbol, angel)
-                gap = gap_quality(symbol, angel, prior_close)
+                # Fetch intraday bars ONCE, reuse across all four factors -
+                # calling each factor without pre-fetched bars means 4
+                # separate API calls per symbol, which tripped Angel One's
+                # rate limit ("Access denied because of exceeding access
+                # rate") on the live 2026-07-27 run after just 3 symbols.
+                intraday_bars = angel.get_intraday_bars(symbol, interval="5min", n=100)
+
+                rvol = relative_volume(symbol, angel, avg_daily_volume, bars=intraday_bars)
+                vwap = vwap_position(symbol, angel, bars=intraday_bars)
+                orb = opening_range_breakout(symbol, angel, bars=intraday_bars)
+                gap = gap_quality(symbol, angel, prior_close, bars=intraday_bars)
 
                 print(f"    RVOL:  {rvol}")
                 print(f"    VWAP:  {vwap}")
                 print(f"    ORB:   {orb}")
                 print(f"    Gap:   {gap}")
+
+                import time
+                time.sleep(1)  # small buffer between symbols - cheap extra insurance
             except Exception as e:
                 print(f"    error fetching intraday factors: {e}")
     print()
