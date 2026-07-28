@@ -5,6 +5,7 @@ piece factors_intraday.py has been stubbed out waiting for all night.
 NOT a full OHLCDataProvider - NSEBhavcopyProvider still covers EOD data;
 this is used alongside it, only for the intraday piece bhavcopy can't do.
 """
+import time
 from datetime import datetime, timedelta
 
 from angel_session import get_authenticated_client
@@ -75,7 +76,28 @@ class AngelOneProvider:
             "fromdate": from_date.strftime("%Y-%m-%d %H:%M"),
             "todate": to_date.strftime("%Y-%m-%d %H:%M"),
         }
-        response = client.getCandleData(params)
+
+        # Angel One's own forum has an open thread ("API Rate Limit
+        # checks are not perfect") acknowledging their rate-limit
+        # enforcement sometimes rejects requests well within the
+        # documented 3-req/sec limit for getCandleData. Retry with
+        # backoff is the fix other developers report working.
+        response = None
+        for attempt in range(3):
+            try:
+                response = client.getCandleData(params)
+            except Exception as e:
+                response = {"status": False, "message": str(e)}
+
+            if response and response.get("status"):
+                break
+            error_text = str(response.get("message", "")) if response else ""
+            if "exceeding access rate" in error_text.lower() or "access denied" in error_text.lower():
+                wait = 2 ** (attempt + 1)
+                print(f"[ANGEL] rate limit hit for {symbol}, retrying in {wait}s (attempt {attempt + 1}/3)")
+                time.sleep(wait)
+                continue
+            break
 
         if not response or not response.get("status"):
             print(f"[ANGEL] getCandleData failed for {symbol}: {response}")
