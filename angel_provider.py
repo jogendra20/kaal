@@ -83,18 +83,28 @@ class AngelOneProvider:
         # documented 3-req/sec limit for getCandleData. Retry with
         # backoff is the fix other developers report working.
         response = None
+        exception_occurred = False
         for attempt in range(3):
+            exception_occurred = False
             try:
                 response = client.getCandleData(params)
             except Exception as e:
                 response = {"status": False, "message": str(e)}
+                exception_occurred = True
 
             if response and response.get("status"):
                 break
             error_text = str(response.get("message", "")) if response else ""
-            if "exceeding access rate" in error_text.lower() or "access denied" in error_text.lower():
+            is_rate_limit = "exceeding access rate" in error_text.lower() or "access denied" in error_text.lower()
+            # Retry on the known rate-limit message AND on any raised
+            # exception (timeouts, connection errors) - a real M&M
+            # request timed out live (2026-07-28, read timeout=7) with
+            # no rate-limit wording at all, same run where SUNPHARMA
+            # separately recovered from an actual rate-limit failure.
+            if is_rate_limit or exception_occurred:
                 wait = 2 ** (attempt + 1)
-                print(f"[ANGEL] rate limit hit for {symbol}, retrying in {wait}s (attempt {attempt + 1}/3)")
+                reason = "rate limit" if is_rate_limit else "network error"
+                print(f"[ANGEL] {reason} for {symbol}, retrying in {wait}s (attempt {attempt + 1}/3)")
                 time.sleep(wait)
                 continue
             break
