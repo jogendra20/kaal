@@ -45,11 +45,12 @@ def _today_bars(bars: list) -> list:
 
 
 def relative_volume(symbol: str, provider, avg_daily_volume: float,
-                     interval: str = "5min") -> dict:
+                     interval: str = "5min", bars: list = None) -> dict:
     if not avg_daily_volume or avg_daily_volume <= 0:
         return None
 
-    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+    if bars is None:
+        bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
     today_bars = _today_bars(bars)
     if not today_bars:
         return None
@@ -83,8 +84,9 @@ def relative_volume(symbol: str, provider, avg_daily_volume: float,
     }
 
 
-def vwap_position(symbol: str, provider, interval: str = "5min") -> dict:
-    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+def vwap_position(symbol: str, provider, interval: str = "5min", bars: list = None) -> dict:
+    if bars is None:
+        bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
     today_bars = _today_bars(bars)
     if not today_bars:
         return None
@@ -110,14 +112,15 @@ def vwap_position(symbol: str, provider, interval: str = "5min") -> dict:
 
 
 def opening_range_breakout(symbol: str, provider, range_minutes: int = 15,
-                            interval: str = "5min") -> dict:
+                            interval: str = "5min", bars: list = None) -> dict:
     """
     Opening range = high/low of the first `range_minutes` of trading.
     Returns None if the opening range window itself isn't complete yet
     (e.g. called very early in the session) - a partial range would
     understate the true high/low and produce a false breakout signal.
     """
-    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+    if bars is None:
+        bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
     today_bars = _today_bars(bars)
     if not today_bars:
         return None
@@ -157,7 +160,7 @@ def opening_range_breakout(symbol: str, provider, range_minutes: int = 15,
     }
 
 
-def gap_quality(symbol: str, provider, prior_close: float, interval: str = "5min") -> dict:
+def gap_quality(symbol: str, provider, prior_close: float, interval: str = "5min", bars: list = None) -> dict:
     """
     prior_close: yesterday's close, from kaal_momentum's EOD bhavcopy
     data (NOT fetched fresh from Angel One).
@@ -167,7 +170,8 @@ def gap_quality(symbol: str, provider, prior_close: float, interval: str = "5min
     if not prior_close or prior_close <= 0:
         return None
 
-    bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
+    if bars is None:
+        bars = provider.get_intraday_bars(symbol, interval=interval, n=100)
     today_bars = _today_bars(bars)
     if not today_bars:
         return None
