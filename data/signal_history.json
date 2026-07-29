@@ -1,78 +1,4 @@
 {
-  "NIACL": {
-    "first_seen": "2026-06-24",
-    "first_price": 195.1,
-    "catalyst": "PROXY_PLAY",
-    "deliv_per": 32.1,
-    "deliv_chg_pct": -1.67,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 32.1% \u2014 mixed signal"
-  },
-  "IFCI": {
-    "first_seen": "2026-06-24",
-    "first_price": 81.95,
-    "catalyst": "PROXY_PLAY",
-    "deliv_per": 30.6,
-    "deliv_chg_pct": -1.92,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 30.6% \u2014 mixed signal"
-  },
-  "GICRE": {
-    "first_seen": "2026-06-24",
-    "first_price": 367.8,
-    "catalyst": "PROXY_PLAY",
-    "deliv_per": 49.12,
-    "deliv_chg_pct": -0.08,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 49.1% \u2014 mixed signal"
-  },
-  "LT": {
-    "first_seen": "2026-06-24",
-    "first_price": 4176.5,
-    "catalyst": "BUDGET_PLAY",
-    "deliv_per": 61.87,
-    "deliv_chg_pct": -0.76,
-    "deliv_label": "ACCUMULATION",
-    "deliv_note": "High delivery 61.9% despite flat/down \u2014 institutions accumulating"
-  },
-  "TATASTEEL": {
-    "first_seen": "2026-06-25",
-    "first_price": 192.8,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 51.46,
-    "deliv_chg_pct": -0.38,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 51.5% \u2014 mixed signal"
-  },
-  "BHARATFORG": {
-    "first_seen": "2026-06-25",
-    "first_price": 2145.0,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 51.1,
-    "deliv_chg_pct": -0.74,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 51.1% \u2014 mixed signal"
-  },
-  "MEDIASSIST": {
-    "first_seen": "2026-06-25",
-    "first_price": 373.0,
-    "catalyst": "ACQUISITION",
-    "deliv_per": 67.47,
-    "deliv_chg_pct": -2.57,
-    "deliv_label": "ACCUMULATION",
-    "deliv_note": "High delivery 67.5% despite flat/down \u2014 institutions accumulating"
-  },
-  "SETL": {
-    "first_seen": "2026-06-25",
-    "first_price": 224.0,
-    "catalyst": "ACQUISITION",
-    "catalyst_day_move": 4.9,
-    "catalyst_day_close": 235.0,
-    "deliv_per": 56.37,
-    "deliv_chg_pct": -0.62,
-    "deliv_label": "NEUTRAL",
-    "deliv_note": "Delivery 56.4% \u2014 mixed signal"
-  },
   "PURVA": {
     "first_seen": "2026-06-29",
     "first_price": 215.46,
@@ -372,5 +298,15 @@
     "first_seen": "2026-07-24",
     "first_price": 268.95,
     "catalyst": "CLARIFICATION"
+  },
+  "SPLPETRO": {
+    "first_seen": "2026-07-28",
+    "first_price": 749.95,
+    "catalyst": "CAPACITY_ADDITION"
+  },
+  "TVSMOTOR": {
+    "first_seen": "2026-07-28",
+    "first_price": 3905.0,
+    "catalyst": "ACQUISITION"
   }
 }

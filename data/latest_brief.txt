@@ -1,22 +1,27 @@
 <b>⚔️ KAAL MORNING BRIEF</b>
-<code>24 Jul 2026 01:39 PM</code>
+<code>28 Jul 2026 08:50 AM</code>
 
 <b>🌐 MACRO</b>
-VIX: <code>14.2</code>  |  Bias: 📉 BEARISH
-GIFT Nifty: <code>-0.44%</code> (Bearish)
-SPX: <code>-1.2%</code>  Crude: <code>$90</code>  Gold: <code>$4051</code>  USD/INR: <code>96.49</code>
+VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
+GIFT Nifty: <code>+0.53%</code> (Bullish)
+SPX: <code>+0.1%</code>  Crude: <code>$81</code>  Gold: <code>$4045</code>  USD/INR: <code>95.90</code>
 ──────────────────────────────────
 
-⚠️ No Tier 1 stocks today — consider staying in cash
+🔥 <b>TIER 1 — HIGH CONVICTION</b>
 
-👀 <b>TIER 2 — WATCHLIST</b>
-
-<code>[11:32 AM]</code> <b>PETRONET</b> — CLARIFICATION 🔴
-Score: <code>70/100</code> | Yest: -0.2% 🟢 FRESH
-└─ Exchange sought clarification from Petronet LNG on QatarEnergy force majeure report
-└─ [WATCH] High-impact clarification request regarding QatarEnergy force majeure; potential supply chain disruption creates volatility opportunity.
+<code>[Jul 27, 06:25 PM]</code> <b>SPLPETRO</b> — CAPACITY ADDITION 🟢
+Score: <code>90/100</code> | Yest: +1.1% 🟢 FRESH
+└─ New Polystyrene line with 80,000 TPA capacity at Rs. 325 Crore cost
+└─ [WATCH] Significant capacity addition (80,000 TPA) with high capital expenditure (₹325 Cr) indicating strong growth visibility in core segment.
 └─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
 └─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+
+<code>[Jul 27, 08:30 PM]</code> <b>TVSMOTOR</b> — ACQUISITION 🟢
+Score: <code>77/100</code> | Yest: +0.9% 🟢 FRESH
+└─ Acquisition of 4.39% stake in TVS Credit Services Ltd for ₹711 crore
+└─ [WATCH] Strategic acquisition of stake in TVS Credit Services with disclosed deal value of ₹711 crore. High liquidity and clear catalyst in bullish ma
+└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
+└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
 
 ──────────────────────────────────
 <i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
