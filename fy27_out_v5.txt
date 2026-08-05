@@ -1,0 +1,337 @@
+  using turnover data from 2026-07-30
+  NIFTY MIDCAP 150: 15 liquid names, turnover range 428-2083 Cr
+  NIFTY SMALLCAP 250: 15 liquid names, turnover range 330-1798 Cr
+Screened universe (30 liquid mid/small-caps): ['ANGELONE', 'BALKRISIND', 'BSE', 'CHENNPETRO', 'COFORGE', 'DEEPAKFERT', 'DIXON', 'EXIDEIND', 'FORCEMOT', 'GROWW', 'GVT&D', 'HEROMOTOCO', 'HFCL', 'KALYANKJIL', 'KAYNES', 'KPITTECH', 'LAURUSLABS', 'MGL', 'MRPL', 'PCBL', 'PERSISTENT', 'PPLPHARMA', 'RBLBANK', 'REDINGTON', 'SONACOMS', 'SUZLON', 'SWIGGY', 'SYNGENE', 'SYRMA', 'WAAREEENER']
+
+[1/30] ANGELONE...
+  building quarterly history...
+  -> 7 prior quarters with usable financials
+  -> 2026-07-15 ENTER_LONG (z=+1.00)  next_day -3.53%
+  -> 2026-04-16 SKIP (z=N/A)  next_day +6.78%
+  -> 2026-02-03 SKIP (z=N/A)  next_day +3.73%
+  -> 2026-01-15 SKIP (z=N/A)  next_day +6.34%
+[2/30] BALKRISIND...
+  building quarterly history...
+  -> 7 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=N/A)  next_day +3.87%
+  -> 2026-06-17 SKIP (z=N/A)  next_day -1.32%
+  -> 2026-05-08 ENTER_LONG (z=+1.91)  next_day -3.03%
+  -> 2026-03-02 SKIP (z=N/A)  next_day +0.12%
+  -> 2026-01-28 SKIP (z=N/A)  next_day -2.29%
+[3/30] BSE...
+  building quarterly history...
+  -> 8 prior quarters with usable financials
+  -> 2026-06-16 SKIP (z=N/A)  next_day -4.33%
+  -> 2026-06-02 SKIP (z=N/A)  next_day +0.78%
+  -> 2026-05-07 SKIP (z=-3.11)  next_day -1.42%
+  -> 2026-02-09 SKIP (z=+0.81)  next_day +2.06%
+[4/30] CHENNPETRO...
+  building quarterly history...
+  -> 6 prior quarters with usable financials
+  -> 2026-07-23 SKIP (z=N/A)  next_day -3.97%
+  -> 2026-05-14 SKIP (z=N/A)  next_day -2.04%
+  -> 2026-04-30 PDF text too short, skipping
+  -> 2026-04-24 SKIP (z=N/A)  next_day -4.94%
+  -> 2026-01-24 SKIP (z=N/A)  next_day +1.70%
+[5/30] COFORGE...
+  building quarterly history...
+  -> 5 prior quarters with usable financials
+  -> 2026-07-28 SKIP (z=N/A)  next_day -0.30%
+  -> 2026-05-05 SKIP (z=N/A)  next_day +1.52%
+  -> 2026-04-23 SKIP (z=N/A)  next_day -4.96%
+  -> 2026-01-22 SKIP (z=N/A)  next_day -2.24%
+[6/30] DEEPAKFERT...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-30 SKIP (z=+0.59)  next_day +1.28%
+  -> 2026-05-28 SKIP (z=+0.96)  next_day +4.90%
+  -> 2026-03-26 SKIP (z=N/A)  next_day -4.85%
+  -> 2026-01-29 SKIP (z=-2.49)  next_day -2.42%
+[7/30] DIXON...
+  building quarterly history...
+  -> 0 prior quarters with usable financials
+  -> 2026-05-12 SKIP (z=N/A)  next_day +8.47%
+  -> 2026-01-29 SKIP (z=N/A)  next_day +3.43%
+[8/30] EXIDEIND...
+  building quarterly history...
+  -> 6 prior quarters with usable financials
+  -> 2026-07-30 SKIP (z=N/A)  next_day -1.50%
+  -> 2026-05-04 SKIP (z=N/A)  next_day -0.10%
+  -> 2026-02-20 SKIP (z=N/A)  next_day +0.58%
+  -> 2026-02-12 PDF text too short, skipping
+  -> 2026-01-30 SKIP (z=N/A)  next_day +1.01%
+[9/30] FORCEMOT...
+  building quarterly history...
+  -> 9 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=N/A)  next_day +1.68%
+  -> 2026-04-29 SKIP (z=-0.33)  next_day -3.61%
+  -> 2026-02-04 ENTER_LONG (z=+15.66)  next_day +2.88%
+[10/30] GROWW...
+  building quarterly history...
+  -> 2 prior quarters with usable financials
+  -> 2026-07-15 ENTER_LONG (z=N/A)  next_day -6.40%
+  -> 2026-04-20 ENTER_LONG (z=N/A)  next_day +6.47%
+  -> 2026-01-14 SKIP (z=N/A)  next_day +0.51%
+[11/30] GVT&D...
+  building quarterly history...
+  -> 0 prior quarters with usable financials
+  -> no results filings found in test window
+[12/30] HEROMOTOCO...
+  building quarterly history...
+  -> 9 prior quarters with usable financials
+  -> 2026-05-05 SKIP (z=+3.71)  next_day -1.34%
+  -> 2026-02-05 SKIP (z=+3.71)  next_day -0.32%
+[13/30] HFCL...
+  building quarterly history...
+  -> 5 prior quarters with usable financials
+  -> 2026-07-22 SKIP (z=N/A)  next_day -6.74%
+  -> 2026-06-03 SKIP (z=N/A)  next_day -1.46%
+  -> 2026-05-14 SKIP (z=N/A)  next_day -3.11%
+  -> 2026-04-30 SKIP (z=N/A)  next_day +8.64%
+  -> 2026-03-25 SKIP (z=N/A)  next_day +1.08%
+  -> 2026-02-03 SKIP (z=N/A)  next_day +0.97%
+[14/30] KALYANKJIL...
+  building quarterly history...
+  -> 6 prior quarters with usable financials
+EOF marker not found
+  [WARN] PDF extract failed: Stream has ended unexpectedly
+  -> 2026-05-08 PDF text too short, skipping
+  -> 2026-02-06 SKIP (z=N/A)  next_day +7.99%
+[15/30] KAYNES...
+  building quarterly history...
+  -> 4 prior quarters with usable financials
+  -> 2026-07-02 SKIP (z=N/A)  next_day +5.00%
+  -> 2026-05-13 SKIP (z=N/A)  next_day -11.28%
+  -> 2026-03-10 SKIP (z=N/A)  next_day -3.01%
+  -> 2026-02-05 SKIP (z=N/A)  next_day +8.35%
+[16/30] KPITTECH...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=+0.93)  next_day -3.32%
+  -> 2026-05-06 SKIP (z=+0.49)  next_day -3.46%
+  -> 2026-01-29 SKIP (z=+0.22)  next_day +0.57%
+[17/30] LAURUSLABS...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-24 SKIP (z=-0.11)  next_day +5.45%
+  -> 2026-04-30 SKIP (z=-1.06)  next_day +1.35%
+  -> 2026-04-28 ENTER_LONG (z=+1.90)  next_day +1.25%
+  -> 2026-01-23 SKIP (z=-1.09)  next_day -0.15%
+  -> 2026-01-12 PDF text too short, skipping
+[18/30] MGL...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-30 SKIP (z=-0.25)  next_day -0.84%
+  -> 2026-05-07 SKIP (z=-2.35)  next_day +2.89%
+  -> 2026-02-07 SKIP (z=+0.94)  next_day +2.85%
+  -> 2026-01-22 SKIP (z=N/A)  next_day -3.28%
+  -> 2026-01-12 PDF text too short, skipping
+[19/30] MRPL...
+  building quarterly history...
+  -> 9 prior quarters with usable financials
+  -> 2026-07-15 SKIP (z=+0.34)  next_day +5.85%
+  -> 2026-04-24 SKIP (z=N/A)  next_day -3.11%
+  -> 2026-01-14 ENTER_LONG (z=+2.15)  next_day +9.21%
+[20/30] PCBL...
+  building quarterly history...
+  -> 1 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=N/A)  next_day -9.63%
+  -> 2026-04-30 SKIP (z=N/A)  next_day -2.49%
+  -> 2026-02-03 SKIP (z=N/A)  next_day -3.18%
+[21/30] PERSISTENT...
+  building quarterly history...
+  -> 7 prior quarters with usable financials
+  -> 2026-06-27 SKIP (z=N/A)  next_day -4.48%
+  -> 2026-06-08 SKIP (z=N/A)  next_day -2.47%
+  -> 2026-04-21 SKIP (z=-1.69)  next_day -2.77%
+  -> 2026-01-20 SKIP (z=N/A)  next_day -1.39%
+[22/30] PPLPHARMA...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=+0.02)  next_day +0.89%
+  -> 2026-04-28 SKIP (z=+0.05)  next_day -1.90%
+  -> 2026-01-29 SKIP (z=+0.04)  next_day +1.46%
+[23/30] RBLBANK...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-17 SKIP (z=-0.30)  next_day +2.19%
+  -> 2026-06-18 SKIP (z=N/A)  next_day +2.34%
+  -> 2026-06-12 SKIP (z=N/A)  next_day +0.72%
+  -> 2026-06-05 SKIP (z=N/A)  next_day -1.00%
+  -> 2026-04-25 ENTER_LONG (z=+2.65)  next_day -1.64%
+  -> 2026-04-11 SKIP (z=N/A)  next_day -0.03%
+  -> 2026-01-17 SKIP (z=+9.58)  next_day -1.99%
+[24/30] REDINGTON...
+  building quarterly history...
+  -> 9 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=+0.65)  next_day +0.97%
+  -> 2026-05-13 SKIP (z=+0.11)  next_day +2.18%
+  -> 2026-02-04 SKIP (z=-0.47)  next_day -2.84%
+[25/30] SONACOMS...
+  building quarterly history...
+  -> 10 prior quarters with usable financials
+  -> 2026-07-23 SKIP (z=+4.39)  next_day +0.98%
+  -> 2026-07-22 SKIP (z=N/A)  next_day -0.72%
+  -> 2026-06-16 SKIP (z=N/A)  next_day -0.60%
+  -> 2026-04-30 ENTER_LONG (z=+1.94)  next_day +1.41%
+  -> 2026-01-23 ENTER_LONG (z=+1.10)  next_day -2.97%
+[26/30] SUZLON...
+  building quarterly history...
+  -> 6 prior quarters with usable financials
+  -> 2026-07-28 SKIP (z=N/A)  next_day -1.15%
+  -> 2026-05-25 SKIP (z=N/A)  next_day +1.75%
+  -> 2026-02-24 SKIP (z=N/A)  next_day -2.62%
+  -> 2026-02-05 ENTER_LONG (z=N/A)  next_day +0.40%
+[27/30] SWIGGY...
+  building quarterly history...
+  -> 8 prior quarters with usable financials
+  -> 2026-07-30 SKIP (z=N/A)  next_day -1.77%
+  -> 2026-07-23 SKIP (z=N/A)  next_day -3.03%
+  -> 2026-05-08 SKIP (z=+2.46)  next_day -4.44%
+  -> 2026-01-29 SKIP (z=+3.18)  next_day +0.24%
+[28/30] SYNGENE...
+  building quarterly history...
+  -> 7 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=+0.04)  next_day +2.10%
+  -> 2026-05-18 SKIP (z=N/A)  next_day +1.05%
+  -> 2026-04-29 SKIP (z=N/A)  next_day +8.26%
+  -> 2026-01-22 SKIP (z=N/A)  next_day -3.41%
+[29/30] SYRMA...
+  building quarterly history...
+  -> 4 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=N/A)  next_day -0.09%
+  -> 2026-05-11 SKIP (z=N/A)  next_day -6.91%
+  -> 2026-01-29 SKIP (z=N/A)  next_day +1.75%
+[30/30] WAAREEENER...
+  building quarterly history...
+  -> 8 prior quarters with usable financials
+  -> 2026-07-29 SKIP (z=+0.45)  next_day -0.04%
+  -> 2026-04-29 SKIP (z=+0.51)  next_day -5.49%
+  -> 2026-03-24 SKIP (z=N/A)  next_day +1.14%
+  -> 2026-03-20 SKIP (z=N/A)  next_day -1.42%
+  -> 2026-01-21 SKIP (z=N/A)  next_day +2.99%
+
+Done. 109 results evaluated. Saved to fy27_backtest_results_v5_minq6.json
+
+ENTER_LONG (n=11)
+    next-day O->C: n=11  win_rate=6/11 (54.5%)  avg=+0.37%
+    3-day C->C   : n=11  win_rate=5/11 (45.5%)  avg=+0.47%
+
+ENTER_SHORT (n=0)
+    next-day O->C: no data
+    3-day C->C   : no data
+
+SKIP (n=98)
+    next-day O->C: n=98  win_rate=45/98 (45.9%)  avg=-0.17%
+    3-day C->C   : n=85  win_rate=42/85 (49.4%)  avg=-0.29%
+
+----------------------------------------------------------------------
+2026-07-15 ANGELONE     ENTER_LONG  z=+1.00  pre_move=-3.5843329960976957%  next_day=-3.53%  3day=-6.54  | Revenue grew 25.99% YoY (14,097.51 vs 11,170.14) and profit grew 102.2
+2026-04-16 ANGELONE     SKIP        z=N/A    pre_move=20.99146688338074%  next_day=+6.78%  3day=7.3  | Priced-In: Stock moved +21.0% in the 5 trading days before this result
+2026-02-03 ANGELONE     SKIP        z=N/A    pre_move=-4.524670987237077%  next_day=+3.73%  3day=2.01  | No revenue or profit figures are present in the filing text to evaluat
+2026-01-15 ANGELONE     SKIP        z=N/A    pre_move=4.73188736366275%  next_day=+6.34%  3day=1.85  | No YoY revenue or profit figures are provided in the filing text to as
+2026-07-29 BALKRISIND   SKIP        z=N/A    pre_move=-2.0435967302452207%  next_day=+3.87%  3day=None  | Revenue grew 24.78% YoY (Rs. 2760.46 cr to Rs. 3444.70 cr), but profit
+2026-06-17 BALKRISIND   SKIP        z=N/A    pre_move=6.492886469970401%  next_day=-1.32%  3day=-0.66  | No revenue or profit figures are present in the filing text to compute
+2026-05-08 BALKRISIND   ENTER_LONG  z=+1.91  pre_move=2.659211782353743%  next_day=-3.03%  3day=-6.44  | Revenue grew YoY by 3.93% (10819.95 vs 10412.88) and profit grew YoY b
+2026-03-02 BALKRISIND   SKIP        z=N/A    pre_move=-5.927153624560981%  next_day=+0.12%  3day=0.38  | No revenue or profit figures are present in the filing text to evaluat
+2026-01-28 BALKRISIND   SKIP        z=N/A    pre_move=-0.5510774798486631%  next_day=-2.29%  3day=-5.2  | Mixed Bag: Revenue from Operations grew YoY (2729.69 vs 2540.57 crores
+2026-06-16 BSE          SKIP        z=N/A    pre_move=6.34020618556701%  next_day=-4.33%  3day=-3.82  | No revenue or profit figures are present in the filing text to evaluat
+2026-06-02 BSE          SKIP        z=N/A    pre_move=-3.0330487863035973%  next_day=+0.78%  3day=-1.41  | No revenue or profit figures are present in the filing text to evaluat
+2026-05-07 BSE          SKIP        z=-3.11  pre_move=6.232591489479055%  next_day=-1.42%  3day=-2.82  | z-score of -3.11 (< -1.0) indicates a genuine negative surprise despit
+2026-02-09 BSE          SKIP        z=+0.81  pre_move=1.2370701705339704%  next_day=+2.06%  3day=1.07  | Revenue (+54.95% YoY) and profit (+103.67% YoY) both grew, but z-score
+2026-07-23 CHENNPETRO   SKIP        z=N/A    pre_move=17.72436762984966%  next_day=-3.97%  3day=-6.68  | Priced-In: Stock moved +17.7% in the 5 trading days before this result
+2026-05-14 CHENNPETRO   SKIP        z=N/A    pre_move=-5.098836135229985%  next_day=-2.04%  3day=-4.62  | No revenue or profit figures are present in the filing text to compute
+2026-04-24 CHENNPETRO   SKIP        z=N/A    pre_move=10.1122438471836%  next_day=-4.94%  3day=8.6  | Priced-In trigger: Stock moved +10.1% in the 5 trading days before thi
+2026-01-24 CHENNPETRO   SKIP        z=N/A    pre_move=-3.7815606077916044%  next_day=+1.70%  3day=2.63  | No YoY growth figures or z-score data are present in the filing text t
+2026-07-28 COFORGE      SKIP        z=N/A    pre_move=1.3259082471492971%  next_day=-0.30%  3day=0.06  | No revenue or profit figures are present in the filing text to compute
+2026-05-05 COFORGE      SKIP        z=N/A    pre_move=0.06082196541835242%  next_day=+1.52%  3day=8.48  | No numerical financial data (revenue, profit, or z-score) is present i
+2026-04-23 COFORGE      SKIP        z=N/A    pre_move=0.3654673921871193%  next_day=-4.96%  3day=-0.83  | No revenue or profit figures are present in the filing text to evaluat
+2026-01-22 COFORGE      SKIP        z=N/A    pre_move=-2.300263388937662%  next_day=-2.24%  3day=-0.57  | No YoY growth figures or z-score available in the filing text to evalu
+2026-07-30 DEEPAKFERT   SKIP        z=+0.59  pre_move=1.2198917034916232%  next_day=+1.28%  3day=None  | Revenue (+22.49% YoY) and profit (+23.36% YoY) both grew, but z-score 
+2026-05-28 DEEPAKFERT   SKIP        z=+0.96  pre_move=9.346923367308415%  next_day=+4.90%  3day=4.58  | Profit YoY change not explicitly stated; revenue grew 6% YoY but z-sco
+2026-03-26 DEEPAKFERT   SKIP        z=N/A    pre_move=9.846069268829021%  next_day=-4.85%  3day=-9.01  | Priced-In trigger: stock moved +9.8% in the 5 trading days before this
+2026-01-29 DEEPAKFERT   SKIP        z=-2.49  pre_move=2.2520949720670553%  next_day=-2.42%  3day=-5.83  | Profit fell YoY (-37.35%) while revenue grew (16.89%), and z-score of 
+2026-05-12 DIXON        SKIP        z=N/A    pre_move=-3.532888550575382%  next_day=+8.47%  3day=7.06  | Red Flag triggered: Profit driven by exceptional items (Rs. 25,037 lak
+2026-01-29 DIXON        SKIP        z=N/A    pre_move=-3.7727017412469572%  next_day=+3.43%  3day=9.22  | Revenue grew 71.15% YoY (3,06,916 vs 1,03,046) and profit grew massive
+2026-07-30 EXIDEIND     SKIP        z=N/A    pre_move=-1.758935618446276%  next_day=-1.50%  3day=None  | Revenue grew 17.64% YoY (5,305.05 vs 4,509.81) and profit grew 27.09% 
+2026-05-04 EXIDEIND     SKIP        z=N/A    pre_move=3.8300935925126027%  next_day=-0.10%  3day=0.82  | No YoY revenue or profit figures are present in the filing text to com
+2026-02-20 EXIDEIND     SKIP        z=N/A    pre_move=-2.316036352975677%  next_day=+0.58%  3day=0.27  | No revenue or profit figures are present in the filing text to compute
+2026-01-30 EXIDEIND     SKIP        z=N/A    pre_move=-1.5646571560055118%  next_day=+1.01%  3day=7.39  | Revenue grew YoY (2.33%) but profit fell YoY (-2.85%), triggering the 
+2026-07-29 FORCEMOT     SKIP        z=N/A    pre_move=-3.9810161920714684%  next_day=+1.68%  3day=None  | No revenue or profit figures are present in the filing text to evaluat
+2026-04-29 FORCEMOT     SKIP        z=-0.33  pre_move=-5.281641961231471%  next_day=-3.61%  3day=-6.39  | Revenue grew YoY (+29.8%) but profit fell YoY (-34.7%), triggering the
+2026-02-04 FORCEMOT     ENTER_LONG  z=+15.66 pre_move=3.5342820181112544%  next_day=+2.88%  3day=9.08  | Revenue grew 12.65% YoY (2,12,843 vs 1,88,936) and profit surged 265.9
+2026-07-15 GROWW        ENTER_LONG  z=N/A    pre_move=1.80846280661438%  next_day=-6.40%  3day=-7.4  | Revenue grew 65.99% YoY (1,501.42 vs 904.40) and profit grew 94.28% Yo
+2026-04-20 GROWW        ENTER_LONG  z=N/A    pre_move=6.257366334511951%  next_day=+6.47%  3day=8.32  | Revenue grew 19.04% YoY (48,158.76 vs 40,616.45) and profit grew 25.11
+2026-01-14 GROWW        SKIP        z=N/A    pre_move=4.603613450781197%  next_day=+0.51%  3day=-1.36  | Mixed Bag: Revenue grew YoY (e.g., 12,160.72 vs 9,745.35) but profit f
+2026-05-05 HEROMOTOCO   SKIP        z=+3.71  pre_move=2.116295475158722%  next_day=-1.34%  3day=1.56  | Profit fell YoY (14.28% decline) despite revenue growth (15.85%), trig
+2026-02-05 HEROMOTOCO   SKIP        z=+3.71  pre_move=8.763940520446097%  next_day=-0.32%  3day=-0.32  | Stock moved +8.8% in prior 5 days (Priced-In trigger). z-score of +3.7
+2026-07-22 HFCL         SKIP        z=N/A    pre_move=1.556166425942321%  next_day=-6.74%  3day=-13.25  | No YoY growth percentages for revenue or profit are present in the fil
+2026-06-03 HFCL         SKIP        z=N/A    pre_move=16.642102677474817%  next_day=-1.46%  3day=-11.06  | Priced-In trigger: Stock moved +16.6% in the 5 trading days before thi
+2026-05-14 HFCL         SKIP        z=N/A    pre_move=19.173720587093264%  next_day=-3.11%  3day=-9.48  | Priced-In trigger: stock moved +19.2% in the 5 trading days before thi
+2026-04-30 HFCL         SKIP        z=N/A    pre_move=9.46443172526573%  next_day=+8.64%  3day=20.57  | Revenue grew 21.75% YoY (4,949.27 Cr vs 4,064.52 Cr) and profit grew 3
+2026-03-25 HFCL         SKIP        z=N/A    pre_move=-2.3712642065385126%  next_day=+1.08%  3day=-3.29  | No revenue or profit figures are present in the filing text to evaluat
+2026-02-03 HFCL         SKIP        z=N/A    pre_move=8.788870703764315%  next_day=+0.97%  3day=3.99  | Priced-In trigger: stock moved +8.8% in the 5 trading days before this
+2026-02-06 KALYANKJIL   SKIP        z=N/A    pre_move=2.228563663541239%  next_day=+7.99%  3day=5.42  | Insufficient prior-quarter history available for z-score computation; 
+2026-07-02 KAYNES       SKIP        z=N/A    pre_move=-2.0143616525226204%  next_day=+5.00%  3day=4.34  | No revenue or profit figures are present in the filing text to evaluat
+2026-05-13 KAYNES       SKIP        z=N/A    pre_move=-1.210080753372843%  next_day=-11.28%  3day=-17.08  | Revenue grew 9.0% YoY (21,278.18M vs 19,154.43M) and profit grew 20.1%
+2026-03-10 KAYNES       SKIP        z=N/A    pre_move=-4.011409308958895%  next_day=-3.01%  3day=-9.53  | No revenue or profit figures are present in the filing text to evaluat
+2026-02-05 KAYNES       SKIP        z=N/A    pre_move=13.393339333933396%  next_day=+8.35%  3day=15.89  | Priced-In: Stock moved +13.4% in the 5 trading days before this result
+2026-07-29 KPITTECH     SKIP        z=+0.93  pre_move=7.3503207412687095%  next_day=-3.32%  3day=None  | Revenue grew YoY (+8.86%) but profit fell YoY (-32.31%), indicating a 
+2026-05-06 KPITTECH     SKIP        z=+0.49  pre_move=5.059159526723793%  next_day=-3.46%  3day=-2.02  | Profit grew YoY (+19.14%) but z-score (+0.49) is below +1.0, indicatin
+2026-01-29 KPITTECH     SKIP        z=+0.22  pre_move=-2.2540440201538057%  next_day=+0.57%  3day=-4.46  | Mixed Bag: Revenue grew YoY (+9.44%) but profit fell YoY (-28.65%). z-
+2026-07-24 LAURUSLABS   SKIP        z=-0.11  pre_move=0.9007270153766969%  next_day=+5.45%  3day=9.63  | Profit YoY growth of 74.96% is below the company's historical average 
+2026-04-30 LAURUSLABS   SKIP        z=-1.06  pre_move=-0.7403419033517298%  next_day=+1.35%  3day=7.16  | Profit YoY growth of 149.41% is -1.06 standard deviations from the com
+2026-04-28 LAURUSLABS   ENTER_LONG  z=+1.90  pre_move=-1.0741800572309086%  next_day=+1.25%  3day=0.78  | Revenue grew 35.1% YoY (1,653.47 vs 1,223.70) and profit surged 981.6%
+2026-01-23 LAURUSLABS   SKIP        z=-1.09  pre_move=-7.7670793214122%  next_day=-0.15%  3day=-1.86  | Profit YoY growth of 394.5% is -1.09 standard deviations from the comp
+2026-07-30 MGL          SKIP        z=-0.25  pre_move=2.1823562049195404%  next_day=-0.84%  3day=None  | Mixed bag: revenue grew 13.92% YoY but profit fell 39.39% YoY. z-score
+2026-05-07 MGL          SKIP        z=-2.35  pre_move=2.9832303618711347%  next_day=+2.89%  3day=-6.63  | Profit fell YoY (-18.66%) while revenue grew (11.28%), creating a mixe
+2026-02-07 MGL          SKIP        z=+0.94  pre_move=8.879652371056112%  next_day=+2.85%  3day=2.76  | Mixed Bag: Revenue grew 16.80% YoY but profit fell 10.52% YoY. Z-score
+2026-01-22 MGL          SKIP        z=N/A    pre_move=3.9755639097744315%  next_day=-3.28%  3day=-7.62  | No revenue or profit figures provided in the filing text to compute Yo
+2026-07-15 MRPL         SKIP        z=+0.34  pre_move=4.1954328199681505%  next_day=+5.85%  3day=4.38  | Revenue grew YoY by 98.2%, but z-score of +0.34 indicates growth is wi
+2026-04-24 MRPL         SKIP        z=N/A    pre_move=6.376564277588156%  next_day=-3.11%  3day=-2.44  | No valid YoY growth percentages or z-scores could be extracted from th
+2026-01-14 MRPL         ENTER_LONG  z=+2.15  pre_move=-2.79860739153723%  next_day=+9.21%  3day=-1.21  | Revenue grew YoY (29,720.13 Cr vs 25,600.78 Cr) and profit before tax 
+2026-07-29 PCBL         SKIP        z=N/A    pre_move=-2.1962832130241234%  next_day=-9.63%  3day=None  | No YoY growth figures or z-score data are present in the filing text t
+2026-04-30 PCBL         SKIP        z=N/A    pre_move=4.586352974127376%  next_day=-2.49%  3day=2.15  | No numerical financial data (revenue, profit, or growth percentages) i
+2026-02-03 PCBL         SKIP        z=N/A    pre_move=1.0957868883431077%  next_day=-3.18%  3day=-7.05  | No financial figures (revenue or profit) are present in the filing tex
+2026-06-27 PERSISTENT   SKIP        z=N/A    pre_move=-2.003845764598725%  next_day=-4.48%  3day=-3.77  | No profit or revenue growth figures are provided in the filing text to
+2026-06-08 PERSISTENT   SKIP        z=N/A    pre_move=-1.1748783932213958%  next_day=-2.47%  3day=-5.27  | No revenue or profit figures are present in the filing text to evaluat
+2026-04-21 PERSISTENT   SKIP        z=-1.69  pre_move=-1.8776141954266652%  next_day=-2.77%  3day=-9.02  | Profit growth is a genuine negative surprise (z-score -1.69 < -1.0), b
+2026-01-20 PERSISTENT   SKIP        z=N/A    pre_move=0.3272557269752221%  next_day=-1.39%  3day=-2.76  | Revenue grew YoY (37,782.05 vs 30,622.84) and profit grew YoY (4,520.4
+2026-07-29 PPLPHARMA    SKIP        z=+0.02  pre_move=8.139989936825629%  next_day=+0.89%  3day=None  | Revenue grew YoY (+15.99%) but profit was flat YoY (+0.27%), and z-sco
+2026-04-28 PPLPHARMA    SKIP        z=+0.05  pre_move=13.389318105475315%  next_day=-1.90%  3day=-0.85  | Revenue grew YoY (1.6%) but profit fell YoY (1.24% decline), triggerin
+2026-01-29 PPLPHARMA    SKIP        z=+0.04  pre_move=-2.4396426081997302%  next_day=+1.46%  3day=5.75  | Revenue declined YoY (-4.0%) while profit grew YoY (8.5%), creating a 
+2026-07-17 RBLBANK      SKIP        z=-0.30  pre_move=0.8337965536409117%  next_day=+2.19%  3day=-1.4  | Profit YoY grew 26.64% (z-score -0.30), which is within the company's 
+2026-06-18 RBLBANK      SKIP        z=N/A    pre_move=2.2714681440443183%  next_day=+2.34%  3day=0.28  | No revenue or profit figures are present in the filing text to compute
+2026-06-12 RBLBANK      SKIP        z=N/A    pre_move=3.130384836300986%  next_day=+0.72%  3day=-0.22  | No revenue or profit figures are present in the filing text to evaluat
+2026-06-05 RBLBANK      SKIP        z=N/A    pre_move=1.5793251974156497%  next_day=-1.00%  3day=2.44  | No financial performance metrics (revenue or profit) are present in th
+2026-04-25 RBLBANK      ENTER_LONG  z=+2.65  pre_move=1.7410572966128524%  next_day=-1.64%  3day=7.3  | Revenue grew 3.48% YoY (1,845,695 vs 1,784,525) and profit grew 17.7% 
+2026-04-11 RBLBANK      SKIP        z=N/A    pre_move=7.026578073089694%  next_day=-0.03%  3day=1.11  | No revenue or profit figures are present in the filing text to evaluat
+2026-01-17 RBLBANK      SKIP        z=+9.58  pre_move=4.760367919961271%  next_day=-1.99%  3day=-3.72  | Stock moved +4.8% in the 5 trading days before this result (priced-in)
+2026-07-29 REDINGTON    SKIP        z=+0.65  pre_move=3.17254174397032%  next_day=+0.97%  3day=None  | Revenue (+34.57%) and profit (+56.16%) both grew YoY, but z-score (+0.
+2026-05-13 REDINGTON    SKIP        z=+0.11  pre_move=-4.991883116883114%  next_day=+2.18%  3day=2.95  | Mixed bag: revenue grew 30.47% YoY but profit fell 13.89% YoY. z-score
+2026-02-04 REDINGTON    SKIP        z=-0.47  pre_move=10.351017151974467%  next_day=-2.84%  3day=-1.24  | Revenue grew YoY (+15.17%) but profit fell YoY (-3.12%), triggering a 
+2026-07-23 SONACOMS     SKIP        z=+4.39  pre_move=8.953209358128381%  next_day=+0.98%  3day=0.29  | Mixed Bag: Revenue grew 50.04% YoY but profit grew only 0.03% YoY, des
+2026-07-22 SONACOMS     SKIP        z=N/A    pre_move=9.227099947827378%  next_day=-0.72%  3day=-0.57  | Priced-In trigger: stock moved +9.2% in the 5 trading days before this
+2026-06-16 SONACOMS     SKIP        z=N/A    pre_move=-0.987879794122519%  next_day=-0.60%  3day=1.47  | No revenue or profit figures are present in the filing text to evaluat
+2026-04-30 SONACOMS     ENTER_LONG  z=+1.94  pre_move=3.165319112334439%  next_day=+1.41%  3day=-3.5  | Revenue grew 27.82% YoY (11,715.77 vs 7,700.76) and profit grew 11.51%
+2026-01-23 SONACOMS     ENTER_LONG  z=+1.10  pre_move=1.613776670637939%  next_day=-2.97%  3day=5.12  | Revenue grew 35.0% YoY (11,277.98 vs 8,315.47) and profit grew 11.5% Y
+2026-07-28 SUZLON       SKIP        z=N/A    pre_move=2.2311983073667947%  next_day=-1.15%  3day=0.02  | Revenue grew 22.52% YoY (3,819.36 vs 3,117.33) and profit grew 73.37% 
+2026-05-25 SUZLON       SKIP        z=N/A    pre_move=0.5236581260519939%  next_day=+1.75%  3day=7.25  | No profit or revenue figures are explicitly provided in the filing tex
+2026-02-24 SUZLON       SKIP        z=N/A    pre_move=-3.109262097657109%  next_day=-2.62%  3day=-3.77  | No revenue or profit figures are present in the filing text to evaluat
+2026-02-05 SUZLON       ENTER_LONG  z=N/A    pre_move=8.691854116619357%  next_day=+0.40%  3day=-0.33  | Revenue grew 42% YoY and profit surged 45% YoY, both exceeding the fal
+2026-07-30 SWIGGY       SKIP        z=N/A    pre_move=6.3316434148687994%  next_day=-1.77%  3day=None  | Mixed Bag: Revenue grew YoY (37.31%) but profit fell significantly (lo
+2026-07-23 SWIGGY       SKIP        z=N/A    pre_move=1.9513137557959859%  next_day=-3.03%  3day=3.55  | No revenue or profit figures are present in the filing text to evaluat
+2026-05-08 SWIGGY       SKIP        z=+2.46  pre_move=1.6363636363636365%  next_day=-4.44%  3day=-8.32  | Revenue grew YoY (51.4%) but profit fell (loss increased from -3,117 t
+2026-01-29 SWIGGY       SKIP        z=+3.18  pre_move=-0.7973014412756891%  next_day=+0.24%  3day=2.83  | Profit fell YoY (loss increased from -799 Cr to -1,065 Cr), and z-scor
+2026-07-29 SYNGENE      SKIP        z=+0.04  pre_move=-2.0234674329502025%  next_day=+2.10%  3day=None  | Profit fell YoY (Rs. 3,049m vs Rs. 740m) while revenue declined (Rs. 6
+2026-05-18 SYNGENE      SKIP        z=N/A    pre_move=-2.845832887557507%  next_day=+1.05%  3day=0.8  | No revenue or profit figures are disclosed in the filing text to compu
+2026-04-29 SYNGENE      SKIP        z=N/A    pre_move=0.8706610150074491%  next_day=+8.26%  3day=10.51  | Revenue grew YoY (1.3%) but profit fell significantly (-34.8% YoY), tr
+2026-01-22 SYNGENE      SKIP        z=N/A    pre_move=-4.642120298365339%  next_day=-3.41%  3day=-13.02  | Mixed Bag: Revenue fell YoY (8,344 vs 8,771 in Q3 and 24,638 vs 33,733
+2026-07-29 SYRMA        SKIP        z=N/A    pre_move=-2.595465393794746%  next_day=-0.09%  3day=None  | Revenue grew 59.55% YoY and profit grew 16.29% YoY, but Phase 1 trigge
+2026-05-11 SYRMA        SKIP        z=N/A    pre_move=14.724438187601027%  next_day=-6.91%  3day=-10.94  | Revenue grew 27.26% YoY and profit grew 32.94% YoY, but Phase 1 trigge
+2026-01-29 SYRMA        SKIP        z=N/A    pre_move=11.774255894858907%  next_day=+1.75%  3day=9.66  | Priced-In trigger: Stock moved +11.8% in the 5 trading days before thi
+2026-07-29 WAAREEENER   SKIP        z=+0.45  pre_move=-4.667044087467258%  next_day=-0.04%  3day=None  | Profit YoY growth of 135.28% is +0.45 standard deviations from the com
+2026-04-29 WAAREEENER   SKIP        z=+0.51  pre_move=-1.0174543578573272%  next_day=-5.49%  3day=-4.96  | Revenue (+83.72%) and profit (+101.43%) both grew YoY, but z-score of 
+2026-03-24 WAAREEENER   SKIP        z=N/A    pre_move=12.396391109807087%  next_day=+1.14%  3day=-1.57  | Priced-In trigger: stock moved +12.4% in the 5 trading days before thi
+2026-03-20 WAAREEENER   SKIP        z=N/A    pre_move=17.634560906515574%  next_day=-1.42%  3day=2.22  | No financial figures (revenue, profit, or YoY growth) are present in t
+2026-01-21 WAAREEENER   SKIP        z=N/A    pre_move=-2.7319647638635605%  next_day=+2.99%  3day=1.34  | Profit growth of 114.8% YoY exceeds the 15% beat threshold, but revenu

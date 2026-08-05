@@ -128,3 +128,51 @@ class AngelOneProvider:
                 continue
 
         return bars[-n:]
+
+    def get_ltp(self, symbol: str) -> dict:
+        """Live LTP + day open/high/low/close via Angel One's ltpData()."""
+        token = self._token_lookup_lazy().get(symbol)
+        if not token:
+            print(f"[ANGEL] no token found for {symbol}")
+            return {}
+
+        client = self._client_lazy()
+        response = None
+        exception_occurred = False
+        for attempt in range(3):
+            exception_occurred = False
+            try:
+                response = client.ltpData("NSE", symbol + "-EQ", token)
+            except Exception as e:
+                response = {"status": False, "message": str(e)}
+                exception_occurred = True
+
+            if response and response.get("status"):
+                break
+            error_text = str(response.get("message", "")) if response else ""
+            is_rate_limit = "exceeding access rate" in error_text.lower() or "access denied" in error_text.lower()
+            if is_rate_limit or exception_occurred:
+                wait = 2 ** (attempt + 1)
+                reason = "rate limit" if is_rate_limit else "network error"
+                print(f"[ANGEL] {reason} for {symbol} ltp, retrying in {wait}s (attempt {attempt + 1}/3)")
+                time.sleep(wait)
+                continue
+            break
+
+        if not response or not response.get("status"):
+            print(f"[ANGEL] ltpData failed for {symbol}: {response}")
+            return {}
+
+        data = response.get("data", {})
+        try:
+            return {
+                "ltp": float(data.get("ltp", 0)),
+                "open": float(data.get("open", 0)),
+                "high": float(data.get("high", 0)),
+                "low": float(data.get("low", 0)),
+                "close": float(data.get("close", 0)),
+            }
+        except (ValueError, TypeError) as e:
+            print(f"[ANGEL] malformed ltpData response for {symbol}: {data} ({e})")
+            return {}
+

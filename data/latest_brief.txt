@@ -1,27 +1,43 @@
-<b>⚔️ KAAL MORNING BRIEF</b>
-<code>28 Jul 2026 08:50 AM</code>
-
-<b>🌐 MACRO</b>
-VIX: <code>12.7</code>  |  Bias: 📈 BULLISH
-GIFT Nifty: <code>+0.53%</code> (Bullish)
-SPX: <code>+0.1%</code>  Crude: <code>$81</code>  Gold: <code>$4045</code>  USD/INR: <code>95.90</code>
+<b>🌙 KAAL EVENING BRIEF</b>
+<code>04 Aug 2026 10:00 PM</code>  |  VIX: <code>12.2</code>
+Crude: <code>$80</code>  USD/INR: <code>95.40</code>
 ──────────────────────────────────
 
-🔥 <b>TIER 1 — HIGH CONVICTION</b>
+<b>📋 TOMORROW'S PRE-WATCHLIST</b>
+<i>(Morning scan will confirm with fresh announcements)</i>
 
-<code>[Jul 27, 06:25 PM]</code> <b>SPLPETRO</b> — CAPACITY ADDITION 🟢
-Score: <code>90/100</code> | Yest: +1.1% 🟢 FRESH
-└─ New Polystyrene line with 80,000 TPA capacity at Rs. 325 Crore cost
-└─ [WATCH] Significant capacity addition (80,000 TPA) with high capital expenditure (₹325 Cr) indicating strong growth visibility in core segment.
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry after 9:30 AM | SL: 15M low | Target: 2x SL
+🔥 <b>TIER 1</b>
 
-<code>[Jul 27, 08:30 PM]</code> <b>TVSMOTOR</b> — ACQUISITION 🟢
-Score: <code>77/100</code> | Yest: +0.9% 🟢 FRESH
-└─ Acquisition of 4.39% stake in TVS Credit Services Ltd for ₹711 crore
-└─ [WATCH] Strategic acquisition of stake in TVS Credit Services with disclosed deal value of ₹711 crore. High liquidity and clear catalyst in bullish ma
-└─ 📊 ⏳ PENDING: First seen today — catalyst-day move not available until tonight's update
-└─ 🎯 Entry: pullback to VWMA20 | SL: 15M low | Target: 1:2
+<code>[09:17 PM]</code> <b>PERSISTENT</b> — ACQUISITION 🟢
+Score: <code>97/100</code>
+└─ Persistent shareholders vote in favor of Nagarro offer
+└─ This is a strategic acquisition where Persistent Systems' shareholders have approved the offer from Nagarro, signaling strong confidence in the deal. The market typically reacts po
+
+<code>[09:40 PM]</code> <b>AVALON</b> — RESULTS BEAT 🟢
+Score: <code>80/100</code>
+└─ Outcome of Board Meeting
+└─ PAT growth of 38.2% YoY with revenue growth of 26.5% and expanded margins (EBITDA margin improved from 11.6% to 12.4%). Results announced after market hours, aligning with positive
+
+<code>[08:13 PM]</code> <b>ONGC</b> — RESULTS BEAT 🟢
+Score: <code>75/100</code>
+└─ Net Profit surges to Rs. 17,034 crore, marking a robust increase of 112%
+└─ The 112% YoY surge in net profit significantly exceeds market expectations, signaling strong operational performance and sector tailwinds. Historically, such earnings beats in oil 
+
+<code>[07:48 PM]</code> <b>HNDFDS</b> — RESULTS BEAT 🟢
+Score: <code>75/100</code>
+└─ Strong Q1 FY27 performance with reaffirmed FY27 PAT guidance
+└─ Results beat expectations with reaffirmed guidance, signaling operational strength and confidence in future earnings. Traders should watch for volume confirmation and sectoral peer
+
+👀 <b>TIER 2</b>
+• <b>SANOFI</b> 🟢 [73] RESULTS BEAT — Double-digit growth in Diabetes Portfolio and robust profit momentum i
+• <b>LT</b> 🟢 [73] MERGER — Scheme of Arrangement between Larsen & Toubro Limited and L&T Realty P
+• <b>SMARTWORKS</b> 🟢 [73] OTHER — Added ~1,41,124 sq. ft capacity in Aerocity, Delhi NCR
+• <b>VENTIVE</b> 🟡 [68] MERGER — Merger of Sun Leisure (India) Private Limited into Soham Leisure Ventu
+• <b>CMLL</b> 🟢 [63] CREDIT UPGRADE — Credit rating revision by a rating agency
+• <b>PAYTM</b> 🟡 [58] NEWS MOMENTUM — Mentioned 4x across BL, ET, TAVILY: Stocks to Watch Today: Paytm, Mees
+• <b>MARUTI</b> 🟡 [50] NEWS MOMENTUM — Mentioned 2x across TAVILY: SEBI’s Closing Auction Faces Liquidity Tes
+
+⚠️ <i>LLM call cap hit during this run — some Tier 2 scores are rule-based only (no AI differentiation). Treat identical scores in this batch with extra caution.</i>
 
 ──────────────────────────────────
-<i>Observe 9:15–9:30. Enter only after 9:30. No new entries after 11 AM.</i>
+<i>Morning brief at 8:50 AM tomorrow.</i>

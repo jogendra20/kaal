@@ -1,0 +1,104 @@
+Scanning last 40 trading days for movers >= 7.0%
+
+  NIFTY MIDCAP 150: 15 liquid names
+  NIFTY SMALLCAP 250: 15 liquid names
+
+Universe: 30 liquid mid/small-caps
+
+[1/40] 2026-06-04 -> 0 movers
+[2/40] 2026-06-05 -> 0 movers
+[3/40] 2026-06-08 -> 0 movers
+[4/40] 2026-06-09 -> 0 movers
+[5/40] 2026-06-10 -> 0 movers
+[6/40] 2026-06-11 -> 0 movers
+[7/40] 2026-06-12 -> 0 movers
+[8/40] 2026-06-15 -> 2 movers
+      BALKRISIND   +8.91%  -> UNEXPLAINED
+      KALYANKJIL   +11.09%  -> UNEXPLAINED
+[9/40] 2026-06-16 -> 0 movers
+[10/40] 2026-06-17 -> 0 movers
+[11/40] 2026-06-18 -> 1 movers
+      REDINGTON    +9.25%  -> UNEXPLAINED
+[12/40] 2026-06-19 -> 0 movers
+[13/40] 2026-06-22 -> 0 movers
+[14/40] 2026-06-23 -> 0 movers
+[15/40] 2026-06-24 -> 0 movers
+[16/40] 2026-06-25 -> 0 movers
+[17/40] 2026-06-26 -> 0 movers
+[18/40] 2026-06-29 -> 1 movers
+      PERSISTENT   -11.22%  -> UNEXPLAINED
+[19/40] 2026-06-30 -> 0 movers
+[20/40] 2026-07-01 -> 1 movers
+      KPITTECH     -16.98%  -> UNEXPLAINED
+[21/40] 2026-07-02 -> 1 movers
+      EXIDEIND     +7.43%  -> UNEXPLAINED
+[22/40] 2026-07-03 -> 1 movers
+      GVT&D        -8.74%  -> UNEXPLAINED
+[23/40] 2026-07-06 -> 0 movers
+[24/40] 2026-07-07 -> 1 movers
+      SWIGGY       +7.21%  -> UNEXPLAINED
+[25/40] 2026-07-08 -> 0 movers
+[26/40] 2026-07-09 -> 2 movers
+      KALYANKJIL   +18.40%  -> UNEXPLAINED
+      SWIGGY       +7.47%  -> UNEXPLAINED
+[27/40] 2026-07-10 -> 2 movers
+      KALYANKJIL   +7.48%  -> UNEXPLAINED
+      MRPL         +8.56%  -> UNEXPLAINED
+[28/40] 2026-07-13 -> 1 movers
+      KALYANKJIL   +7.25%  -> UNEXPLAINED
+[29/40] 2026-07-14 -> 0 movers
+[30/40] 2026-07-15 -> 0 movers
+[31/40] 2026-07-16 -> 2 movers
+      CHENNPETRO   +7.22%  -> UNEXPLAINED
+    ! MRPL         +10.07%  -> CATALYST
+[32/40] 2026-07-17 -> 0 movers
+[33/40] 2026-07-20 -> 0 movers
+[34/40] 2026-07-21 -> 0 movers
+[35/40] 2026-07-22 -> 0 movers
+[36/40] 2026-07-23 -> 0 movers
+[37/40] 2026-07-24 -> 0 movers
+[38/40] 2026-07-27 -> 2 movers
+      LAURUSLABS   +7.01%  -> UNEXPLAINED
+      REDINGTON    +7.37%  -> UNEXPLAINED
+[39/40] 2026-07-28 -> 3 movers
+    ! COFORGE      +10.31%  -> CATALYST
+      KALYANKJIL   +7.75%  -> UNEXPLAINED
+    ! SUZLON       -9.65%  -> CATALYST
+[40/40] 2026-07-29 -> 3 movers
+      KAYNES       +12.73%  -> UNEXPLAINED
+    ! PCBL         +14.86%  -> CATALYST
+      SWIGGY       +7.03%  -> UNEXPLAINED
+
+======================================================================
+40 days with bhavcopy data, 0 empty
+======================================================================
+
+SUMMARY over 23 mover events (7.0%+ moves)
+
+  CATALYST    : 4 events (17.4%)
+  PROMOTER    : 0 events (0.0%)
+  UNEXPLAINED : 19 events (82.6%)
+
+----------------------------------------------------------------------
+UNEXPLAINED movers (no catalyst or promoter filing found) — these are
+the ones worth checking with intraday volume data in Phase B:
+
+2026-06-15 BALKRISIND   +8.91%
+2026-06-15 KALYANKJIL   +11.09%
+2026-06-18 REDINGTON    +9.25%
+2026-06-29 PERSISTENT   -11.22%
+2026-07-01 KPITTECH     -16.98%
+2026-07-02 EXIDEIND     +7.43%
+2026-07-03 GVT&D        -8.74%
+2026-07-07 SWIGGY       +7.21%
+2026-07-09 KALYANKJIL   +18.40%
+2026-07-09 SWIGGY       +7.47%
+2026-07-10 KALYANKJIL   +7.48%
+2026-07-10 MRPL         +8.56%
+2026-07-13 KALYANKJIL   +7.25%
+2026-07-16 CHENNPETRO   +7.22%
+2026-07-27 LAURUSLABS   +7.01%
+2026-07-27 REDINGTON    +7.37%
+2026-07-28 KALYANKJIL   +7.75%
+2026-07-29 KAYNES       +12.73%
+2026-07-29 SWIGGY       +7.03%

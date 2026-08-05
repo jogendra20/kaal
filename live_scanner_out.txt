@@ -1,0 +1,193 @@
+Live scanner starting -- 2026-08-05 08:26
+Polling every 900s until 15:25
+
+Midcap universe: 150 symbols
+[SRC] Chartink gap_up: 212 stocks
+  Top 5: ['APARINDS', 'OFSS', 'APOLLOHOSP', 'KEI', 'NETWEB']
+[SRC] Chartink 52w_high: 174 stocks
+  Top 5: ['APOLLOHOSP', 'HEROMOTOCO', 'HAL', 'TVSMOTOR', 'YASHO']
+[SRC] Chartink high_volume_breakout: 80 stocks
+  Top 5: ['KEI', 'NETWEB', 'BASF', 'GODFRYPHLP', 'ALKYLAMINE']
+[SRC] Chartink momentum: 695 stocks
+  Top 5: ['APARINDS', 'BAJAJ-AUTO', 'OFSS', 'POLYCAB', 'APOLLOHOSP']
+Screener symbols: 78
+[SRC] OI spurts: 213 total | 20 high conviction (>10%)
+[SRC] Top OI: [('LICI', 245.4), ('PIDILITIND', 56.0), ('IREDA', 35.7), ('UPL', 31.9), ('KEI', 20.9)]
+Recent results (fresh, within 24h): 10 -- ['UBL', 'NHPC', 'TATAINVEST', 'BSE', 'KALYANKJIL', 'NYKAA', 'BHARTIHEXA', 'MARICO', 'UNOMINDA', 'GODREJPROP']
+Recent KMP/management changes (fresh): 0 -- []
+Combined watchlist (observation only): 25 symbols
+
+[SRC] SPX: 7736.52 (+1.79%)
+[SRC] Crude: 80.34 (-5.11%)
+[SRC] Gold: 4033.7 (-0.38%)
+[SRC] USD/INR: 95.33 (-0.07%)
+[SRC] VIX (live NSE): 12.15
+[SRC] GIFT Nifty (Yahoo): +1.60% → Bullish
+[08:27:07] VIX=12.15 | scanning 25 symbols...
+[I 260805 08:27:18 smartConnect:124] in pool
+curl_cffi not available; falling back to requests without browser TLS impersonation. Yahoo Finance may rate-limit or block this client. Install curl_cffi (>=0.15) for the supported configuration.
+  APARINDS     score=2  LTP=15433.0 (+4.66%)  tags=['SCREEN_CONFIRMED']  mcap=62016.0Cr [LARGE_CAP]
+  APLAPOLLO    score=2  LTP=1920.0 (-1.11%)  tags=['SCREEN_CONFIRMED']  mcap=53310.0Cr [LARGE_CAP]
+  BALKRISIND   score=2  LTP=2491.9 (-0.01%)  tags=['SCREEN_CONFIRMED']  mcap=48173.0Cr [LARGE_CAP]
+  BHARTIHEXA   score=0  LTP=1616.8 (-1.76%)  tags=[]  mcap=80840.0Cr [LARGE_CAP]
+  [92mBSE          CANDIDATE  score=4  LTP=3618.0 (+1.20%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=147572.0Cr [LARGE_CAP][0m
+  [TG] sent for BSE
+  COFORGE      score=2  LTP=1749.9 (-1.02%)  tags=['SCREEN_CONFIRMED']  mcap=77466.0Cr [LARGE_CAP]
+  ENDURANCE    score=2  LTP=2838.7 (+1.83%)  tags=['SCREEN_CONFIRMED']  mcap=39930.0Cr [LARGE_CAP]
+  ESCORTS      score=2  LTP=3101.2 (-1.09%)  tags=['SCREEN_CONFIRMED']  mcap=34122.0Cr [LARGE_CAP]
+  GODFRYPHLP   score=5  LTP=2336.9 (+4.00%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=36451.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  GODREJPROP   score=3  LTP=2033.6 (-2.68%)  tags=['OI_SPURT']  mcap=61257.0Cr [LARGE_CAP]
+  GVT&D        score=2  LTP=4333.2 (-0.84%)  tags=['SCREEN_CONFIRMED']  mcap=110950.0Cr [LARGE_CAP]
+  HEROMOTOCO   score=2  LTP=5548.0 (+1.61%)  tags=['SCREEN_CONFIRMED']  mcap=111012.0Cr [LARGE_CAP]
+  KALYANKJIL   score=0  LTP=591.4 (-2.73%)  tags=[]  mcap=61076.0Cr [LARGE_CAP]
+  KEI          score=7  LTP=5500.0 (+9.49%)  tags=['BIG_MOVE', 'SCREEN_CONFIRMED', 'OI_SPURT']  mcap=52580.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  LAURUSLABS   score=2  LTP=1850.0 (+2.13%)  tags=['SCREEN_CONFIRMED']  mcap=99958.0Cr [LARGE_CAP]
+  MARICO       score=1  LTP=875.0 (-0.68%)  tags=['WATCH_HEAVY_NEWS']  mcap=113415.0Cr [LARGE_CAP]
+  NAM-INDIA    score=5  LTP=1202.0 (+3.18%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=76843.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  NHPC         score=1  LTP=80.5 (+1.58%)  tags=['WATCH_HEAVY_NEWS']  mcap=80863.0Cr [LARGE_CAP]
+  [92mNYKAA        CANDIDATE  score=4  LTP=342.5 (-0.70%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=98088.0Cr [LARGE_CAP][0m
+  [TG] sent for NYKAA
+  OFSS         score=2  LTP=11600.0 (+2.36%)  tags=['SCREEN_CONFIRMED']  mcap=101008.0Cr [LARGE_CAP]
+  POLYCAB      score=2  LTP=9176.0 (+1.57%)  tags=['SCREEN_CONFIRMED']  mcap=138223.0Cr [LARGE_CAP]
+  RADICO       score=2  LTP=4450.0 (-0.20%)  tags=['SCREEN_CONFIRMED']  mcap=59622.0Cr [LARGE_CAP]
+  TATAINVEST   score=0  LTP=677.6 (+0.14%)  tags=[]  mcap=34283.0Cr [LARGE_CAP]
+  UBL          score=1  LTP=1434.1 (-0.30%)  tags=['WATCH_HEAVY_NEWS']  mcap=37918.0Cr [LARGE_CAP]
+  UNOMINDA     score=1  LTP=1227.0 (+1.40%)  tags=['WATCH_HEAVY_NEWS']  mcap=70854.0Cr [LARGE_CAP]
+  -> sleeping 900s
+
+[SRC] SPX: 7736.52 (+1.79%)
+[SRC] Crude: 80.34 (-5.11%)
+[SRC] Gold: 4033.7 (-0.38%)
+[SRC] USD/INR: 95.33 (-0.07%)
+[SRC] VIX: fallback 15
+[SRC] GIFT Nifty (Yahoo): -0.64% → Bearish
+[08:43:11] VIX=15 | scanning 25 symbols...
+  APARINDS     score=2  LTP=15433.0 (+4.66%)  tags=['SCREEN_CONFIRMED']  mcap=62016.0Cr [LARGE_CAP]
+  APLAPOLLO    score=2  LTP=1920.0 (-1.11%)  tags=['SCREEN_CONFIRMED']  mcap=53310.0Cr [LARGE_CAP]
+  BALKRISIND   score=2  LTP=2491.9 (-0.01%)  tags=['SCREEN_CONFIRMED']  mcap=48173.0Cr [LARGE_CAP]
+  BHARTIHEXA   score=0  LTP=1616.8 (-1.76%)  tags=[]  mcap=80840.0Cr [LARGE_CAP]
+  [92mBSE          CANDIDATE  score=4  LTP=3618.0 (+1.20%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=147572.0Cr [LARGE_CAP][0m
+  COFORGE      score=2  LTP=1749.9 (-1.02%)  tags=['SCREEN_CONFIRMED']  mcap=77466.0Cr [LARGE_CAP]
+  ENDURANCE    score=2  LTP=2838.7 (+1.83%)  tags=['SCREEN_CONFIRMED']  mcap=39930.0Cr [LARGE_CAP]
+  ESCORTS      score=2  LTP=3101.2 (-1.09%)  tags=['SCREEN_CONFIRMED']  mcap=34122.0Cr [LARGE_CAP]
+  GODFRYPHLP   score=5  LTP=2336.9 (+4.00%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=36451.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  GODREJPROP   score=3  LTP=2033.6 (-2.68%)  tags=['OI_SPURT']  mcap=61257.0Cr [LARGE_CAP]
+  GVT&D        score=2  LTP=4333.2 (-0.84%)  tags=['SCREEN_CONFIRMED']  mcap=110950.0Cr [LARGE_CAP]
+  HEROMOTOCO   score=2  LTP=5548.0 (+1.61%)  tags=['SCREEN_CONFIRMED']  mcap=111012.0Cr [LARGE_CAP]
+  KALYANKJIL   score=0  LTP=591.4 (-2.73%)  tags=[]  mcap=61076.0Cr [LARGE_CAP]
+  KEI          score=7  LTP=5500.0 (+9.49%)  tags=['BIG_MOVE', 'SCREEN_CONFIRMED', 'OI_SPURT']  mcap=52580.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  LAURUSLABS   score=2  LTP=1850.0 (+2.13%)  tags=['SCREEN_CONFIRMED']  mcap=99958.0Cr [LARGE_CAP]
+  MARICO       score=1  LTP=875.0 (-0.68%)  tags=['WATCH_HEAVY_NEWS']  mcap=113415.0Cr [LARGE_CAP]
+  NAM-INDIA    score=5  LTP=1202.0 (+3.18%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=76843.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  NHPC         score=1  LTP=80.5 (+1.58%)  tags=['WATCH_HEAVY_NEWS']  mcap=80863.0Cr [LARGE_CAP]
+  [92mNYKAA        CANDIDATE  score=4  LTP=342.5 (-0.70%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=98088.0Cr [LARGE_CAP][0m
+  OFSS         score=2  LTP=11600.0 (+2.36%)  tags=['SCREEN_CONFIRMED']  mcap=101008.0Cr [LARGE_CAP]
+  POLYCAB      score=2  LTP=9176.0 (+1.57%)  tags=['SCREEN_CONFIRMED']  mcap=138223.0Cr [LARGE_CAP]
+  RADICO       score=2  LTP=4450.0 (-0.20%)  tags=['SCREEN_CONFIRMED']  mcap=59622.0Cr [LARGE_CAP]
+  TATAINVEST   score=0  LTP=677.6 (+0.14%)  tags=[]  mcap=34283.0Cr [LARGE_CAP]
+  UBL          score=1  LTP=1434.1 (-0.30%)  tags=['WATCH_HEAVY_NEWS']  mcap=37918.0Cr [LARGE_CAP]
+  UNOMINDA     score=1  LTP=1227.0 (+1.40%)  tags=['WATCH_HEAVY_NEWS']  mcap=70854.0Cr [LARGE_CAP]
+  -> sleeping 900s
+
+[SRC] SPX: 7736.52 (+1.79%)
+[SRC] Crude: 80.34 (-5.11%)
+[SRC] Gold: 4033.7 (-0.38%)
+[SRC] USD/INR: 95.33 (-0.07%)
+[SRC] VIX (live NSE): 12.15
+[SRC] GIFT Nifty (Yahoo): +1.60% → Bullish
+[08:58:36] VIX=12.15 | scanning 25 symbols...
+  APARINDS     score=2  LTP=15433.0 (+4.66%)  tags=['SCREEN_CONFIRMED']  mcap=62016.0Cr [LARGE_CAP]
+  APLAPOLLO    score=2  LTP=1920.0 (-1.11%)  tags=['SCREEN_CONFIRMED']  mcap=53310.0Cr [LARGE_CAP]
+  BALKRISIND   score=2  LTP=2491.9 (-0.01%)  tags=['SCREEN_CONFIRMED']  mcap=48173.0Cr [LARGE_CAP]
+  BHARTIHEXA   score=0  LTP=1616.8 (-1.76%)  tags=[]  mcap=80840.0Cr [LARGE_CAP]
+  [92mBSE          CANDIDATE  score=4  LTP=3618.0 (+1.20%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=147572.0Cr [LARGE_CAP][0m
+  COFORGE      score=2  LTP=1749.9 (-1.02%)  tags=['SCREEN_CONFIRMED']  mcap=77466.0Cr [LARGE_CAP]
+  ENDURANCE    score=2  LTP=2838.7 (+1.83%)  tags=['SCREEN_CONFIRMED']  mcap=39930.0Cr [LARGE_CAP]
+  ESCORTS      score=2  LTP=3101.2 (-1.09%)  tags=['SCREEN_CONFIRMED']  mcap=34122.0Cr [LARGE_CAP]
+  GODFRYPHLP   score=5  LTP=2336.9 (+4.00%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=36451.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  GODREJPROP   score=3  LTP=2033.6 (-2.68%)  tags=['OI_SPURT']  mcap=61257.0Cr [LARGE_CAP]
+  GVT&D        score=2  LTP=4333.2 (-0.84%)  tags=['SCREEN_CONFIRMED']  mcap=110950.0Cr [LARGE_CAP]
+  HEROMOTOCO   score=2  LTP=5548.0 (+1.61%)  tags=['SCREEN_CONFIRMED']  mcap=111012.0Cr [LARGE_CAP]
+  KALYANKJIL   score=0  LTP=591.4 (-2.73%)  tags=[]  mcap=61076.0Cr [LARGE_CAP]
+  KEI          score=7  LTP=5500.0 (+9.49%)  tags=['BIG_MOVE', 'SCREEN_CONFIRMED', 'OI_SPURT']  mcap=52580.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  LAURUSLABS   score=2  LTP=1850.0 (+2.13%)  tags=['SCREEN_CONFIRMED']  mcap=99958.0Cr [LARGE_CAP]
+  MARICO       score=1  LTP=875.0 (-0.68%)  tags=['WATCH_HEAVY_NEWS']  mcap=113415.0Cr [LARGE_CAP]
+  NAM-INDIA    score=5  LTP=1202.0 (+3.18%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=76843.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  NHPC         score=1  LTP=80.5 (+1.58%)  tags=['WATCH_HEAVY_NEWS']  mcap=80863.0Cr [LARGE_CAP]
+  [92mNYKAA        CANDIDATE  score=4  LTP=342.5 (-0.70%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=98088.0Cr [LARGE_CAP][0m
+  OFSS         score=2  LTP=11600.0 (+2.36%)  tags=['SCREEN_CONFIRMED']  mcap=101008.0Cr [LARGE_CAP]
+  POLYCAB      score=2  LTP=9176.0 (+1.57%)  tags=['SCREEN_CONFIRMED']  mcap=138223.0Cr [LARGE_CAP]
+  RADICO       score=2  LTP=4450.0 (-0.20%)  tags=['SCREEN_CONFIRMED']  mcap=59622.0Cr [LARGE_CAP]
+  TATAINVEST   score=0  LTP=677.6 (+0.14%)  tags=[]  mcap=34283.0Cr [LARGE_CAP]
+  UBL          score=1  LTP=1434.1 (-0.30%)  tags=['WATCH_HEAVY_NEWS']  mcap=37918.0Cr [LARGE_CAP]
+  UNOMINDA     score=1  LTP=1227.0 (+1.40%)  tags=['WATCH_HEAVY_NEWS']  mcap=70854.0Cr [LARGE_CAP]
+  -> sleeping 900s
+
+[SRC] SPX: 7736.52 (+1.79%)
+[SRC] Crude: 80.34 (-5.11%)
+[SRC] Gold: 4033.7 (-0.38%)
+[SRC] USD/INR: 94.96 (-0.39%)
+[SRC] VIX: fallback 15
+[SRC] GIFT Nifty (Yahoo): +0.22% → Neutral
+[09:14:04] VIX=15 | scanning 25 symbols...
+  APARINDS     score=2  LTP=15737.0 (+1.97%)  tags=['SCREEN_CONFIRMED']  mcap=62016.0Cr [LARGE_CAP]
+  APLAPOLLO    score=2  LTP=1945.0 (+1.30%)  tags=['SCREEN_CONFIRMED']  mcap=53310.0Cr [LARGE_CAP]
+  BALKRISIND   score=2  LTP=2469.8 (-0.89%)  tags=['SCREEN_CONFIRMED']  mcap=48173.0Cr [LARGE_CAP]
+  BHARTIHEXA   score=0  LTP=1642.0 (+1.56%)  tags=[]  mcap=80840.0Cr [LARGE_CAP]
+  [92mBSE          CANDIDATE  score=4  LTP=3664.1 (+1.27%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=147572.0Cr [LARGE_CAP][0m
+  COFORGE      score=2  LTP=1745.1 (-0.27%)  tags=['SCREEN_CONFIRMED']  mcap=77466.0Cr [LARGE_CAP]
+  ENDURANCE    score=2  LTP=2860.0 (+0.75%)  tags=['SCREEN_CONFIRMED']  mcap=39930.0Cr [LARGE_CAP]
+  ESCORTS      score=2  LTP=3115.0 (+0.44%)  tags=['SCREEN_CONFIRMED']  mcap=34122.0Cr [LARGE_CAP]
+  GODFRYPHLP   score=5  LTP=2336.9 (+0.00%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=36451.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  GODREJPROP   score=3  LTP=2055.7 (+1.09%)  tags=['OI_SPURT']  mcap=61257.0Cr [LARGE_CAP]
+  GVT&D        score=2  LTP=4380.0 (+1.08%)  tags=['SCREEN_CONFIRMED']  mcap=110950.0Cr [LARGE_CAP]
+  HEROMOTOCO   score=2  LTP=5578.0 (+0.54%)  tags=['SCREEN_CONFIRMED']  mcap=111012.0Cr [LARGE_CAP]
+  KALYANKJIL   score=0  LTP=579.7 (-1.98%)  tags=[]  mcap=61076.0Cr [LARGE_CAP]
+  KEI          score=5  LTP=5484.1 (-0.29%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=52580.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  LAURUSLABS   score=2  LTP=1854.0 (+0.22%)  tags=['SCREEN_CONFIRMED']  mcap=99958.0Cr [LARGE_CAP]
+  MARICO       score=1  LTP=878.6 (+0.41%)  tags=['WATCH_HEAVY_NEWS']  mcap=113415.0Cr [LARGE_CAP]
+  NAM-INDIA    score=5  LTP=1207.0 (+0.42%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=76843.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  NHPC         score=1  LTP=81.86 (+1.69%)  tags=['WATCH_HEAVY_NEWS']  mcap=80863.0Cr [LARGE_CAP]
+  [92mNYKAA        CANDIDATE  score=4  LTP=348.0 (+1.61%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=98088.0Cr [LARGE_CAP][0m
+  OFSS         score=2  LTP=11650.0 (+0.43%)  tags=['SCREEN_CONFIRMED']  mcap=101008.0Cr [LARGE_CAP]
+  POLYCAB      score=2  LTP=9200.0 (+0.26%)  tags=['SCREEN_CONFIRMED']  mcap=138223.0Cr [LARGE_CAP]
+  RADICO       score=2  LTP=4472.0 (+0.49%)  tags=['SCREEN_CONFIRMED']  mcap=59622.0Cr [LARGE_CAP]
+  TATAINVEST   score=0  LTP=687.0 (+1.39%)  tags=[]  mcap=34283.0Cr [LARGE_CAP]
+  UBL          score=1  LTP=1439.0 (+0.34%)  tags=['WATCH_HEAVY_NEWS']  mcap=37918.0Cr [LARGE_CAP]
+  UNOMINDA     score=1  LTP=1229.2 (+0.18%)  tags=['WATCH_HEAVY_NEWS']  mcap=70854.0Cr [LARGE_CAP]
+  -> sleeping 900s
+
+[SRC] SPX: 7736.52 (+1.79%)
+[SRC] Crude: 80.34 (-5.11%)
+[SRC] Gold: 4033.7 (-0.38%)
+[SRC] USD/INR: 95.03 (-0.32%)
+[SRC] VIX (live NSE): 11.86
+[SRC] GIFT Nifty (Yahoo): +0.03% → Neutral
+[09:29:33] VIX=11.86 | scanning 25 symbols...
+  APARINDS     score=2  LTP=15810.0 (+2.44%)  tags=['SCREEN_CONFIRMED']  mcap=62016.0Cr [LARGE_CAP]
+  APLAPOLLO    score=2  LTP=1938.1 (+0.94%)  tags=['SCREEN_CONFIRMED']  mcap=53310.0Cr [LARGE_CAP]
+  BALKRISIND   score=2  LTP=2532.0 (+1.61%)  tags=['SCREEN_CONFIRMED']  mcap=48173.0Cr [LARGE_CAP]
+  BHARTIHEXA   score=0  LTP=1574.6 (-2.61%)  tags=[]  mcap=80840.0Cr [LARGE_CAP]
+  [92mBSE          CANDIDATE  score=4  LTP=3593.6 (-0.67%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=147572.0Cr [LARGE_CAP][0m
+  COFORGE      score=2  LTP=1759.1 (+0.53%)  tags=['SCREEN_CONFIRMED']  mcap=77466.0Cr [LARGE_CAP]
+  ENDURANCE    score=2  LTP=2868.0 (+1.03%)  tags=['SCREEN_CONFIRMED']  mcap=39930.0Cr [LARGE_CAP]
+  ESCORTS      score=2  LTP=3117.1 (+0.51%)  tags=['SCREEN_CONFIRMED']  mcap=34122.0Cr [LARGE_CAP]
+  GODFRYPHLP   score=5  LTP=2324.0 (-0.55%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=36451.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  GODREJPROP   score=3  LTP=2121.2 (+4.31%)  tags=['OI_SPURT']  mcap=61257.0Cr [LARGE_CAP]
+  GVT&D        score=2  LTP=4378.6 (+1.05%)  tags=['SCREEN_CONFIRMED']  mcap=110950.0Cr [LARGE_CAP]
+  HEROMOTOCO   score=2  LTP=5625.5 (+1.40%)  tags=['SCREEN_CONFIRMED']  mcap=111012.0Cr [LARGE_CAP]
+  KALYANKJIL   score=0  LTP=580.35 (-1.87%)  tags=[]  mcap=61076.0Cr [LARGE_CAP]
+  KEI          score=5  LTP=5498.7 (-0.02%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=52580.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  LAURUSLABS   score=2  LTP=1846.0 (-0.22%)  tags=['SCREEN_CONFIRMED']  mcap=99958.0Cr [LARGE_CAP]
+  MARICO       score=1  LTP=850.6 (-2.79%)  tags=['WATCH_HEAVY_NEWS']  mcap=113415.0Cr [LARGE_CAP]
+  NAM-INDIA    score=5  LTP=1201.9 (-0.01%)  tags=['SCREEN_CONFIRMED', 'OI_SPURT']  mcap=76843.0Cr [LARGE_CAP]  [no fresh catalyst -- suppressed]
+  NHPC         score=1  LTP=81.85 (+1.68%)  tags=['WATCH_HEAVY_NEWS']  mcap=80863.0Cr [LARGE_CAP]
+  [92mNYKAA        CANDIDATE  score=4  LTP=335.45 (-2.06%)  tags=['OI_SPURT', 'WATCH_HEAVY_NEWS']  mcap=98088.0Cr [LARGE_CAP][0m
+  OFSS         score=2  LTP=11635.0 (+0.30%)  tags=['SCREEN_CONFIRMED']  mcap=101008.0Cr [LARGE_CAP]
+  POLYCAB      score=2  LTP=9223.0 (+0.51%)  tags=['SCREEN_CONFIRMED']  mcap=138223.0Cr [LARGE_CAP]
+  RADICO       score=2  LTP=4479.1 (+0.65%)  tags=['SCREEN_CONFIRMED']  mcap=59622.0Cr [LARGE_CAP]
+  TATAINVEST   score=0  LTP=677.15 (-0.07%)  tags=[]  mcap=34283.0Cr [LARGE_CAP]
+  UBL          score=1  LTP=1427.0 (-0.50%)  tags=['WATCH_HEAVY_NEWS']  mcap=37918.0Cr [LARGE_CAP]
+  UNOMINDA     score=1  LTP=1260.4 (+2.72%)  tags=['WATCH_HEAVY_NEWS']  mcap=70854.0Cr [LARGE_CAP]
+  -> sleeping 900s
+

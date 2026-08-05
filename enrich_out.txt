@@ -1,0 +1,53 @@
+Checking bulk/block-deals endpoint before running the full patch...
+  bulk-deals endpoint: {'_error_status': 503}
+  block-deals endpoint: {'_error_status': 503}
+  [WARN] endpoint did not return a usable list -- bulk/block deal
+  enrichment below will likely be empty for everything, not because
+  no deals happened, but because the URL/params are probably wrong.
+  Worth checking NSE's site directly for the current endpoint before trusting results.
+
+Re-checking 19 UNEXPLAINED events for bulk/block deals + sector correlation...
+
+  ~ CHENNPETRO   2026-07-16 -> reclassified SECTOR_CORRELATED (with ['MRPL'], sector=OIL_GAS)
+
+======================================================================
+REVISED SUMMARY after patching all three blind spots
+======================================================================
+
+  CATALYST            : 4 events (17.4%)
+  PROMOTER            : 0 events (0.0%)
+  INSTITUTIONAL_DEAL  : 0 events (0.0%)
+  SECTOR_CORRELATED   : 1 events (4.3%)
+  UNEXPLAINED         : 18 events (78.3%)
+
+----------------------------------------------------------------------
+Symbols appearing 2+ times in the remaining UNEXPLAINED bucket
+(these skew the sample -- treat them as one repeated stock's
+behavior, not evidence of a broad pattern, until checked individually):
+
+  KALYANKJIL: 5 occurrences
+  SWIGGY: 3 occurrences
+  REDINGTON: 2 occurrences
+
+----------------------------------------------------------------------
+Final TRULY UNEXPLAINED list (no catalyst, no promoter filing, no
+bulk/block deal, no same-sector same-day peer):
+
+2026-06-15 BALKRISIND   +8.91%  sector=AUTO_ANCILLARY
+2026-06-15 KALYANKJIL   +11.09%  sector=JEWELLERY
+2026-06-18 REDINGTON    +9.25%  sector=IT_SERVICES
+2026-06-29 PERSISTENT   -11.22%  sector=IT_SERVICES
+2026-07-01 KPITTECH     -16.98%  sector=IT_SERVICES
+2026-07-02 EXIDEIND     +7.43%  sector=AUTO_ANCILLARY
+2026-07-03 GVT&D        -8.74%  sector=None
+2026-07-07 SWIGGY       +7.21%  sector=CONSUMER_INTERNET
+2026-07-09 KALYANKJIL   +18.40%  sector=JEWELLERY
+2026-07-09 SWIGGY       +7.47%  sector=CONSUMER_INTERNET
+2026-07-10 KALYANKJIL   +7.48%  sector=JEWELLERY
+2026-07-10 MRPL         +8.56%  sector=OIL_GAS
+2026-07-13 KALYANKJIL   +7.25%  sector=JEWELLERY
+2026-07-27 LAURUSLABS   +7.01%  sector=PHARMA
+2026-07-27 REDINGTON    +7.37%  sector=IT_SERVICES
+2026-07-28 KALYANKJIL   +7.75%  sector=JEWELLERY
+2026-07-29 KAYNES       +12.73%  sector=ELECTRONICS_MFG
+2026-07-29 SWIGGY       +7.03%  sector=CONSUMER_INTERNET

@@ -1,0 +1,8 @@
+[1/20] RELIANCE...
+  [DEBUG] finish_reason=length content_len=0 usage={'queue_time': 0.05304288, 'prompt_tokens': 2268, 'prompt_time': 0.195333118, 'completion_tokens': 800, 'completion_time': 1.540299626, 'total_tokens': 3068, 'total_time': 1.7356327440000001, 'completion_tokens_details': {'reasoning_tokens': 800}}
+  -> 2026-07-17 no usable verdict
+  [DEBUG] finish_reason=length content_len=0 usage={'queue_time': 0.048838306, 'prompt_tokens': 2183, 'prompt_time': 0.161600342, 'completion_tokens': 800, 'completion_time': 1.603490897, 'total_tokens': 2983, 'total_time': 1.765091239, 'completion_tokens_details': {'reasoning_tokens': 800}}
+  -> 2026-04-24 no usable verdict
+  [DEBUG] finish_reason=length content_len=0 usage={'queue_time': 0.049631923, 'prompt_tokens': 2449, 'prompt_time': 0.186318265, 'completion_tokens': 800, 'completion_time': 1.564879221, 'total_tokens': 3249, 'total_time': 1.7511974860000001, 'completion_tokens_details': {'reasoning_tokens': 800}}
+  -> 2026-01-16 no usable verdict
+[2/20] ONGC...

@@ -1,0 +1,34 @@
+Fetching Chartink screeners...
+[SRC] Chartink gap_up: 89 stocks
+  Top 5: ['ABB', 'KEI', 'NETWEB', 'DATAPATTNS', 'SIEMENS']
+[SRC] Chartink 52w_high: 72 stocks
+  Top 5: ['HEROMOTOCO', 'HAL', 'TVSMOTOR', 'SIEMENS', 'GODFRYPHLP']
+[SRC] Chartink high_volume_breakout: 24 stocks
+  Top 5: ['KEI', 'GODFRYPHLP', 'DEEPAKFERT', 'GESHIP', 'ATHERENERG']
+[SRC] Chartink momentum: 310 stocks
+  Top 5: ['KEI', 'NETWEB', 'DATAPATTNS', 'TVSMOTOR', 'LT']
+  48 symbols from high-volume/momentum screens
+Fetching OI spurts...
+[SRC] OI spurts: 213 total | 5 high conviction (>10%)
+[SRC] Top OI: [('LICI', 83.8), ('KEI', 27.1), ('GODFRYPHLP', 22.0), ('UPL', 18.2), ('IREDA', 15.9)]
+  5 symbols with OI change > 10.0%
+
+Combined watchlist: 51 symbols
+
+Checking news staleness for each symbol (one-time, not repeated per poll)...
+
+  AASTHA       -> FRESH  (3 article(s))
+  ADANIENT     -> FRESH  (3 article(s))
+  ADANIGREEN   -> FRESH  (3 article(s))
+  ADANIPORTS   -> FRESH  (3 article(s))
+  AEGISLOG     -> FRESH  (3 article(s))
+  AEROFLEX     -> FRESH  (3 article(s))
+  AETHER       -> FRESH  (3 article(s))
+  APLAPOLLO    -> FRESH  (3 article(s))
+  ATHERENERG   -> FRESH  (3 article(s))
+  AVADHSUGAR   -> FRESH  (3 article(s))
+  CDSL         -> FRESH  (3 article(s))
+  CGPOWER      -> FRESH  (3 article(s))
+  COFORGE      -> FRESH  (3 article(s))
+  CUPID        -> FRESH  (3 article(s))
+  DATAPATTNS   -> FRESH  (3 article(s))

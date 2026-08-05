@@ -1,0 +1,10 @@
+[1/20] RELIANCE...
+  [DEBUG] no JSON braces found. Raw content (0 chars): ''
+  -> 2026-07-17 no usable verdict
+  [DEBUG] no JSON braces found. Raw content (0 chars): ''
+  -> 2026-04-24 no usable verdict
+  [DEBUG] no JSON braces found. Raw content (0 chars): ''
+  -> 2026-01-16 no usable verdict
+[2/20] ONGC...
+  [DEBUG] no JSON braces found. Raw content (0 chars): ''
+  -> 2026-07-09 no usable verdict

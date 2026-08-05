@@ -1,0 +1,57 @@
+Reading: ['fy27_backtest_results.json', 'fy27_backtest_results_v2_trendbeat.json', 'fy27_backtest_results_v3_sue.json', 'fy27_backtest_results_v4_theilsen.json', 'fy27_backtest_results_v5_minq6.json']
+
+194 unique symbol+date picks across all files
+
+17 picks moved >= 10.0% (next-day or 3-day)
+177 picks did not
+
+======================================================================
+BIG MOVERS (>=10%) vs EVERYTHING ELSE — same metrics, compared
+======================================================================
+  MOVERS: n=17
+    decisions: {'ENTER_LONG': 4, 'SKIP': 13}
+    avg |pre_move_pct|: 6.17%  (n=17)
+    avg |z_score| (where available): 0.36  (18% had a z-score)
+
+  NON-MOVERS: n=177
+    decisions: {'ENTER_LONG': 41, 'SKIP': 136}
+    avg |pre_move_pct|: 4.59%  (n=177)
+    avg |z_score| (where available): 2.38  (25% had a z-score)
+
+----------------------------------------------------------------------
+Full list of movers, sorted by move size:
+
+2026-04-29 CEMPRO       ENTER_LONG  z=N/A    pre_move=6.666143831856325  next_day=10.47  3day=29.6
+    Revenue grew YoY by 8.0% (9,982.72 vs 9,246.16) and net profit grew by 59.2% (593.66 vs 372.80), meeting the B
+2026-04-30 HFCL         SKIP        z=N/A    pre_move=9.46443172526573  next_day=8.64  3day=20.57
+    Revenue grew YoY (Rs. 4,527.54 Cr vs Rs. 3,795.22 Cr) and net profit grew significantly (Rs. 252.87 Cr vs Rs. 
+2026-05-13 KAYNES       SKIP        z=-0.41  pre_move=-1.210080753372843  next_day=-11.28  3day=-17.08
+    Profit YoY growth of 67.3% is below the company's prior 3-quarter average of +31.9% (std dev 36.6), with a z-s
+2026-01-17 NETWEB       SKIP        z=N/A    pre_move=-1.4717136633896508  next_day=-8.27  3day=-16.08
+    No YoY comparison figures are present in the filing text to evaluate revenue or profit growth.
+2026-02-05 KAYNES       SKIP        z=N/A    pre_move=13.393339333933396  next_day=8.35  3day=15.89
+    Priced-In: Stock moved +13.4% in the 5 trading days before this result (triggers SKIP per checklist).
+2026-07-22 HFCL         SKIP        z=N/A    pre_move=1.556166425942321  next_day=-6.74  3day=-13.25
+    No standalone or consolidated financial results (revenue, profit, or margins) are provided in the filing text 
+2026-01-22 SYNGENE      SKIP        z=N/A    pre_move=-4.642120298365339  next_day=-3.41  3day=-13.02
+    Revenue grew YoY (4.93%) but profit fell significantly (standalone profit before tax declined from 3,609 to 1,
+2026-07-27 CGCL         ENTER_LONG  z=N/A    pre_move=-7.980223260844372  next_day=-9.3  3day=-12.25
+    Revenue grew YoY from ₹10,009.98M to ₹15,764.75M (+57.4%), and profit grew from ₹1,749.04M to ₹3,533.81M (+101
+2026-07-21 BANDHANBNK   SKIP        z=+0.12  pre_move=0.6380952380952397  next_day=-7.69  3day=-11.72
+    Profit YoY growth is +0.12 standard deviations (z-score) from the company's prior 8-quarter average, which is 
+2026-07-15 HSCL         ENTER_LONG  z=N/A    pre_move=-1.8636263977197982  next_day=4.69  3day=11.58
+    Revenue grew YoY from 1,287.76 to 1,431.88 Crores (+11.25%), and net profit after tax grew from 179.36 to 228.
+2026-04-27 BANDHANBNK   SKIP        z=N/A    pre_move=0.28131817659890956  next_day=-0.56  3day=11.17
+    No financial figures (revenue, profit, or YoY growth) are present in the filing text to evaluate beats/misses 
+2026-06-03 HFCL         SKIP        z=N/A    pre_move=16.642102677474817  next_day=-1.46  3day=-11.06
+    Priced-In trigger: Stock moved +16.6% in the 5 trading days before this result (exceeds >|8%| threshold).
+2026-04-22 OFSS         SKIP        z=N/A    pre_move=10.69858329262335  next_day=4.29  3day=11.03
+    Revenue grew YoY (15,663 vs 12,895 million) but net profit fell sharply (-39.45% YoY: 11,111 vs 18,355 million
+2026-05-11 SYRMA        SKIP        z=N/A    pre_move=14.724438187601027  next_day=-6.91  3day=-10.94
+    Priced-In trigger: Stock moved +14.7% in the 5 trading days before this result (exceeds >|8%| threshold).
+2026-04-29 SYNGENE      SKIP        z=+0.55  pre_move=0.8706610150074491  next_day=8.26  3day=10.51
+    Profit fell YoY (-68.74%) while revenue grew slightly (1.27%), and z-score (0.55) indicates growth is in line 
+2026-02-04 HEXT         ENTER_LONG  z=N/A    pre_move=1.2697083856564684  next_day=-4.53  3day=-10.44
+    Revenue grew YoY from 120,493 to 138,187 (+14.7%) and net profit grew from 11,740 to 15,563 (+33.6%), with ope
+2026-04-30 RRKABEL      SKIP        z=N/A    pre_move=11.594401756311747  next_day=-2.91  3day=10.34
+    Stock already moved +11.6% in the 5 trading days before this result (Priced-In trigger). Revenue grew YoY (₹97
