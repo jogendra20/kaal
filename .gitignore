@@ -22,3 +22,4 @@ movers_pattern_scan.json
 volume_positioning_enriched.json
 fy27_quarter_history_cache.json
 live_scanner_out.txt
+watchlist_snapshot_*.json
