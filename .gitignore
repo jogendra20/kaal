@@ -24,3 +24,9 @@ fy27_quarter_history_cache.json
 live_scanner_out.txt
 watchlist_snapshot_*.json
 watchlist_snapshot_*.json
+data/latest_brief.txt
+data/policy_dedup.txt
+data/seen_ids.txt
+data/signal_history.json
+data/watchlist.txt
+data/results_history/
