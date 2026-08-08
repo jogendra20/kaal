@@ -17,7 +17,6 @@ data/angel_scrip_master.json
 *_debug.txt
 *_debug*.txt
 backtest_out.txt
-fy27_backtest_results*.json
 watchlist_snapshot_*.json
 movers_pattern_scan.json
 volume_positioning_enriched.json
