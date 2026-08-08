@@ -585,12 +585,35 @@ def score_policy_signals(news_articles: list) -> list:
 
         text = (article.get("title", "") + " " + article.get("summary", "")).upper()
 
+        # Exclude retrospective/analysis pieces that mention policy
+        # vocabulary without describing a fresh action (e.g. "Escaping
+        # India's Anti-Dumping Duties: Lessons From The Past" -- this is
+        # about Bangladesh, not a new duty benefiting an Indian company).
+        RETROSPECTIVE_CONTEXT = [
+            "LESSONS FROM", "LESSONS LEARNED", "HISTORY OF", "LOOKING BACK",
+            "ESCAPING", "AVOID", "BYPASS", "LOOPHOLE", "WORKAROUND",
+            "ANALYSIS:", "EXPLAINER:", "OPINION:", "IN THE PAST",
+        ]
+        if any(kw in text for kw in RETROSPECTIVE_CONTEXT):
+            continue
+
+        # Require an action verb confirming this is about a duty actually
+        # being imposed/confirmed, not just background mention of the topic.
+        ACTION_VERBS = [
+            "IMPOSED", "IMPOSES", "LEVIED", "LEVIES", "NOTIFIED", "NOTIFIES",
+            "APPROVED", "APPROVES", "CONFIRMS", "CONFIRMED", "EXTENDS", "EXTENDED",
+            "INITIATES PROBE", "INITIATED PROBE", "RECOMMENDS DUTY", "IMPOSITION OF",
+        ]
+        has_action_verb = any(kw in text for kw in ACTION_VERBS)
+
         matched_policy = None
         for policy_type, keywords in POLICY_TRIGGERS.items():
             if any(kw in text for kw in keywords):
                 matched_policy = policy_type
                 break
         if not matched_policy:
+            continue
+        if not has_action_verb:
             continue
 
         # PLI_APPROVAL needs company-specific trigger, not generic milestone
@@ -627,11 +650,20 @@ def score_policy_signals(news_articles: list) -> list:
                     beneficiary_stocks.append(sym)
                     seen_symbols.add(sym)
 
+        # Dynamic score instead of flat 80/70: base score starts below
+        # Tier 1 threshold (75) and only reaches Tier 1 territory when
+        # multiple sectors/keywords confirm a strong, specific match.
+        # This stops every policy headline from auto-promoting to Tier 1
+        # regardless of strength -- weak/single-sector matches now cap
+        # out in Tier 2 range where they belong.
+        match_strength = len(matched_sectors)
+        base_score = 62 + min(match_strength * 6, 16)  # 62-78 range
+
         for i, symbol in enumerate(beneficiary_stocks):
             if symbol in flagged_symbols_today:
                 continue  # Fix 1: skip already flagged symbol
             flagged_symbols_today.add(symbol)
-            score = 80 if i == 0 else 70
+            score = base_score if i == 0 else max(base_score - 10, 45)
             results.append({
                 "symbol":         symbol,
                 "score":          score,
