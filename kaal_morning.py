@@ -201,7 +201,30 @@ def _format_signal_block(s: dict) -> list:
     return lines
 
 
-def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
+def build_top5_section(final: list) -> list:
+    """
+    Top 5 across the whole scored universe (tier1 + tier2 combined),
+    ranked purely by score. Separate from the Tier1/Tier2 sections below
+    it - this exists for a quick "what are my best 5 shots today" read
+    without having to eyeball-rank across two lists.
+    Reuses _format_signal_block so conviction, delivery data, opportunity
+    label and entry plan are identical to what's already in the Tier
+    sections - no separate formatting logic to maintain.
+    """
+    top5 = final[:5]
+    if not top5:
+        return []
+    lines = ["\n🏆 <b>TOP 5 — HIGHEST CONVICTION</b>"]
+    for i, s in enumerate(top5, 1):
+        block = _format_signal_block(s)
+        # Prefix the symbol line with its rank
+        block[1] = block[1].replace(f"<b>{s['symbol']}</b>", f"<b>{i}. {s['symbol']}</b>")
+        lines += block
+    lines.append("─" * 34)
+    return lines
+
+
+def build_morning_brief(tier1: list, tier2: list, macro: dict, top5_source: list = None) -> str:
     now   = datetime.now().strftime("%d %b %Y %I:%M %p")
     vix   = macro.get("vix", 0)
     bias  = macro_bias_label(macro)
@@ -222,6 +245,9 @@ def build_morning_brief(tier1: list, tier2: list, macro: dict) -> str:
         f"USD/INR: <code>{macro.get('usdinr', 0):.2f}</code>",
         "─" * 34,
     ]
+
+    if top5_source:
+        lines += build_top5_section(top5_source)
 
     if tier1:
         lines.append("\n🔥 <b>TIER 1 — HIGH CONVICTION</b>")
@@ -631,7 +657,7 @@ def run():
     log(f"Watchlist saved: {watchlist_symbols}")
 
     # ── Send Telegram ─────────────────────────────────────
-    msg = build_morning_brief(tier1, tier2, macro)
+    msg = build_morning_brief(tier1, tier2, macro, top5_source=final)
     # Save brief to file
     import os
     brief_file = os.path.join(os.path.dirname(__file__), "data", "latest_brief.txt")
