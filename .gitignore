@@ -10,3 +10,16 @@ venv/
 .DS_Store
 data/bhavcopy_cache/
 data/angel_scrip_master.json
+
+# run artifacts / debug dumps - not source, shouldn't be tracked
+*_out.txt
+*_out_v*.txt
+*_debug.txt
+*_debug*.txt
+backtest_out.txt
+fy27_backtest_results*.json
+watchlist_snapshot_*.json
+movers_pattern_scan.json
+volume_positioning_enriched.json
+fy27_quarter_history_cache.json
+live_scanner_out.txt
