@@ -121,7 +121,7 @@ def fetch_results_announcements(session, symbol, from_date, to_date):
     return out
 
 
-def download_pdf_text(url, max_chars=4000, top_pages=3):
+def download_pdf_text(url, max_chars=5500, top_pages=4):
     if not url or url == "-":
         return ""
     for attempt in range(2):
@@ -142,11 +142,26 @@ def download_pdf_text(url, max_chars=4000, top_pages=3):
             return ""
         import pypdf
         reader = pypdf.PdfReader(io.BytesIO(r.content))
+        # Strong, specific line items that only appear in an actual
+        # results table - not a cover letter or notes page. Case-
+        # insensitive: the previous check ("Particulars" in t) missed
+        # every page where the header is printed in ALL CAPS
+        # ("PARTICULARS"), which is common in auditor-formatted filings
+        # and was causing real table pages to lose to cover-page noise
+        # that scored high purely on incidental digit density (CIN
+        # numbers, dates, addresses).
+        TABLE_MARKERS = [
+            "particulars", "revenue from operations", "total income",
+            "total expenses", "profit for the period", "profit before tax",
+            "earnings per share", "total comprehensive income",
+        ]
         scored = []
         for i, page in enumerate(reader.pages):
             t = page.extract_text() or ""
             digit_count = sum(c.isdigit() for c in t)
-            score = digit_count + (500 if "Particulars" in t else 0)
+            lower_t = t.lower()
+            marker_hits = sum(1 for m in TABLE_MARKERS if m in lower_t)
+            score = digit_count + (500 * marker_hits)
             scored.append((i, score, t))
         top = sorted(scored, key=lambda x: -x[1])[:top_pages]
         top_in_order = sorted(top, key=lambda x: x[0])
