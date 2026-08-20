@@ -187,3 +187,12 @@
 - chore: untrack watchlist snapshots - unused, generated locally, not needed in history
 - chore: untrack watchlist snapshots - unused, generated locally, not needed in history
 
+
+### 2026-08-20
+- cleanup: removed superseded FY27 backtest drafts (fy27_backtest8q.py, v3/v4/v5) - results preserved in fy27_backtest_results_v*.json
+- cleanup: removed raw stdout dumps (fy27_out_v1-v5.txt) - superseded by structured JSON results
+- cleanup: removed backtest progress checkpoints + fy27_quarter_history_cache.json - regenerable scratch state
+- cleanup: removed nse_cache.db - regenerable cache, same precedent as bhavcopy
+- cleanup: removed patch_chartink_sort_fix.py (leftover one-shot patch, missed in Phase 0) + bse_test/nse_test debug probes
+- cleanup: removed kpl_* pre-rename announcement fetchers + bse_full_list.py/json - superseded by kaal_sources.py/kaal_market_data.py, zero importers
+- cleanup: removed one-off dated research dumps (observation_monday, movers_pattern_scan, analyze_movers, analyze_volume_positioning, delivery_rvol_check, volume_surge, weekend_results_momentum, timestamp_check, enrich_unexplained) - single-session analysis scripts, not reusable pipeline code
